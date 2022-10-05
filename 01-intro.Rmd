@@ -6,5 +6,6 @@ We are going to cover two things during this session
 
 -   look into the calculation of scaling factors used for the computation of local production rates, and how they vary in space and time
 -   make some simple calculations of TCN concentration build up at the Earth surface, as a response to exposure and denudation
+- test
 
 
