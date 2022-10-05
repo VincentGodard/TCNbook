@@ -1,0 +1,42 @@
+--- 
+title: "A Minimal Book Example"
+author: "Vincent Godard"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: '../data/TCNbook.bib'
+biblio-style: apalike
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+# Prerequisites
+
+This html page is derived from an [R Markdown](http://rmarkdown.rstudio.com) Notebook.
+You can copy/paste the various lines of code into your own R script and run it in any R session.
+
+These activities do not require any specific prior knowledge of R programming language.
+The idea is for you to simply copy and paste the code in a script, run it, and change various parameters to observe and investigate the associated response.
+
+In addition to the scripting-oriented activities below you can also experiment visually with a few interactive [Shiny](https://shiny.rstudio.com) apps
+
+<http://shinyproxy.osupytheas.fr>
+
+Both are built on the dedicated `TCNtools` package :
+
+<https://vincentgodard.github.io/TCNtools>
+
+This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.
+
+You can install the package directly on you system (instructions on package website), or alternatively launch a binder session where everything is installed and should run smoothly.
+You can launch the binder by clicking on the icon below, and access an online RStudio session in your browser.
+
+[![binder](../data/binder.png)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio)
+
+The first thing we have to do, before calling any of these functions, is to load the `TCNtools` package.
+
+```{r}
+library("TCNtools")
+```
+
