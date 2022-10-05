@@ -173,6 +173,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.2" data-path="time-dependent-scalings.html"><a href="time-dependent-scalings.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>4.1</b> Background</a></li>
+<li class="chapter" data-level="4.2" data-path="set-up-of-the-calculations.html"><a href="set-up-of-the-calculations.html"><i class="fa fa-check"></i><b>4.2</b> Set up of the calculations</a></li>
+<li class="chapter" data-level="4.3" data-path="evolution-of-concentration-with-time.html"><a href="evolution-of-concentration-with-time.html"><i class="fa fa-check"></i><b>4.3</b> Evolution of concentration with time</a></li>
+<li class="chapter" data-level="4.4" data-path="two-end-member-situations.html"><a href="two-end-member-situations.html"><i class="fa fa-check"></i><b>4.4</b> Two end-member situations</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -192,14 +199,14 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="time-independent-scaling" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Time-independent scaling<a href="time-independent-scaling.html#time-independent-scaling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We are going to present the most widely used and simplest scaling scheme known as Lal-Stone and often abbreviated as <strong>st</strong>. The main equations are presented in the reference article by <span class="citation">Stone (<a href="time-dependent-scalings.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span> .</p>
+<p>We are going to present the most widely used and simplest scaling scheme known as Lal-Stone and often abbreviated as <strong>st</strong>. The main equations are presented in the reference article by <span class="citation">Stone (<a href="two-end-member-situations.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span> .</p>
 <div id="site-characteristics" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Site characteristics<a href="time-independent-scaling.html#site-characteristics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We first need to define some parameters concerning the site of interest :</p>
 <ul>
 <li>latitude <code>lat</code> in degrees</li>
 <li>altitude <code>z</code> in meters (can be a vector or a scalar)</li>
-<li>longitude <code>lon</code> in degrees, this is not used for <em>st</em> scaling (<span class="citation">Stone (<a href="time-dependent-scalings.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), just in case we want to compute atmospheric pressure according to ERA40 (<span class="citation">Uppala et al. (<a href="time-dependent-scalings.html#ref-uppala2005era40" role="doc-biblioref">2005</a>)</span>).</li>
+<li>longitude <code>lon</code> in degrees, this is not used for <em>st</em> scaling (<span class="citation">Stone (<a href="two-end-member-situations.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), just in case we want to compute atmospheric pressure according to ERA40 (<span class="citation">Uppala et al. (<a href="two-end-member-situations.html#ref-uppala2005era40" role="doc-biblioref">2005</a>)</span>).</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="time-independent-scaling.html#cb2-1" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">=</span> <span class="dv">30</span> <span class="co"># latitude</span></span>
 <span id="cb2-2"><a href="time-independent-scaling.html#cb2-2" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">=</span> <span class="dv">30</span> <span class="co"># longitude</span></span>
@@ -219,7 +226,7 @@ Here <code>z</code> is a vector to see the variations over a range of elevations
 </div>
 <div id="computation-of-scaling-factors" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Computation of scaling factors<a href="time-independent-scaling.html#computation-of-scaling-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We can now compute the scaling factors according to <span class="citation">Stone (<a href="time-dependent-scalings.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>.
+<p>We can now compute the scaling factors according to <span class="citation">Stone (<a href="two-end-member-situations.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>.
 Same as above, to get some information about the function (parameters definition) type <code>?st_scaling</code> in the R console.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="time-independent-scaling.html#cb4-1" aria-hidden="true" tabindex="-1"></a>st <span class="ot">=</span> <span class="fu">scaling_st</span>(P1,lat) <span class="co"># here we use the pressure according to Stone 2000 model</span></span>
 <span id="cb4-2"><a href="time-independent-scaling.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(st)</span></code></pre></div>

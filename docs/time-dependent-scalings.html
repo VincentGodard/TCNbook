@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="time-independent-scaling.html"/>
-
+<link rel="next" href="exploring-tcn-build-up-at-the-surface.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -173,6 +173,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.2" data-path="time-dependent-scalings.html"><a href="time-dependent-scalings.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>4.1</b> Background</a></li>
+<li class="chapter" data-level="4.2" data-path="set-up-of-the-calculations.html"><a href="set-up-of-the-calculations.html"><i class="fa fa-check"></i><b>4.2</b> Set up of the calculations</a></li>
+<li class="chapter" data-level="4.3" data-path="evolution-of-concentration-with-time.html"><a href="evolution-of-concentration-with-time.html"><i class="fa fa-check"></i><b>4.3</b> Evolution of concentration with time</a></li>
+<li class="chapter" data-level="4.4" data-path="two-end-member-situations.html"><a href="two-end-member-situations.html"><i class="fa fa-check"></i><b>4.4</b> Two end-member situations</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -223,9 +230,9 @@ We plot the three of them on the same graph.</p>
 <div id="cutoff-rigidity" class="section level4 hasAnchor" number="3.2.1.2">
 <h4><span class="header-section-number">3.2.1.2</span> Cutoff Rigidity<a href="time-dependent-scalings.html#cutoff-rigidity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Now we need to convert that into cutoff rigidity using <code>vdm2rc</code> function.
-Such can be done using the following expression (<span class="citation">Martin et al. (<a href="time-dependent-scalings.html#ref-martin2017crep" role="doc-biblioref">2017</a>)</span>): <span class="math display">\[R_c = 14.3 \frac{M}{M_0}\cos^4 \lambda,\]</span> where <span class="math inline">\(M\)</span> is the moment of the Earth dipole field, <span class="math inline">\(M_0\)</span> the 2010 reference value for <span class="math inline">\(M\)</span> and <span class="math inline">\(\lambda\)</span> the latitude.
+Such can be done using the following expression (<span class="citation">Martin et al. (<a href="two-end-member-situations.html#ref-martin2017crep" role="doc-biblioref">2017</a>)</span>): <span class="math display">\[R_c = 14.3 \frac{M}{M_0}\cos^4 \lambda,\]</span> where <span class="math inline">\(M\)</span> is the moment of the Earth dipole field, <span class="math inline">\(M_0\)</span> the 2010 reference value for <span class="math inline">\(M\)</span> and <span class="math inline">\(\lambda\)</span> the latitude.
 This corresponds to the default <code>model=elsasser54</code> in the <code>vdm2rc</code> function arguments.
-A more complex formula proposed by <span class="citation">Lifton, Sato, and Dunai (<a href="time-dependent-scalings.html#ref-lifton2014scaling" role="doc-biblioref">2014</a>)</span> can be used with <code>model=lifton14</code>.</p>
+A more complex formula proposed by <span class="citation">Lifton, Sato, and Dunai (<a href="two-end-member-situations.html#ref-lifton2014scaling" role="doc-biblioref">2014</a>)</span> can be used with <code>model=lifton14</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="time-dependent-scalings.html#cb9-1" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">=</span> <span class="dv">40</span></span>
 <span id="cb9-2"><a href="time-dependent-scalings.html#cb9-2" aria-hidden="true" tabindex="-1"></a>rc1a <span class="ot">=</span> <span class="fu">vdm2rc</span>(vdm1,lat)</span>
 <span id="cb9-3"><a href="time-dependent-scalings.html#cb9-3" aria-hidden="true" tabindex="-1"></a>rc1b <span class="ot">=</span> <span class="fu">vdm2rc</span>(vdm1,lat,<span class="at">model=</span><span class="st">&quot;lifton14&quot;</span>)</span>
@@ -263,20 +270,6 @@ We plot the corresponding time series, as well as the value of <em>st</em> scali
 <p><strong>TODO</strong> Explore the variations of the scaling factor by using various values for elevation <code>alt</code>, and different <span class="math inline">\(R_c\)</span> time-series. Look for the differences with the time-independant <code>st</code> scaling</p>
 </blockquote>
 
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-lifton2014scaling" class="csl-entry">
-Lifton, Nathaniel, Tatsuhiko Sato, and Tibor J. Dunai. 2014. <span>“Scaling in Situ Cosmogenic Nuclide Production Rates Using Analytical Approximations to Atmospheric Cosmic-Ray Fluxes.”</span> <em>Earth and Planetary Science Letters</em> 386: 149–60. <a href="https://doi.org/f5r46p">https://doi.org/f5r46p</a>.
-</div>
-<div id="ref-martin2017crep" class="csl-entry">
-Martin, L. C. P., P.-H. Blard, G. Balco, J. Lavé, R. Delunel, N. Lifton, and V. Laurent. 2017. <span>“The <span>CREp</span> Program and the <span>ICE-D</span> Production Rate Calibration Database: <span>A</span> Fully Parameterizable and Updated Online Tool to Compute Cosmic-Ray Exposure Ages.”</span> <em>Quaternary Geochronology</em> 38 (March): 25–49. <a href="https://doi.org/f92pbm">https://doi.org/f92pbm</a>.
-</div>
-<div id="ref-stone2000air" class="csl-entry">
-Stone, John O. 2000. <span>“Air Pressure and Cosmogenic Isotope Production.”</span> <em>Journal of Geophysical Research: Solid Earth</em> 105 (B10): 23753–59. <a href="https://doi.org/fbsd87">https://doi.org/fbsd87</a>.
-</div>
-<div id="ref-uppala2005era40" class="csl-entry">
-Uppala, S. M., P. W. KÅllberg, Adrian J. Simmons, U. Andrae, V. Da Costa Bechtold, M. Fiorino, J. K. Gibson, et al. 2005. <span>“The <span>ERA-40</span> Re-Analysis.”</span> <em>Quarterly Journal of the Royal Meteorological Society</em> 131 (612): 2961–3012. <a href="https://doi.org/fthgs7">https://doi.org/fthgs7</a>.
-</div>
-</div>
 </div>
 </div>
 <!-- </div> -->
@@ -285,8 +278,8 @@ Uppala, S. M., P. W. KÅllberg, Adrian J. Simmons, U. Andrae, V. Da Costa Bechto
           </div>
         </div>
       </div>
-<a href="time-independent-scaling.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="time-independent-scaling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exploring-tcn-build-up-at-the-surface.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

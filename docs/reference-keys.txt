@@ -11,3 +11,17 @@ definition-of-paleomagnetic-variations
 virtual-dipole-moment
 cutoff-rigidity
 lalstone-modified-scaling-lm
+exploring-tcn-build-up-at-the-surface
+background
+set-up-of-the-calculations
+evolution-of-concentration-with-time
+two-end-member-situations
+application-to-exposure-dating
+back-to-the-evolution-of-concentration
+interpretation-in-terms-of-exposure-ages
+time-varying-production-rates
+dealing-with-uncertainties
+application-to-denudation-rate-measurements
+concentration---denudation-rate-relationship
+integration-time-scale
+on-the-importance-of-muons

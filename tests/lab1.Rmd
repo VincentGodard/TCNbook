@@ -1,0 +1,682 @@
+---
+title: 'Interpretation of TCN concentrations at the surface '
+date: "`r Sys.Date()`"
+author: 'Vincent Godard'
+bibliography: '../data/formation_ED_cosmos.bib'
+output:
+  html_document:
+    theme: united
+    toc: true
+    toc_float: true
+    number_sections: yes
+    df_print: paged
+    code_folding: show
+    code_download: true
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Introduction
+
+## Objectives of the session
+
+We are going to cover two things during this session
+
+-   look into the calculation of scaling factors used for the computation of local production rates, and how they vary in space and time
+-   make some simple calculations of TCN concentration build up at the Earth surface, as a response to exposure and denudation
+
+## Technical details
+
+This html page is derived from an [R Markdown](http://rmarkdown.rstudio.com) Notebook.
+You can copy/paste the various lines of code into your own R script and run it in any R session.
+
+These activities do not require any specific prior knowledge of R programming language.
+The idea is for you to simply copy and paste the code in a script, run it, and change various parameters to observe and investigate the associated response.
+
+In addition to the scripting-oriented activities below you can also experiment visually with a few interactive [Shiny](https://shiny.rstudio.com) apps
+
+<http://shinyproxy.osupytheas.fr>
+
+Both are built on the dedicated `TCNtools` package :
+
+<https://vincentgodard.github.io/TCNtools>
+
+This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.
+
+You can install the package directly on you system (instructions on package website), or alternatively launch a binder session where everything is installed and should run smoothly.
+You can launch the binder by clicking on the icon below, and access an online RStudio session in your browser.
+
+[![binder](../data/binder.png)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio)
+
+The first thing we have to do, before calling any of these functions, is to load the `TCNtools` package.
+
+```{r}
+library("TCNtools")
+```
+
+# Scaling factors
+
+First we are going to explore how the scaling factors are changing with elevation, latitude and time, and what is the impact on local production rates.
+
+## Time-independent scaling
+
+We are going to present the most widely used and simplest scaling scheme known as Lal-Stone and often abbreviated as **st**. The main equations are presented in the reference article by @stone2000air .
+
+### Site characteristics
+
+We first need to define some parameters concerning the site of interest :
+
+-   latitude `lat` in degrees
+-   altitude `z` in meters (can be a vector or a scalar)
+-   longitude `lon` in degrees, this is not used for *st* scaling (@stone2000air), just in case we want to compute atmospheric pressure according to ERA40 (@uppala2005era40).
+
+```{r}
+lat = 30 # latitude
+lon = 30 # longitude
+z = seq(0,3000,by=100) # vector from 0 to 3000 m by 100 m increments
+```
+
+Now we can compute the atmospheric pressure, with the function `atm_pressure` according to the two models available, and then plot for comparison.
+Here `z` is a vector to see the variations over a range of elevations.
+
+To get information about the usage of the function used here (for example what are the different models) type `?atm_pressure` in the R console.
+
+```{r}
+P1 = atm_pressure(alt=z,model="stone2000") 
+P2 = atm_pressure(alt=z,lat=lat,lon=lon,model="era40")
+plot(P1,z,type="l",xlab="Pressure (hPa)",ylab="Altitude (m)",col="darkorange3") 
+lines(P2,z,lty=2,col="darkorange3")
+legend("topright",c("Stone 2000","ERA40"),lty=c(1,2))
+```
+
+> **TODO** Modify `lat` and `lon` to see the effects on the pressure computed with the ERA40 model 
+
+### Computation of scaling factors
+
+We can now compute the scaling factors according to @stone2000air.
+Same as above, to get some information about the function (parameters definition) type `?st_scaling` in the R console.
+
+```{r}
+st = scaling_st(P1,lat) # here we use the pressure according to Stone 2000 model
+st
+```
+
+The result is stored in `st` as a dataframe with as many rows as there are elements in the input pressure vector (`P1`) and two columns named `Nneutrons` and `Nmuons`, for the spallogenic and muogenic contributions, respectively.
+
+We can plot the evolution with elevation, which illustrates the major influence of altitude of the sampling site in controlling the local production rate.
+
+```{r}
+plot(st$Nneutrons,z,type="l",
+     xlab="Spallogenic st scaling factor (Stone 2000)",ylab="Altitude (m)",
+     main=paste("Latitude ",lat,"°",sep=""),col="darkorange3")
+```
+
+> **TODO** Modify `lat` to see the effects on the scaling factor
+
+
+### Global variations
+
+In order to get a better idea of the variations with both latitude (from 0 to 90°) and elevation (from sea level to 3000 m) we can try the following plot.
+
+```{r}
+P = atm_pressure(alt=0,model="stone2000") # compute pressure
+lat = seq(0,90,by=1) # latitude vector
+n = length(lat) # size of vector
+st = scaling_st(P,lat) # compute scaling
+plot(lat,st$Nneutrons,type="l",ylim=c(0.5,12),col="darkorange3",
+     xlab="Latitude (°)",ylab="Spallogenic st scaling factor (Stone 2000)")
+grid()
+text(lat[n],st$Nneutrons[n],"0 km",cex=0.5,adj=0) # put label at the end of curve
+for (z in seq(500,3000,by=500)){ # loop on elevations : same as above for a range of elevations
+  P = atm_pressure(alt=z,model="stone2000") 
+  st = scaling_st(P,lat) 
+  lines(lat,st$Nneutrons,col="darkorange3")
+  text(lat[n],st$Nneutrons[n],z/1000,cex=0.5,adj=0)
+}
+```
+
+This dependence of the scaling factor on latitude is a direct consequence of the dipole structure of the Earth magnetic field, with a higher cosmic rays flux at high latitudes.
+
+## Time-dependent scalings
+
+### Definition of paleomagnetic variations
+
+Time-dependent scaling factors allow to take into account the variations through time of the Earth magnetic field, which modulates the incoming cosmic ray flux. This is particularly important in exposure dating applications.
+
+#### Virtual Dipole Moment
+
+We need to first define a time series for the Virtual Dipole Moment (VDM) variation, using the `get_vdm` function.
+
+Several paleomagnetic database can be used.
+The three options correspond to databases defined in [Crep](https://crep.otelo.univ-lorraine.fr).
+We plot the three of them on the same graph.
+
+```{r}
+time = seq(0,50e3,length.out = 1000) # time vector from 0 to 50 ka BP, with 1000 regularly spaced elements
+#
+plot(NA,xlim=range(time),ylim=c(0,16),xlab="Time (a BP)",ylab="VDM (10^22 A.m^2)")
+grid()
+# - Glopis
+col1="coral1"
+vdm1=get_vdm(time,model="glopis")
+lines(time,vdm1/1e22,col=col1)
+# 2 - Musch
+col2 = "chartreuse"
+vdm2=get_vdm(time,model="musch")
+lines(time,vdm2/1e22,col=col2)
+# 3 - lsd
+col3 = "cornflowerblue"
+vdm3=get_vdm(time,model="lsd")
+lines(time,vdm3/1e22,col=col3)
+legend("topright",c("glopis","musch","lsd"),col=c(col1,col2,col3),lty=1)
+
+
+```
+
+#### Cutoff Rigidity
+
+Now we need to convert that into cutoff rigidity using `vdm2rc` function.
+Such can be done using the following expression (@martin2017crep): $$R_c = 14.3 \frac{M}{M_0}\cos^4 \lambda,$$ where $M$ is the moment of the Earth dipole field, $M_0$ the 2010 reference value for $M$ and $\lambda$ the latitude.
+This corresponds to the default `model=elsasser54` in the `vdm2rc` function arguments.
+A more complex formula proposed by @lifton2014scaling can be used with `model=lifton14`.
+
+```{r}
+lat = 40
+rc1a = vdm2rc(vdm1,lat)
+rc1b = vdm2rc(vdm1,lat,model="lifton14")
+rc2a = vdm2rc(vdm2,lat)
+rc2b = vdm2rc(vdm2,lat,model="lifton14")
+rc3a = vdm2rc(vdm3,lat)
+rc3b = vdm2rc(vdm3,lat,model="lifton14")
+#
+plot(NA,xlim=range(time),ylim=range(rc1a,rc2a,na.omit(rc3a)),xlab="Time (a BP)",ylab="Rc (GV)")
+grid()
+lines(time,rc1a,col=col1)
+lines(time,rc1b,col=col1,lty=2)
+lines(time,rc2a,col=col2)
+lines(time,rc2b,col=col2,lty=2)
+lines(time,rc3a,col=col3)
+lines(time,rc3b,col=col3,lty=2)
+legend("bottomleft",c("glopis","musch","lsd","elsasser54","lifton14"),col=c(col1,col2,col3,"black","black"),lty=c(1,1,1,1,2),cex=0.5)
+
+```
+
+> **TODO** change the latitude `lat` and observe the influence on $R_c$ 
+
+### Lal/Stone modified scaling (*lm*)
+
+Once we have a $R_c$ time series we can compute the *lm* scaling factors using the `scaling_lm` function.
+For that we will only use one elevation (*z=0*), so we recompute the atmospheric pressure.
+We plot the corresponding time series, as well as the value of *st* scaling factor for reference.
+
+```{r}
+P = atm_pressure(alt=0,model="stone2000")
+lm = scaling_lm(P,rc1a)
+plot(time,lm,type="l",xlab="Time (a BP)",ylab="Spallogenic lm scaling factor")
+abline(h=scaling_st(P,lat)$Nneutrons,lty=2)
+```
+
+> **TODO** Explore the variations of the scaling factor by using various values for elevation `alt`, and different $R_c$ time-series. Look for the differences with the time-independant `st` scaling
+
+
+# Exploring TCN build up at the surface
+
+We are going to consider simple computations of concentration under various conditions in terms of erosion, depth or age.
+This will be done using an *Eulerian point of view*, which is the most straightforward and fastest way to perform such computation.
+In this case the quantity of interest (concentration) is computed at fixed depths below the surface, while the exhumed material is moving through this reference frame during its trajectory toward the surface.
+More details on the differences between Eulerian and Lagrangian approaches, and their applications to complex exposition/denudation histories, will be studied later.
+
+Note that interpreting measured concentrations in terms of end-member situations of *pure exposure* or *steady-state denudation* is often done with online calculators (@balco2008complete,@marrero2016cronusearth,@martin2017crep).
+This will be fine in many cases, but you should always be careful about the underlying hypothesis (no erosion, steady state achieved...) when interpreting your concentrations and always think about how TCN are accumulating.
+The goal of this activity is to explore this behavior.
+
+## Background
+
+The relevant general equation is the following,
+
+$$
+C=C_0e^{-\lambda t} + \sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda}e^{\frac{-\rho z}{\Lambda_i}}(1-e^{-(\frac{\rho \varepsilon}{\Lambda_i}+\lambda)t})
+$$ with the following variables and parameters,
+
+-   $C$ the concentration (as a function of time $t$ and depth $z$)
+-   $C_0$ the inherited concentration
+-   $\lambda$ the decay constant for the considered nuclide
+-   $P_i$ the scaled surface production rate for the nuclide of interest and the $i$-th production pathway (spallation, stopped muons, fast muons)
+-   $\rho$ the density of the medium
+-   $\Lambda_i$ the attenuation length for the particules of the $i$-th production pathway
+-   $\varepsilon$ surface denudation
+
+In order to stick with usual conventions in the following time $t$ will be measured in years (a), the unit of length will be cm and the depths ($z$) will be expressed in g/cm$^2$ (i.e. actual depth $\times \rho$).
+
+Note two keys limitations of this representation :
+
+-   it does not allow to account for time variations of production rates (at least in its most straightforward implementation), so we will mostly using the *st* scaling
+-   it assumes exponential evolution of production with depth, which is clearly not the case for low energy neutrons (figure 2b from @gosse2001terrestrial) and is questionable in some situations for muons (@balco2017production)
+
+## Set up of the calculations
+
+We should the define the basic parameters we are going to use for the computation, which are two vectors :
+
+-   a vector with the attenuation lengths for different particles (in g/cm$^2$)
+    -   neutrons for spallation reactions $\Lambda_{spal}$
+    -   stopping muons $\Lambda_{stop}$
+    -   fast muons $\Lambda_{fast}$\
+-   a vector (or matrix) with the SLHL production rates (in at/g/a), in this case for the *st* scaling scheme (@stone2000air), and decay constant $\lambda$ (in 1/a) for the nuclide(s) of interest.
+
+For easy reference a set of data for these parameters is included in the `TCNtools` package, including Sea-Level High-Latitude production rates for the `st` scaling scheme.
+Note that these often used SLHL values are defined for convenience, most calculators for exposure age work directly with the production rate value at calibration sites, and that they are always relative to the scaling scheme used (@borchers2016geological).
+
+We can first load the attenuation length data (g/cm$^2$).
+Documentation of this dataset is accessible with `?Lambda`.
+
+```{r }
+data(Lambda) # we load a vector containing the attenuation length into the environment
+print(Lambda)
+rho = 2.7 # we also define the density (g/cm3)
+```
+
+Some production and decay parameters can also be loaded.
+Documentation of this dataset is accessible with `?prm`.
+
+```{r}
+data(prm) # we load a matrix containing the production/decay parameters into the environment
+print(prm)
+```
+
+We also need to define the properties of our site of interest and compute the relevant scaling parameters. As we already saw previously, this can easily be done with,
+
+```{r }
+altitude = 1000 # elevation in m
+latitude = 45 # latitude in degrees
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+```
+
+## Evolution of concentration with time
+
+To get a general overview of the behavior we are  going to use directly the `solv_conc_eul` function, which allows to easily deal with various configurations. In the following sections we will go back to the key equations to get a better sense of the importance of various parameters
+As always the documentation of the function, including its various arguments, can be obtained by typing `?solv_conc_eul` in the R console.
+
+```{r ck_5bis}
+nuc = "Be10" # "Al26", "C14"
+t =  seq(0,200e3,length.out=1000) # a vector containing time from 0 to 100 ka by 100 a steps
+z = 0 * rho # depth at which we are going to perform the calculation (cm converted to g/cm2)
+C0 = 0 # inherited concentration (at/g)
+ero = 0 * (100/1e6*rho) # denudation rate expressed in m/Ma and converted in g/cm2/a
+C = solv_conc_eul(z,ero,t,C0,prm[,nuc],S,Lambda) # compute concentration
+plot(t/1000,C,type="l",col="cornflowerblue",lwd=3,ylab="Concentration (at/g)",xlab="Time (ka)")
+grid()
+# see explanation for these  lines below
+Prod = c(prm[1,nuc]*S$Nneutrons,prm[2,nuc]*S$Nmuons,prm[3,nuc]*S$Nmuons) # scaled production vector (defined for the sake of clarity of the expressions below)
+lambda = prm[4,nuc] # radiactive decay
+abline(0,sum(Prod)*1000,lty=2) # note that time is in ka on the plot
+abline(h=sum(Prod/((ero/Lambda)+lambda)),lty=2)
+```
+
+Start with zero erosion ($\varepsilon=0$), corresponding to the pure exposition of a surface.
+We see here the progressive build-up of concentration though time and the establishment of balance between gains (production) and losses (denudation and decay) leading to the concentration plateau at steady state.
+
+Two lines are added to the graph,
+
+- The first one corresponds to the production slope $\sum_i P_i$, how much nuclide you produce and how it would accumulate if you had no radioactive decay and no denudation.
+- The second one (horizontal) is the maximum value of concentration when steady state is achieved :
+$$ C_{max}=\sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda} $$
+
+> **TODO**
+
+-   Change the maximum of the `t` vector until you see the influence of radioactive decay and the plateau.
+-   Add some inheritance
+-   Test the evolution with other nuclides ($^{26}$Al and $^{14}$C)
+
+You can also play around with this build up using this Shiny App :
+
+<http://shinyproxy.osupytheas.fr/simple_accumulation>
+
+Now try to modify the `ero` (always keeping it is in g/cm$^2$/a) parameter above, to see its influence on time needed to reach steady state and the final concentration.
+
+
+## Two end-member situations
+
+No we are going to build a summary plot showing the influence of both exposure and denudation.
+
+```{r }
+altitude = 1000 # elevation in m
+latitude = 45 # latitude in degrees
+nuc = "Be10"
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+t =  10^seq(log10(1),log10(10e6),length.out=1000) # time vector, log-spaced!
+# calculation of the evolution of concentration for denudation = 0
+C = solv_conc_eul(0,0,t,0,prm[,nuc],S,Lambda) # compute concentration for pure exposure
+plot(t,C,type="l",col="cornflowerblue",lwd=3,ylab="Concentration (at/g)",xlab="Time (a)",log="xy")
+grid()
+text(max(t),max(C),0,cex=0.5,adj=0) # label the curve
+# now we make the same computation for other denudation rates
+ero = c(1,10,100,1000) # erosion vector in m/Ma
+for (i in 1:length(ero)){
+  e = ero[i] * (100/1e6*rho) # convert denudation in g/cm2/a
+  C = solv_conc_eul(0,e,t,0,prm[,nuc],S,Lambda) # compute concentration for pure exposure
+  lines(t,C,col="cornflowerblue",lwd=3)
+  text(max(t),max(C),ero[i],cex=0.5,adj=0) # label the curve
+}
+
+```
+
+Note that this a log-log plot. It is probably one of the most important figure to keep in mind when analyzing TCN concentrations. It clearly shows the existence of two end-member situations when interpreting these concentrations, in terms of exposure age or denudation rates, and the transition between the two. 
+
+> **TODO** Think about a bit about the following points
+
+- What are the key hypothesis made when interpreting a TCN concentration in terms of
+    - exposure age
+    - surface denudation
+- Can you think of geological/geomorphological situations where these hypotheses are violated?
+- Why are the plateau concentrations so different?
+- How is the time to reach the plateau changing and why?
+
+# Application to exposure dating
+
+## Back to the evolution of concentration
+
+We first consider the evolution of concentration with time $t$.
+The computation will be carried out at the surface ($z=0$), but this could be done at any arbitrary depth.
+We also consider that $\varepsilon = 0$ and that there is no inheritance.
+The starting equation above becomes, $$
+C(t)=\sum_i \frac{P_i}{\lambda}(1-e^{-\lambda t})
+$$ 
+For the sake of the example we are going to compute that by hand, and compare with our results above obtained with the `solv_conc_eul` function,
+
+```{r `}
+# set up
+altitude = 1000 # elevation in m
+latitude = 45 # latitude in degrees
+nuc = "Be10"
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+t =  seq(0,200e3,by=100) # a vector containing time from 0 to 100 ka by 100 a steps
+Pspal = prm[1,nuc]*S$Nneutrons # scaled spallation production rate in at/g/y (st scaling)
+Pstop = prm[2,nuc]*S$Nmuons # scaled stopped muons  production rate in at/g/y
+Pfast = prm[3,nuc]*S$Nmuons # scaled fast muons  production rate in at/g/y
+lambda = prm[4,nuc] # radioactive decay (1/y)
+C = (Pspal + Pstop + Pfast) / lambda * (1-exp(-lambda*t))
+plot(t/1000,C,type="l",col="coral",lwd=3,ylab="Concentration (at/g)",xlab="Time (ka)")
+grid()
+# check if this is ok
+C2 = solv_conc_eul(0,0,t,0,prm[,nuc],S,Lambda) # compute concentration for pure exposure
+lines(t/1000,C2,lty=2)
+
+```
+
+On thing to note in this graph is that time $t$ is expressed as *time elapsed since start of exposure*, which we can not directly translate into the age BP, when dealing with radioactive decay and time variations in production rate. 
+
+## Interpretation in terms of exposure ages
+ We are no going to make some simple calculations to convert our concentrations in terms of exposure age. 
+It basically solving for $t$ the equation $C_{mod}(t) = C_{mes}$. The left hand side is our modelled concentration, obtained for example with ou simple Eulerian model (`solv_conc_eul`), where we need to keep in mind all the hypotheses we make ($z=0$, $\varepsilon=0$, $C_0=0$) 
+
+We are going to use an example from @protin2019climatic, using sample *ARG-16-9*. Here are the characteristics of this sample.
+
+```{r}
+rho = 2.7
+altitude = 2252 # elevation in m
+latitude = 45.97 # latitude in degrees
+longitude = 6.96 # longitude in degrees
+Ss = 0.939*exp(-2.6*rho/Lambda[1]) # factor accounting for topographic shielding and sample thickness
+Cmes = 26.8e4 # measured concentration (at/g)
+Cmes_e = 1.3e4
+#
+P = atm_pressure(alt=altitude,lat=latitude,lon=longitude,model="era40") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+```
+
+Now, for example we can make some guess about the exposure age and see what is the difference with the measured concentration.
+
+```{r}
+age = 10e3 # a 
+Cmod = solv_conc_eul(0,0,age,0,prm[,"Be10"],S*Ss,Lambda) # compute concentration
+```
+
+We could try make `Cmod` equal to `Cmes` by trial and error, but we can be more systematic,
+
+```{r}
+age = seq(0,20e3,by=10)
+Cmod = rep(NA,length(age))
+for (i in 1:length(age)){
+  Cmod[i] = solv_conc_eul(0,0,age[i],0,prm[,"Be10"],S*Ss,Lambda) # compute concentration
+}
+imin = which.min(abs(Cmod-Cmes))
+res = age[imin]
+plot(age,Cmod-Cmes,type="l",main=paste(res,"a BP"),col="coral",lwd=2)
+abline(h=0)
+abline(v=res)
+```
+
+> **TODO** Compare with the age from table 1 from @protin2019climatic. Comment about the possible causes for the differences?
+
+We can be even more efficient by using an simple optimization approach to solve $C_{mod}(t) = C_{mes}$, using the built in `optimize` function. We just define a function to be optimized (search of minimum) and launch a search over an age range. We are looking for the minimum value of $|C_{mod}-C_{mes}|$
+
+```{r}
+fun_opt <-function(t,Cmes,prm,S,Lambda){
+  Cmod = solv_conc_eul(0,0,t,0,prm[,"Be10"],S,Lambda)
+  return(abs(Cmod-Cmes))
+}
+res = optimize(fun_opt,c(0,50e3),Cmes,prm,S*Ss,Lambda)
+print(res)
+```
+
+## Time varying production rates
+We are now going back to the time varying-scaling parameters
+
+```{r}
+data = data.frame(t1=seq(0,50e3,length.out=2000)) # we build a dataframe to store results
+data$t2 = max(data$t1) - data$t1 # time BP
+data$vdm = get_vdm(data$t2,model="musch")
+data$rc = vdm2rc(data$vdm,latitude,model="elsasser54")
+data$lm = scaling_lm(P,data$rc)
+plot(data$t2,data$lm,type="l",xlab="Age BP (a)",ylab="Scaling factor")
+abline(h=S$Nneutrons,col="red")
+abline(h=mean(data$lm),lty=2)
+```
+
+In this case we can not use the same equations for the evolution of TCN  concentration as above, because we need to account for $P(t)$. We are going to use,
+$$C_{mod}(t) = \int_0^t P(t)e^{-\lambda t}dt$$
+Note : it is usually considered that production by muons is much less affected than that by neutrons by the magnetic field variations.
+
+Below we first compare how the concentration evolves through time with the two approaches. 
+
+```{r}
+library(pracma) # useful library containing the cumtrapz function for trapezoidal integration
+data$C1 = solv_conc_eul(0,0,data$t1,0,prm,S*Ss,Lambda) 
+data$C2 = cumtrapz(data$t1,(prm[1]*data$lm*Ss+(prm[2,"Be10"] + prm[3,"Be10"])*Ss*S$Nmuons)*(exp(-prm["lambda",'Be10']*data$t1)))[,1] 
+plot(data$t1,data$C1,type="l",xlab="time (a)",ylab="Concentration (at/g)",col="cyan4")
+lines(data$t1,data$C2,col="darkgoldenrod2")
+legend("topleft",c("st","lm"),lty=1,col=c("cyan4", "darkgoldenrod2"))
+```
+
+We can solve solve $|C_{mod}-C_{mes}|$ for $t$ with the same approach as the `st` case,
+
+```{r}
+compute_C<-function(t1,prm,P,lat,Lambda,S){
+  data = data.frame(t1=seq(0,t1,length.out=1000)) # we build a dataframe to store results
+  data$t2 = max(data$t1) - data$t1 # time BP
+  data$vdm = get_vdm(data$t2,model="musch")
+  data$rc = vdm2rc(data$vdm,lat,model="elsasser54")
+  data$lm = scaling_lm(P,data$rc)
+  Cmod = trapz(data$t1,(prm[1,"Be10"]*data$lm+(prm[2,"Be10"] + prm[3,"Be10"])*S$Nmuons)*(exp(-prm["lambda",'Be10']*data$t2)))
+  return(Cmod)
+}
+
+fun_opt2 <-function(t1,Cmes,prm,P,lat,Lambda,S){
+  Cmod =  compute_C(t1,prm,P,lat,Lambda,S)
+  return(abs(Cmod-Cmes))
+}
+
+  P = atm_pressure(alt=alt,lat=lat,lon=lon,model="era40") # compute atmospheric pressure at site
+  S = scaling_st(P,lat) # compute the scaling parameters according to Stone (2000)
+  res = optimize(fun_opt2,c(0,50e3),Cmes,prm,P,lat,Lambda,S*Ss)
+print(res)
+```
+
+
+Caveat we did those calculation using a number of simplification and numerical shortcuts ....
+
+## Dealing with uncertainties
+
+# Application to denudation rate measurements
+
+## Concentration - denudation rate relationship
+
+Now we are going to consider the evolution of concentration with denudation rate $\varepsilon$.
+The computation will be carried out at the surface ($z=0$), but this could be done at any arbitrary depth.
+We will consider that $t=+\infty$ and that we have reached the plateau concentration.
+The key equation is now,
+$$C=\sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda}$$
+
+Which simplifies to $C\approx\frac{P_i \Lambda_i}{\rho \varepsilon}$ if we neglect radioactive decay.
+
+```{r}
+# setup
+altitude = 1000 # elevation in m
+latitude = 45 # latitude in degrees
+nuc = "Be10"
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+ero = 10^seq(log10(0.1),log10(1000),length.out = 100) * 100/1e6*rho # a log-spaced vector for denudation rate expressed in m/Ma and converted in g/cm2/a
+age =  Inf # infinite age
+z = 0 * rho # depth at which we are going to perform the calculation (cm converted to g/cm2)
+C0 = 0 # inherited concentration
+C = solv_conc_eul(z,ero,age,C0,prm[,nuc],S,Lambda) # compute concentration
+plot(ero/100*1e6/rho,C,col="lawngreen",log="xy",type="l",lwd=3,ylab="Concentration (at/g)",xlab="Denudation rate (m/Ma)")
+grid()
+# what happens if we neglect radioactive decay
+Prod = c(prm[1,nuc]*S$Nneutrons,prm[2,nuc]*S$Nmuons,prm[3,nuc]*S$Nmuons) # scaled production vector (defined for the sake of clarity of the expressions below)
+lambda = prm[4,nuc] # radioactive decay
+C2 = prm[1,nuc]*S$Nneutrons*Lambda[1]/ero + prm[2,nuc]*S$Nmuons*Lambda[2]/ero + prm[3,nuc]*S$Nmuons*Lambda[3]/ero    
+lines(ero/100*1e6/rho,C2,lty=2)
+```
+
+This figure (log-scales on both axes) highlights the strong inverse relationship, at steady-state, between denudation rate ($\varepsilon$) and concentration ($C$), which is the foundation of many geomorphological studies trying to establish landscape evolution rates.
+Note the change in the relationship at very low denudation rates, which corresponds to the situation where the effects of radioactive decay become predominant.
+
+> **TODO** Over what range of denudation rates it is reasonable to neglect radioactive decay? What kind of geological context could it correspond to?
+
+A simple way to answer this question would be to compute the relative difference between the computed concentrations
+
+```{r}
+error = abs(C-C2)/C*100
+plot(ero/100*1e6/rho,error,log="xy",type="l",ylab="Relative error (%)",xlab="Denudation rate (m/Ma)")
+```
+
+
+## Integration time scale
+
+
+## On the importance of muons
+
+For $^{10}$Be the muonic represent a very small fraction of surface production : 
+
+```{r}
+nuc = "Be10"
+f = (prm[2,nuc]+prm[3,nuc])/sum(prm[1:3,nuc])*100
+paste("For",nuc,"muons represent",round(f,1),"% of SLHL surface production")
+```
+
+```{r}
+col_sp = "deepskyblue"
+col_sm = "indianred1"
+col_fm = "darkseagreen1"
+nuc = "Be21"
+alt = 0
+lat = 30
+rho = 2.65
+P = atm_pressure(alt=alt,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,lat)
+data = data.frame(ero1=10^seq(log10(0.1),log10(2000),length=100)) # ero1 -> denudation in m/Ma
+emin = min(data$ero1)
+emax = max(data$ero1)
+data$ero2 = data$ero1/1e6*100*rho # eros2 -> denudation in g/cm2/a
+# steady state concentrations associated with individual pathways
+data$Csp = prm[1,nuc]*S$Nneutrons/(prm[4,nuc]+(data$ero2/Lambda[1]))
+data$Csm = prm[2,nuc]*S$Nmuons/(prm[4,nuc]+(data$ero2/Lambda[2]))
+data$Cfm = prm[3,nuc]*S$Nmuons/(prm[4,nuc]+(data$ero2/Lambda[3]))
+data$C = data$Csp + data$Csm + data$Cfm
+#
+plot(NA,xlim=c(emin,emax),ylim=c(0,1),log="x",xlab="Denudation rate (m/Ma)",ylab="Fraction",xaxs="i",yaxs="i")
+polygon(c(emin,emax,emax,emin),c(0,0,1,1),col=col_fm)
+polygon(c(emin,emax,rev(data$ero1)),
+        c(0,0,rev((data$Csp+data$Csm)/data$C)),col=col_sm)
+polygon(c(emin,emax,rev(data$ero1)),
+        c(0,0,rev(data$Csp/data$C)),col=col_sp)
+grid(col="black",equilogs = FALSE)
+
+text(0.2,0.1,nuc,cex=2)
+legend("bottomright",
+       c("Spallation","Stopping muons","Fast muons"),
+       pch=22,pt.bg=c(col_sp,col_sm,col_fm),pt.cex=1.5,cex=1,bg="white")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- We first consider the evolution of concentration with time $t$. -->
+<!-- The computation will be carried out at the surface ($z=0$), but this could be done at any arbitrary depth. -->
+<!-- We also consider that $\varepsilon = 0$ and that there is no inheritance. -->
+<!-- The equation above becomes, $$ -->
+<!-- C(t)=\sum_i \frac{P_i}{\lambda}(1-e^{-\lambda t}) -->
+<!-- $$ For the sake of the example we are going to compute that by hand, -->
+
+<!-- ```{r ck_5} -->
+<!-- t =  seq(0,100e3,by=100) # a vector containing time from 0 to 100 ka by 100 a steps -->
+<!-- Pspal = prm[1,"Be10"]*S$Nneutrons # scaled spallation production rate in at/g/y (st scaling) -->
+<!-- Pstop = prm[2,"Be10"]*S$Nmuons # scaled stopped muons  production rate in at/g/y -->
+<!-- Pfast = prm[3,"Be10"]*S$Nmuons # scaled fast muons  production rate in at/g/y -->
+<!-- lambda = prm[4,"Be10"] # radioactive decay (1/y) -->
+<!-- C1 = (Pspal + Pstop + Pfast) / lambda * (1-exp(-lambda*t)) -->
+<!-- plot(t/1000,C1,type="l",col="coral",lwd=3,ylab="Concentration (at/g)",xlab="Time (ka)") -->
+<!-- grid() -->
+<!-- ``` -->
+
+
+<!-- ## Evolution of concentration with denudation rate -->
+
+<!-- Now we are going to consider the evolution of concentration with denudation rate $\varepsilon$. -->
+<!-- The computation will be carried out at the surface ($z=0$), but this could be done at any arbitrary depth. -->
+<!-- We will consider that $t=+\infty$ and that we have reached the plateau concentration. -->
+
+<!-- ```{r} -->
+<!-- ero = 10^seq(log10(0.1),log10(1000),length.out = 100) * 100/1e6*rho # a log-spaced vector for denudation rate expressed in m/Ma and converted in g/cm2/a -->
+<!-- age =  Inf # infinite age -->
+<!-- z = 0 * rho # depth at which we are going to perform the calculation (cm converted to g/cm2) -->
+<!-- C0 = 0 # inherited concentration -->
+<!-- C = solv_conc_eul(z,ero,age,C0,prm[,"Be10"],S,Lambda) # compute concentration -->
+<!-- plot(ero/100*1e6/rho,C,col="lawngreen",log="xy",type="l",lwd=3,ylab="Concentration (at/g)",xlab="Denudation rate (m/Ma)") -->
+<!-- grid() -->
+<!-- ``` -->
+
+<!-- This figure (log-scales on both axes) highlights the strong inverse relationship, at steady-state, between denudation rate ($\varepsilon$) and concentration ($C$), which is the foundation of many geomorphological studies trying to establish landscape evolution rates. -->
+<!-- Note the change in the relationship at very low denudation rates, which corresponds to the situation where the effects of radioactive decay become predominant. -->
+
+
+
+
+# References

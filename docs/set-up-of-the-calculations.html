@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.2 Set up of the calculations | A Minimal Book Example</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.2 Set up of the calculations | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.2 Set up of the calculations | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Vincent Godard" />
+
+
+<meta name="date" content="2022-10-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="background.html"/>
+<link rel="next" href="evolution-of-concentration-with-time.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="objectives-of-the-session.html"><a href="objectives-of-the-session.html"><i class="fa fa-check"></i><b>2.1</b> Objectives of the session</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scaling-factors.html"><a href="scaling-factors.html"><i class="fa fa-check"></i><b>3</b> Scaling factors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="time-independent-scaling.html"><a href="time-independent-scaling.html"><i class="fa fa-check"></i><b>3.1</b> Time-independent scaling</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="time-independent-scaling.html"><a href="time-independent-scaling.html#site-characteristics"><i class="fa fa-check"></i><b>3.1.1</b> Site characteristics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="time-independent-scaling.html"><a href="time-independent-scaling.html#computation-of-scaling-factors"><i class="fa fa-check"></i><b>3.1.2</b> Computation of scaling factors</a></li>
+<li class="chapter" data-level="3.1.3" data-path="time-independent-scaling.html"><a href="time-independent-scaling.html#global-variations"><i class="fa fa-check"></i><b>3.1.3</b> Global variations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="time-dependent-scalings.html"><a href="time-dependent-scalings.html"><i class="fa fa-check"></i><b>3.2</b> Time-dependent scalings</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="time-dependent-scalings.html"><a href="time-dependent-scalings.html#definition-of-paleomagnetic-variations"><i class="fa fa-check"></i><b>3.2.1</b> Definition of paleomagnetic variations</a></li>
+<li class="chapter" data-level="3.2.2" data-path="time-dependent-scalings.html"><a href="time-dependent-scalings.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>4.1</b> Background</a></li>
+<li class="chapter" data-level="4.2" data-path="set-up-of-the-calculations.html"><a href="set-up-of-the-calculations.html"><i class="fa fa-check"></i><b>4.2</b> Set up of the calculations</a></li>
+<li class="chapter" data-level="4.3" data-path="evolution-of-concentration-with-time.html"><a href="evolution-of-concentration-with-time.html"><i class="fa fa-check"></i><b>4.3</b> Evolution of concentration with time</a></li>
+<li class="chapter" data-level="4.4" data-path="two-end-member-situations.html"><a href="two-end-member-situations.html"><i class="fa fa-check"></i><b>4.4</b> Two end-member situations</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="set-up-of-the-calculations" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Set up of the calculations<a href="set-up-of-the-calculations.html#set-up-of-the-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We should the define the basic parameters we are going to use for the computation, which are two vectors :</p>
+<ul>
+<li>a vector with the attenuation lengths for different particles (in g/cm<span class="math inline">\(^2\)</span>)
+<ul>
+<li>neutrons for spallation reactions <span class="math inline">\(\Lambda_{spal}\)</span></li>
+<li>stopping muons <span class="math inline">\(\Lambda_{stop}\)</span></li>
+<li>fast muons <span class="math inline">\(\Lambda_{fast}\)</span><br />
+</li>
+</ul></li>
+<li>a vector (or matrix) with the SLHL production rates (in at/g/a), in this case for the <em>st</em> scaling scheme (<span class="citation">Stone (<a href="two-end-member-situations.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), and decay constant <span class="math inline">\(\lambda\)</span> (in 1/a) for the nuclide(s) of interest.</li>
+</ul>
+<p>For easy reference a set of data for these parameters is included in the <code>TCNtools</code> package, including Sea-Level High-Latitude production rates for the <code>st</code> scaling scheme.
+Note that these often used SLHL values are defined for convenience, most calculators for exposure age work directly with the production rate value at calibration sites, and that they are always relative to the scaling scheme used (<span class="citation">Borchers et al. (<a href="two-end-member-situations.html#ref-borchers2016geological" role="doc-biblioref">2016</a>)</span>).</p>
+<p>We can first load the attenuation length data (g/cm<span class="math inline">\(^2\)</span>).
+Documentation of this dataset is accessible with <code>?Lambda</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="set-up-of-the-calculations.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda) <span class="co"># we load a vector containing the attenuation length into the environment</span></span>
+<span id="cb11-2"><a href="set-up-of-the-calculations.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Lambda)</span></code></pre></div>
+<pre><code>## Lspal Lstop Lfast 
+##   160  1500  4320</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="set-up-of-the-calculations.html#cb13-1" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">2.7</span> <span class="co"># we also define the density (g/cm3)</span></span></code></pre></div>
+<p>Some production and decay parameters can also be loaded.
+Documentation of this dataset is accessible with <code>?prm</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="set-up-of-the-calculations.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm) <span class="co"># we load a matrix containing the production/decay parameters into the environment</span></span>
+<span id="cb14-2"><a href="set-up-of-the-calculations.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(prm)</span></code></pre></div>
+<pre><code>##               Be10         Al26          C14
+## Pspal  4.01000e+00 2.793000e+01 1.224000e+01
+## Pstop  1.20000e-02 8.400000e-01 3.310000e+00
+## Pfast  3.90000e-02 8.100000e-02 0.000000e+00
+## lambda 5.09667e-07 9.667325e-07 1.209681e-04</code></pre>
+<p>We also need to define the properties of our site of interest and compute the relevant scaling parameters. As we already saw previously, this can easily be done with,</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="set-up-of-the-calculations.html#cb16-1" aria-hidden="true" tabindex="-1"></a>altitude <span class="ot">=</span> <span class="dv">1000</span> <span class="co"># elevation in m</span></span>
+<span id="cb16-2"><a href="set-up-of-the-calculations.html#cb16-2" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> <span class="dv">45</span> <span class="co"># latitude in degrees</span></span>
+<span id="cb16-3"><a href="set-up-of-the-calculations.html#cb16-3" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
+<span id="cb16-4"><a href="set-up-of-the-calculations.html#cb16-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span></code></pre></div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="background.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="evolution-of-concentration-with-time.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
