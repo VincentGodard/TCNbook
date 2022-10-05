@@ -627,7 +627,7 @@ legend("bottomright",
 
 
 
-
+knitr::include_url("http://shinyproxy.osupytheas.fr/production_rates/")
 
 
 

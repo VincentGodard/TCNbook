@@ -172,6 +172,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.1" data-path="scaling-factors.html"><a href="scaling-factors.html#definition-of-paleomagnetic-variations"><i class="fa fa-check"></i><b>3.2.1</b> Definition of paleomagnetic variations</a></li>
 <li class="chapter" data-level="3.2.2" data-path="scaling-factors.html"><a href="scaling-factors.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-app"><i class="fa fa-check"></i><b>3.3</b> Interactive App</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
 <ul>
@@ -235,7 +236,7 @@ Here <code>z</code> is a vector to see the variations over a range of elevations
 <span id="cb3-3"><a href="scaling-factors.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(P1,z,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Pressure (hPa)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Altitude (m)&quot;</span>,<span class="at">col=</span><span class="st">&quot;darkorange3&quot;</span>) </span>
 <span id="cb3-4"><a href="scaling-factors.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(P2,z,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;darkorange3&quot;</span>)</span>
 <span id="cb3-5"><a href="scaling-factors.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;Stone 2000&quot;</span>,<span class="st">&quot;ERA40&quot;</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <blockquote>
 <p><strong>TODO</strong> Modify <code>lat</code> and <code>lon</code> to see the effects on the pressure computed with the ERA40 model</p>
 </blockquote>
@@ -283,7 +284,7 @@ Same as above, to get some information about the function (parameters definition
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="scaling-factors.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(st<span class="sc">$</span>Nneutrons,z,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,</span>
 <span id="cb6-2"><a href="scaling-factors.html#cb6-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Spallogenic st scaling factor (Stone 2000)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Altitude (m)&quot;</span>,</span>
 <span id="cb6-3"><a href="scaling-factors.html#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;Latitude &quot;</span>,lat,<span class="st">&quot;°&quot;</span>,<span class="at">sep=</span><span class="st">&quot;&quot;</span>),<span class="at">col=</span><span class="st">&quot;darkorange3&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <blockquote>
 <p><strong>TODO</strong> Modify <code>lat</code> to see the effects on the scaling factor</p>
 </blockquote>
@@ -305,7 +306,7 @@ Same as above, to get some information about the function (parameters definition
 <span id="cb7-12"><a href="scaling-factors.html#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(lat,st<span class="sc">$</span>Nneutrons,<span class="at">col=</span><span class="st">&quot;darkorange3&quot;</span>)</span>
 <span id="cb7-13"><a href="scaling-factors.html#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(lat[n],st<span class="sc">$</span>Nneutrons[n],z<span class="sc">/</span><span class="dv">1000</span>,<span class="at">cex=</span><span class="fl">0.5</span>,<span class="at">adj=</span><span class="dv">0</span>)</span>
 <span id="cb7-14"><a href="scaling-factors.html#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>This dependence of the scaling factor on latitude is a direct consequence of the dipole structure of the Earth magnetic field, with a higher cosmic rays flux at high latitudes.</p>
 </div>
 </div>
@@ -337,7 +338,7 @@ We plot the three of them on the same graph.</p>
 <span id="cb8-15"><a href="scaling-factors.html#cb8-15" aria-hidden="true" tabindex="-1"></a>vdm3<span class="ot">=</span><span class="fu">get_vdm</span>(time,<span class="at">model=</span><span class="st">&quot;lsd&quot;</span>)</span>
 <span id="cb8-16"><a href="scaling-factors.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,vdm3<span class="sc">/</span><span class="fl">1e22</span>,<span class="at">col=</span>col3)</span>
 <span id="cb8-17"><a href="scaling-factors.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;glopis&quot;</span>,<span class="st">&quot;musch&quot;</span>,<span class="st">&quot;lsd&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(col1,col2,col3),<span class="at">lty=</span><span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="cutoff-rigidity" class="section level4 hasAnchor" number="3.2.1.2">
 <h4><span class="header-section-number">3.2.1.2</span> Cutoff Rigidity<a href="scaling-factors.html#cutoff-rigidity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -362,7 +363,7 @@ A more complex formula proposed by <span class="citation">Lifton, Sato, and Duna
 <span id="cb9-15"><a href="scaling-factors.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,rc3a,<span class="at">col=</span>col3)</span>
 <span id="cb9-16"><a href="scaling-factors.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,rc3b,<span class="at">col=</span>col3,<span class="at">lty=</span><span class="dv">2</span>)</span>
 <span id="cb9-17"><a href="scaling-factors.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;glopis&quot;</span>,<span class="st">&quot;musch&quot;</span>,<span class="st">&quot;lsd&quot;</span>,<span class="st">&quot;elsasser54&quot;</span>,<span class="st">&quot;lifton14&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(col1,col2,col3,<span class="st">&quot;black&quot;</span>,<span class="st">&quot;black&quot;</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">cex=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <blockquote>
 <p><strong>TODO</strong> change the latitude <code>lat</code> and observe the influence on <span class="math inline">\(R_c\)</span></p>
 </blockquote>
@@ -377,12 +378,18 @@ We plot the corresponding time series, as well as the value of <em>st</em> scali
 <span id="cb10-2"><a href="scaling-factors.html#cb10-2" aria-hidden="true" tabindex="-1"></a>lm <span class="ot">=</span> <span class="fu">scaling_lm</span>(P,rc1a)</span>
 <span id="cb10-3"><a href="scaling-factors.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time,lm,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Time (a BP)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Spallogenic lm scaling factor&quot;</span>)</span>
 <span id="cb10-4"><a href="scaling-factors.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">scaling_st</span>(P,lat)<span class="sc">$</span>Nneutrons,<span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <blockquote>
 <p><strong>TODO</strong> Explore the variations of the scaling factor by using various values for elevation <code>alt</code>, and different <span class="math inline">\(R_c\)</span> time-series. Look for the differences with the time-independant <code>st</code> scaling</p>
 </blockquote>
-
 </div>
+</div>
+<div id="interactive-app" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Interactive App<a href="scaling-factors.html#interactive-app" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can also explore dynamically the behavior of scaling parameters using this embedded application, which use the same type of code.</p>
+<iframe src="http://shinyproxy.osupytheas.fr/production_rates/" width="672" height="1200px" data-external="1">
+</iframe>
+
 </div>
 </div>
             </section>

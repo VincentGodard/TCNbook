@@ -172,6 +172,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.1" data-path="scaling-factors.html"><a href="scaling-factors.html#definition-of-paleomagnetic-variations"><i class="fa fa-check"></i><b>3.2.1</b> Definition of paleomagnetic variations</a></li>
 <li class="chapter" data-level="3.2.2" data-path="scaling-factors.html"><a href="scaling-factors.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-app"><i class="fa fa-check"></i><b>3.3</b> Interactive App</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
 <ul>
@@ -270,7 +271,7 @@ It basically solving for <span class="math inline">\(t\)</span> the equation <sp
 <span id="cb22-8"><a href="application-to-exposure-dating.html#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(age,Cmod<span class="sc">-</span>Cmes,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">main=</span><span class="fu">paste</span>(res,<span class="st">&quot;a BP&quot;</span>),<span class="at">col=</span><span class="st">&quot;coral&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
 <span id="cb22-9"><a href="application-to-exposure-dating.html#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span>
 <span id="cb22-10"><a href="application-to-exposure-dating.html#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>res)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <blockquote>
 <p><strong>TODO</strong> Compare with the age from table 1 from <span class="citation">Protin et al. (<a href="application-to-denudation-rate-measurements.html#ref-protin2019climatic" role="doc-biblioref">2019</a>)</span>. Comment about the possible causes for the differences?</p>
 </blockquote>
@@ -298,7 +299,7 @@ It basically solving for <span class="math inline">\(t\)</span> the equation <sp
 <span id="cb25-6"><a href="application-to-exposure-dating.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>t2,data<span class="sc">$</span>lm,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Age BP (a)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Scaling factor&quot;</span>)</span>
 <span id="cb25-7"><a href="application-to-exposure-dating.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>S<span class="sc">$</span>Nneutrons,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
 <span id="cb25-8"><a href="application-to-exposure-dating.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(data<span class="sc">$</span>lm),<span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>In this case we can not use the same equations for the evolution of TCN concentration as above, because we need to account for <span class="math inline">\(P(t)\)</span>. We are going to use,
 <span class="math display">\[C_{mod}(t) = \int_0^t P(t)e^{-\lambda t}dt\]</span>
 Note : it is usually considered that production by muons is much less affected than that by neutrons by the magnetic field variations.</p>
@@ -309,7 +310,7 @@ Note : it is usually considered that production by muons is much less affected t
 <span id="cb26-4"><a href="application-to-exposure-dating.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>t1,data<span class="sc">$</span>C1,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;time (a)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Concentration (at/g)&quot;</span>,<span class="at">col=</span><span class="st">&quot;cyan4&quot;</span>)</span>
 <span id="cb26-5"><a href="application-to-exposure-dating.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(data<span class="sc">$</span>t1,data<span class="sc">$</span>C2,<span class="at">col=</span><span class="st">&quot;darkgoldenrod2&quot;</span>)</span>
 <span id="cb26-6"><a href="application-to-exposure-dating.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;st&quot;</span>,<span class="st">&quot;lm&quot;</span>),<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;cyan4&quot;</span>, <span class="st">&quot;darkgoldenrod2&quot;</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>We can solve solve <span class="math inline">\(|C_{mod}-C_{mes}|\)</span> for <span class="math inline">\(t\)</span> with the same approach as the <code>st</code> case,</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="application-to-exposure-dating.html#cb27-1" aria-hidden="true" tabindex="-1"></a>compute_C<span class="ot">&lt;-</span><span class="cf">function</span>(t1,prm,P,lat,Lambda,S){</span>
 <span id="cb27-2"><a href="application-to-exposure-dating.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">t1=</span><span class="fu">seq</span>(<span class="dv">0</span>,t1,<span class="at">length.out=</span><span class="dv">1000</span>)) <span class="co"># we build a dataframe to store results</span></span>

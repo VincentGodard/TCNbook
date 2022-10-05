@@ -166,3 +166,12 @@ abline(h=scaling_st(P,lat)$Nneutrons,lty=2)
 ```
 
 > **TODO** Explore the variations of the scaling factor by using various values for elevation `alt`, and different $R_c$ time-series. Look for the differences with the time-independant `st` scaling
+
+## Interactive App
+
+You can also explore dynamically the behavior of scaling parameters using this embedded application, which use the same type of code. 
+
+```{r echo=FALSE}
+knitr::include_url("http://shinyproxy.osupytheas.fr/production_rates/",height = "1200px")
+```
+
