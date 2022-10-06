@@ -25,6 +25,8 @@ dealing-with-uncertainties
 application-to-denudation-rate-measurements
 concentration---denudation-rate-relationship
 integration-time-scale
+change-in-denudation-through-time
 on-the-importance-of-muons
 two-nuclides-systems
+evolution-of-ratios
 steady-state-denudation-and-constant-exposure-curves

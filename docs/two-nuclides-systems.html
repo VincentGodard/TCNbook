@@ -192,11 +192,13 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#concentration---denudation-rate-relationship"><i class="fa fa-check"></i><b>6.1</b> Concentration - denudation rate relationship</a></li>
 <li class="chapter" data-level="6.2" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#integration-time-scale"><i class="fa fa-check"></i><b>6.2</b> Integration time scale</a></li>
-<li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.3</b> On the importance of muons</a></li>
+<li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#change-in-denudation-through-time"><i class="fa fa-check"></i><b>6.3</b> Change in denudation through time</a></li>
+<li class="chapter" data-level="6.4" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.4</b> On the importance of muons</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> Two nuclides systems</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.1</b> Steady-state denudation and constant exposure curves</a></li>
+<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#evolution-of-ratios"><i class="fa fa-check"></i><b>7.1</b> Evolution of ratios</a></li>
+<li class="chapter" data-level="7.2" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.2</b> Steady-state denudation and constant exposure curves</a></li>
 </ul></li>
 </ul>
 
@@ -217,7 +219,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="two-nuclides-systems" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">7</span> Two nuclides systems<a href="two-nuclides-systems.html#two-nuclides-systems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>We first define the usual variables and parameters</p>
+<p>We first define the usual variables and parameters.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="two-nuclides-systems.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda) <span class="co"># we load a vector containing the attenuation length into the environment</span></span>
 <span id="cb35-2"><a href="two-nuclides-systems.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm) <span class="co"># we load a matrix containing the production/decay parameters into the environment</span></span>
 <span id="cb35-3"><a href="two-nuclides-systems.html#cb35-3" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">2.7</span> <span class="co"># we also define the density (g/cm3)</span></span>
@@ -225,23 +227,39 @@ div.csl-indent {
 <span id="cb35-5"><a href="two-nuclides-systems.html#cb35-5" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> <span class="dv">45</span> <span class="co"># latitude in degrees</span></span>
 <span id="cb35-6"><a href="two-nuclides-systems.html#cb35-6" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
 <span id="cb35-7"><a href="two-nuclides-systems.html#cb35-7" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span></code></pre></div>
-<p>Here first we consider that all samples are close and have similar positions, so similar scaling parameters.
+<p>Here first we consider that all samples are close and have similar positions and elevation, so similar scaling parameters.
 We will see later how to deal with situations where samples have different positions and hence different scaling parameters.</p>
-<div id="steady-state-denudation-and-constant-exposure-curves" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Steady-state denudation and constant exposure curves<a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In order to avoid messing up things later we define here once and for all which is nuclide 1 and which is nuclide 2, according to their respective <span class="math inline">\(\tau_{1/2}\)</span> :</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="two-nuclides-systems.html#cb36-1" aria-hidden="true" tabindex="-1"></a>N1 <span class="ot">=</span> <span class="st">&quot;Be10&quot;</span> <span class="co"># longer half-life</span></span>
+<span id="cb36-2"><a href="two-nuclides-systems.html#cb36-2" aria-hidden="true" tabindex="-1"></a>N2 <span class="ot">=</span> <span class="st">&quot;Al26&quot;</span> <span class="co"># shorter half-life</span></span></code></pre></div>
+<div id="evolution-of-ratios" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Evolution of ratios<a href="two-nuclides-systems.html#evolution-of-ratios" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We first start by looking into the evolution of the isotopic ratio between the nuclides, once production has stopped, which is one of the key phenomenon used in burial dating applications.</p>
+<p>We will look at the evolution through time (typically over several Ma for the 26/10 system), starting from concentrations defined by a denudation steady-state.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="two-nuclides-systems.html#cb37-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">t =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fl">7e6</span>,<span class="at">by=</span><span class="dv">2000</span>))</span>
+<span id="cb37-2"><a href="two-nuclides-systems.html#cb37-2" aria-hidden="true" tabindex="-1"></a>ero <span class="ot">=</span> <span class="dv">50</span> <span class="sc">*</span> rho <span class="sc">*</span> <span class="dv">100</span> <span class="sc">/</span> <span class="fl">1e6</span> <span class="co"># in g/cm2/a</span></span></code></pre></div>
+<p>We compute the initial steady-state concentrations.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="two-nuclides-systems.html#cb38-1" aria-hidden="true" tabindex="-1"></a>C1_0 <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(<span class="dv">0</span>,ero,<span class="cn">Inf</span>,<span class="dv">0</span>,prm[,N1],S,Lambda)</span>
+<span id="cb38-2"><a href="two-nuclides-systems.html#cb38-2" aria-hidden="true" tabindex="-1"></a>C2_0 <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(<span class="dv">0</span>,ero,<span class="cn">Inf</span>,<span class="dv">0</span>,prm[,N2],S,Lambda)</span></code></pre></div>
+<p>Now we let them decay through time starting from the initial values, with no production (<span class="math inline">\(z=+\infty\)</span>).
+We plot the evolution of the ratio through time.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="two-nuclides-systems.html#cb39-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>C1 <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(<span class="cn">Inf</span>,<span class="dv">0</span>,data<span class="sc">$</span>t,C1_0,prm[,N1],S,Lambda)</span>
+<span id="cb39-2"><a href="two-nuclides-systems.html#cb39-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>C2 <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(<span class="cn">Inf</span>,<span class="dv">0</span>,data<span class="sc">$</span>t,C2_0,prm[,N2],S,Lambda)</span>
+<span id="cb39-3"><a href="two-nuclides-systems.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>t,data<span class="sc">$</span>C2<span class="sc">/</span>data<span class="sc">$</span>C1,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;darkorange&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Time (a)&quot;</span>,<span class="at">ylab=</span><span class="fu">paste</span>(N2,<span class="st">&quot;/&quot;</span>,N1))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="steady-state-denudation-and-constant-exposure-curves" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Steady-state denudation and constant exposure curves<a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Two-nuclides plots are usually built around two curves representing the predictions, in terms of concentrations, for end-member simplified situations :</p>
 <ul>
 <li><strong>steady-state denudation</strong>, where the concentrations of the nuclides of interest are computed for various values of surface denudation rates</li>
 <li><strong>constant exposure</strong>, where the concentrations of the nuclides of interest are computed for various duration of surface exposition, with no denudation</li>
 </ul>
 <p>We will use the Eulerian point of view (function <code>solv_conc_eul</code>) to compute the concentrations, which is done by function <code>tnp_curves</code>.</p>
-<p>In order to avoid messing up things later we define here once and for all which is nuclide 1 and which is nuclide 2, according to their respective <span class="math inline">\(\tau_{1/2}\)</span> :</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="two-nuclides-systems.html#cb36-1" aria-hidden="true" tabindex="-1"></a>N1 <span class="ot">=</span> <span class="st">&quot;Be10&quot;</span> <span class="co"># longer half-life</span></span>
-<span id="cb36-2"><a href="two-nuclides-systems.html#cb36-2" aria-hidden="true" tabindex="-1"></a>N2 <span class="ot">=</span> <span class="st">&quot;Al26&quot;</span> <span class="co"># shorter half-life</span></span></code></pre></div>
 <p>We compute the data for these two curves.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="two-nuclides-systems.html#cb37-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">tnp_curves</span>(prm[,N1],prm[,N2],Lambda,S,rho)</span>
-<span id="cb37-2"><a href="two-nuclides-systems.html#cb37-2" aria-hidden="true" tabindex="-1"></a>ss_ero <span class="ot">=</span> tmp[[<span class="dv">1</span>]]</span>
-<span id="cb37-3"><a href="two-nuclides-systems.html#cb37-3" aria-hidden="true" tabindex="-1"></a>cst_exp <span class="ot">=</span> tmp[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="two-nuclides-systems.html#cb40-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">tnp_curves</span>(prm[,N1],prm[,N2],Lambda,S,rho)</span>
+<span id="cb40-2"><a href="two-nuclides-systems.html#cb40-2" aria-hidden="true" tabindex="-1"></a>ss_ero <span class="ot">=</span> tmp[[<span class="dv">1</span>]]</span>
+<span id="cb40-3"><a href="two-nuclides-systems.html#cb40-3" aria-hidden="true" tabindex="-1"></a>cst_exp <span class="ot">=</span> tmp[[<span class="dv">2</span>]]</span></code></pre></div>
 <p>The default parameters for the ranges of denudation rates and exposure ages can be adjusted if needed.</p>
 <p>Now that we can plot everything in a two-nuclides graph.
 While not mandatory, it is usually recommended to organize the plot this way :</p>
@@ -249,12 +267,17 @@ While not mandatory, it is usually recommended to organize the plot this way :</
 <li><strong>X-axis</strong> : longer half-life nuclide (our <span class="math inline">\(N_1\)</span>)</li>
 <li><strong>Y-axis</strong> : ratio of shorter to longer half-life nuclides (our <span class="math inline">\(N_2/N_1\)</span>)</li>
 </ul>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="two-nuclides-systems.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(cst_exp<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C1),<span class="at">ylim=</span><span class="fu">range</span>(cst_exp<span class="sc">$</span>C2<span class="sc">/</span>cst_exp<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C2<span class="sc">/</span>ss_ero<span class="sc">$</span>C1),<span class="at">log=</span><span class="st">&quot;x&quot;</span>,</span>
-<span id="cb38-2"><a href="two-nuclides-systems.html#cb38-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">paste</span>(N1,<span class="st">&quot;(at/g)&quot;</span>),<span class="at">ylab=</span><span class="fu">paste</span>(N2,<span class="st">&quot;/&quot;</span>,N1))</span>
-<span id="cb38-3"><a href="two-nuclides-systems.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cst_exp<span class="sc">$</span>C1,cst_exp<span class="sc">$</span>C2<span class="sc">/</span>cst_exp<span class="sc">$</span>C1,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;khaki4&quot;</span>) <span class="co"># constant exposure, dashed line</span></span>
-<span id="cb38-4"><a href="two-nuclides-systems.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ss_ero<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C2<span class="sc">/</span>ss_ero<span class="sc">$</span>C1,<span class="at">col=</span><span class="st">&quot;khaki4&quot;</span>) <span class="co"># steady-state erosion, solid line</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="two-nuclides-systems.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(cst_exp<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C1),<span class="at">ylim=</span><span class="fu">range</span>(cst_exp<span class="sc">$</span>C2<span class="sc">/</span>cst_exp<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C2<span class="sc">/</span>ss_ero<span class="sc">$</span>C1),<span class="at">log=</span><span class="st">&quot;x&quot;</span>,</span>
+<span id="cb41-2"><a href="two-nuclides-systems.html#cb41-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">paste</span>(N1,<span class="st">&quot;(at/g)&quot;</span>),<span class="at">ylab=</span><span class="fu">paste</span>(N2,<span class="st">&quot;/&quot;</span>,N1))</span>
+<span id="cb41-3"><a href="two-nuclides-systems.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cst_exp<span class="sc">$</span>C1,cst_exp<span class="sc">$</span>C2<span class="sc">/</span>cst_exp<span class="sc">$</span>C1,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;khaki4&quot;</span>) <span class="co"># constant exposure, dashed line</span></span>
+<span id="cb41-4"><a href="two-nuclides-systems.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ss_ero<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C2<span class="sc">/</span>ss_ero<span class="sc">$</span>C1,<span class="at">col=</span><span class="st">&quot;khaki4&quot;</span>) <span class="co"># steady-state erosion, solid line</span></span>
+<span id="cb41-5"><a href="two-nuclides-systems.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(data<span class="sc">$</span>C1,data<span class="sc">$</span>C2<span class="sc">/</span>data<span class="sc">$</span>C1,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/test-1.png" width="672" /></p>
-<p>The extent of the plot can be modified to correspond more closely to the reported data.</p>
+<p>We have also plotted the burial trajectory we generated above</p>
+<p>Starting from a position on the steady-state denudation curve, we progressively lower the ratios.</p>
+<blockquote>
+<p><strong>TODO</strong> Change the denudation rate used to compute the initial steayd-state concentrations</p>
+</blockquote>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-balco2017production" class="csl-entry">

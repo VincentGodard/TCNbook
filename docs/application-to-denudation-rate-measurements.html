@@ -192,11 +192,13 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#concentration---denudation-rate-relationship"><i class="fa fa-check"></i><b>6.1</b> Concentration - denudation rate relationship</a></li>
 <li class="chapter" data-level="6.2" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#integration-time-scale"><i class="fa fa-check"></i><b>6.2</b> Integration time scale</a></li>
-<li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.3</b> On the importance of muons</a></li>
+<li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#change-in-denudation-through-time"><i class="fa fa-check"></i><b>6.3</b> Change in denudation through time</a></li>
+<li class="chapter" data-level="6.4" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.4</b> On the importance of muons</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> Two nuclides systems</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.1</b> Steady-state denudation and constant exposure curves</a></li>
+<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#evolution-of-ratios"><i class="fa fa-check"></i><b>7.1</b> Evolution of ratios</a></li>
+<li class="chapter" data-level="7.2" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.2</b> Steady-state denudation and constant exposure curves</a></li>
 </ul></li>
 </ul>
 
@@ -261,13 +263,18 @@ Note the change in the relationship at very low denudation rates, which correspo
 <div id="integration-time-scale" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Integration time scale<a href="application-to-denudation-rate-measurements.html#integration-time-scale" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="on-the-importance-of-muons" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> On the importance of muons<a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="change-in-denudation-through-time" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Change in denudation through time<a href="application-to-denudation-rate-measurements.html#change-in-denudation-through-time" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="on-the-importance-of-muons" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> On the importance of muons<a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For <span class="math inline">\(^{10}\)</span>Be the muonic represent a very small fraction of surface production :</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="application-to-denudation-rate-measurements.html#cb32-1" aria-hidden="true" tabindex="-1"></a>nuc <span class="ot">=</span> <span class="st">&quot;Be10&quot;</span></span>
 <span id="cb32-2"><a href="application-to-denudation-rate-measurements.html#cb32-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> (prm[<span class="dv">2</span>,nuc]<span class="sc">+</span>prm[<span class="dv">3</span>,nuc])<span class="sc">/</span><span class="fu">sum</span>(prm[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,nuc])<span class="sc">*</span><span class="dv">100</span></span>
 <span id="cb32-3"><a href="application-to-denudation-rate-measurements.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&quot;For&quot;</span>,nuc,<span class="st">&quot;muons represent&quot;</span>,<span class="fu">round</span>(f,<span class="dv">1</span>),<span class="st">&quot;% of SLHL surface production&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;For Be10 muons represent 1.3 % of SLHL surface production&quot;</code></pre>
+<p>Muons provide a a very small fraction of production at the surface for <span class="math inline">\(^{10}\)</span>Be, but they penetrate much deeper than neutrons into rocks. For that reason they are going to account to a higher proportion of nuclides on eroding surface.
+We can separate the various sources of production (neutrons and muons) and see what is their respective contributions to the concentration observed at the surface.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="application-to-denudation-rate-measurements.html#cb34-1" aria-hidden="true" tabindex="-1"></a>col_sp <span class="ot">=</span> <span class="st">&quot;deepskyblue&quot;</span></span>
 <span id="cb34-2"><a href="application-to-denudation-rate-measurements.html#cb34-2" aria-hidden="true" tabindex="-1"></a>col_sm <span class="ot">=</span> <span class="st">&quot;indianred1&quot;</span></span>
 <span id="cb34-3"><a href="application-to-denudation-rate-measurements.html#cb34-3" aria-hidden="true" tabindex="-1"></a>col_fm <span class="ot">=</span> <span class="st">&quot;darkseagreen1&quot;</span></span>
