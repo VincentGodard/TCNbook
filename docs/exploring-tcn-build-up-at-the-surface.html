@@ -194,6 +194,10 @@ div.csl-indent {
 <li class="chapter" data-level="6.2" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#integration-time-scale"><i class="fa fa-check"></i><b>6.2</b> Integration time scale</a></li>
 <li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.3</b> On the importance of muons</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> Two nuclides systems</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.1</b> Steady-state denudation and constant exposure curves</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -217,7 +221,7 @@ div.csl-indent {
 This will be done using an <em>Eulerian point of view</em>, which is the most straightforward and fastest way to perform such computation.
 In this case the quantity of interest (concentration) is computed at fixed depths below the surface, while the exhumed material is moving through this reference frame during its trajectory toward the surface.
 More details on the differences between Eulerian and Lagrangian approaches, and their applications to complex exposition/denudation histories, will be studied later.</p>
-<p>Note that interpreting measured concentrations in terms of end-member situations of <em>pure exposure</em> or <em>steady-state denudation</em> is often done with online calculators (<span class="citation">Balco et al. (<a href="application-to-denudation-rate-measurements.html#ref-balco2008complete" role="doc-biblioref">2008</a>)</span>,<span class="citation">Marrero et al. (<a href="application-to-denudation-rate-measurements.html#ref-marrero2016cronusearth" role="doc-biblioref">2016</a>)</span>,<span class="citation">Martin et al. (<a href="application-to-denudation-rate-measurements.html#ref-martin2017crep" role="doc-biblioref">2017</a>)</span>).
+<p>Note that interpreting measured concentrations in terms of end-member situations of <em>pure exposure</em> or <em>steady-state denudation</em> is often done with online calculators (<span class="citation">Balco et al. (<a href="two-nuclides-systems.html#ref-balco2008complete" role="doc-biblioref">2008</a>)</span>,<span class="citation">Marrero et al. (<a href="two-nuclides-systems.html#ref-marrero2016cronusearth" role="doc-biblioref">2016</a>)</span>,<span class="citation">Martin et al. (<a href="two-nuclides-systems.html#ref-martin2017crep" role="doc-biblioref">2017</a>)</span>).
 This will be fine in many cases, but you should always be careful about the underlying hypothesis (no erosion, steady state achieved…) when interpreting your concentrations and always think about how TCN are accumulating.
 The goal of this activity is to explore this behavior.</p>
 <div id="background" class="section level2 hasAnchor" number="4.1">
@@ -239,7 +243,7 @@ C=C_0e^{-\lambda t} + \sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lamb
 <p>Note two keys limitations of this representation :</p>
 <ul>
 <li>it does not allow to account for time variations of production rates (at least in its most straightforward implementation), so we will mostly using the <em>st</em> scaling</li>
-<li>it assumes exponential evolution of production with depth, which is clearly not the case for low energy neutrons (figure 2b from <span class="citation">Gosse and Phillips (<a href="application-to-denudation-rate-measurements.html#ref-gosse2001terrestrial" role="doc-biblioref">2001</a>)</span>) and is questionable in some situations for muons (<span class="citation">Balco (<a href="application-to-denudation-rate-measurements.html#ref-balco2017production" role="doc-biblioref">2017</a>)</span>)</li>
+<li>it assumes exponential evolution of production with depth, which is clearly not the case for low energy neutrons (figure 2b from <span class="citation">Gosse and Phillips (<a href="two-nuclides-systems.html#ref-gosse2001terrestrial" role="doc-biblioref">2001</a>)</span>) and is questionable in some situations for muons (<span class="citation">Balco (<a href="two-nuclides-systems.html#ref-balco2017production" role="doc-biblioref">2017</a>)</span>)</li>
 </ul>
 </div>
 <div id="set-up-of-the-calculations" class="section level2 hasAnchor" number="4.2">
@@ -253,10 +257,10 @@ C=C_0e^{-\lambda t} + \sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lamb
 <li>fast muons <span class="math inline">\(\Lambda_{fast}\)</span><br />
 </li>
 </ul></li>
-<li>a vector (or matrix) with the SLHL production rates (in at/g/a), in this case for the <em>st</em> scaling scheme (<span class="citation">Stone (<a href="application-to-denudation-rate-measurements.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), and decay constant <span class="math inline">\(\lambda\)</span> (in 1/a) for the nuclide(s) of interest.</li>
+<li>a vector (or matrix) with the SLHL production rates (in at/g/a), in this case for the <em>st</em> scaling scheme (<span class="citation">Stone (<a href="two-nuclides-systems.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), and decay constant <span class="math inline">\(\lambda\)</span> (in 1/a) for the nuclide(s) of interest.</li>
 </ul>
 <p>For easy reference a set of data for these parameters is included in the <code>TCNtools</code> package, including Sea-Level High-Latitude production rates for the <code>st</code> scaling scheme.
-Note that these often used SLHL values are defined for convenience, most calculators for exposure age work directly with the production rate value at calibration sites, and that they are always relative to the scaling scheme used (<span class="citation">Borchers et al. (<a href="application-to-denudation-rate-measurements.html#ref-borchers2016geological" role="doc-biblioref">2016</a>)</span>).</p>
+Note that these often used SLHL values are defined for convenience, most calculators for exposure age work directly with the production rate value at calibration sites, and that they are always relative to the scaling scheme used (<span class="citation">Borchers et al. (<a href="two-nuclides-systems.html#ref-borchers2016geological" role="doc-biblioref">2016</a>)</span>).</p>
 <p>We can first load the attenuation length data (g/cm<span class="math inline">\(^2\)</span>).
 Documentation of this dataset is accessible with <code>?Lambda</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="exploring-tcn-build-up-at-the-surface.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda) <span class="co"># we load a vector containing the attenuation length into the environment</span></span>

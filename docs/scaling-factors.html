@@ -194,6 +194,10 @@ div.csl-indent {
 <li class="chapter" data-level="6.2" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#integration-time-scale"><i class="fa fa-check"></i><b>6.2</b> Integration time scale</a></li>
 <li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.3</b> On the importance of muons</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> Two nuclides systems</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.1</b> Steady-state denudation and constant exposure curves</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -216,14 +220,14 @@ div.csl-indent {
 <p>First we are going to explore how the scaling factors are changing with elevation, latitude and time, and what is the impact on local production rates.</p>
 <div id="time-independent-scaling" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Time-independent scaling<a href="scaling-factors.html#time-independent-scaling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We are going to present the most widely used and simplest scaling scheme known as Lal-Stone and often abbreviated as <strong>st</strong>. The main equations are presented in the reference article by <span class="citation">Stone (<a href="application-to-denudation-rate-measurements.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span> .</p>
+<p>We are going to present the most widely used and simplest scaling scheme known as Lal-Stone and often abbreviated as <strong>st</strong>. The main equations are presented in the reference article by <span class="citation">Stone (<a href="two-nuclides-systems.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span> .</p>
 <div id="site-characteristics" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Site characteristics<a href="scaling-factors.html#site-characteristics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We first need to define some parameters concerning the site of interest :</p>
 <ul>
 <li>latitude <code>lat</code> in degrees</li>
 <li>altitude <code>z</code> in meters (can be a vector or a scalar)</li>
-<li>longitude <code>lon</code> in degrees, this is not used for <em>st</em> scaling (<span class="citation">Stone (<a href="application-to-denudation-rate-measurements.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), just in case we want to compute atmospheric pressure according to ERA40 (<span class="citation">Uppala et al. (<a href="application-to-denudation-rate-measurements.html#ref-uppala2005era40" role="doc-biblioref">2005</a>)</span>).</li>
+<li>longitude <code>lon</code> in degrees, this is not used for <em>st</em> scaling (<span class="citation">Stone (<a href="two-nuclides-systems.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>), just in case we want to compute atmospheric pressure according to ERA40 (<span class="citation">Uppala et al. (<a href="two-nuclides-systems.html#ref-uppala2005era40" role="doc-biblioref">2005</a>)</span>).</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="scaling-factors.html#cb2-1" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">=</span> <span class="dv">30</span> <span class="co"># latitude</span></span>
 <span id="cb2-2"><a href="scaling-factors.html#cb2-2" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">=</span> <span class="dv">30</span> <span class="co"># longitude</span></span>
@@ -243,7 +247,7 @@ Here <code>z</code> is a vector to see the variations over a range of elevations
 </div>
 <div id="computation-of-scaling-factors" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Computation of scaling factors<a href="scaling-factors.html#computation-of-scaling-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We can now compute the scaling factors according to <span class="citation">Stone (<a href="application-to-denudation-rate-measurements.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>.
+<p>We can now compute the scaling factors according to <span class="citation">Stone (<a href="two-nuclides-systems.html#ref-stone2000air" role="doc-biblioref">2000</a>)</span>.
 Same as above, to get some information about the function (parameters definition) type <code>?st_scaling</code> in the R console.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="scaling-factors.html#cb4-1" aria-hidden="true" tabindex="-1"></a>st <span class="ot">=</span> <span class="fu">scaling_st</span>(P1,lat) <span class="co"># here we use the pressure according to Stone 2000 model</span></span>
 <span id="cb4-2"><a href="scaling-factors.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(st)</span></code></pre></div>
@@ -343,9 +347,9 @@ We plot the three of them on the same graph.</p>
 <div id="cutoff-rigidity" class="section level4 hasAnchor" number="3.2.1.2">
 <h4><span class="header-section-number">3.2.1.2</span> Cutoff Rigidity<a href="scaling-factors.html#cutoff-rigidity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Now we need to convert that into cutoff rigidity using <code>vdm2rc</code> function.
-Such can be done using the following expression (<span class="citation">Martin et al. (<a href="application-to-denudation-rate-measurements.html#ref-martin2017crep" role="doc-biblioref">2017</a>)</span>): <span class="math display">\[R_c = 14.3 \frac{M}{M_0}\cos^4 \lambda,\]</span> where <span class="math inline">\(M\)</span> is the moment of the Earth dipole field, <span class="math inline">\(M_0\)</span> the 2010 reference value for <span class="math inline">\(M\)</span> and <span class="math inline">\(\lambda\)</span> the latitude.
+Such can be done using the following expression (<span class="citation">Martin et al. (<a href="two-nuclides-systems.html#ref-martin2017crep" role="doc-biblioref">2017</a>)</span>): <span class="math display">\[R_c = 14.3 \frac{M}{M_0}\cos^4 \lambda,\]</span> where <span class="math inline">\(M\)</span> is the moment of the Earth dipole field, <span class="math inline">\(M_0\)</span> the 2010 reference value for <span class="math inline">\(M\)</span> and <span class="math inline">\(\lambda\)</span> the latitude.
 This corresponds to the default <code>model=elsasser54</code> in the <code>vdm2rc</code> function arguments.
-A more complex formula proposed by <span class="citation">Lifton, Sato, and Dunai (<a href="application-to-denudation-rate-measurements.html#ref-lifton2014scaling" role="doc-biblioref">2014</a>)</span> can be used with <code>model=lifton14</code>.</p>
+A more complex formula proposed by <span class="citation">Lifton, Sato, and Dunai (<a href="two-nuclides-systems.html#ref-lifton2014scaling" role="doc-biblioref">2014</a>)</span> can be used with <code>model=lifton14</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="scaling-factors.html#cb9-1" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">=</span> <span class="dv">40</span></span>
 <span id="cb9-2"><a href="scaling-factors.html#cb9-2" aria-hidden="true" tabindex="-1"></a>rc1a <span class="ot">=</span> <span class="fu">vdm2rc</span>(vdm1,lat)</span>
 <span id="cb9-3"><a href="scaling-factors.html#cb9-3" aria-hidden="true" tabindex="-1"></a>rc1b <span class="ot">=</span> <span class="fu">vdm2rc</span>(vdm1,lat,<span class="at">model=</span><span class="st">&quot;lifton14&quot;</span>)</span>

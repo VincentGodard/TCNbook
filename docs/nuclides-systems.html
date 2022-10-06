@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>A Minimal Book Example</title>
+  <title>7 2 nuclides systems | A Minimal Book Example</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="A Minimal Book Example" />
+  <meta property="og:title" content="7 2 nuclides systems | A Minimal Book Example" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Minimal Book Example" />
+  <meta name="twitter:title" content="7 2 nuclides systems | A Minimal Book Example" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="application-to-denudation-rate-measurements.html"/>
 
-<link rel="next" href="introduction.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -119,28 +119,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 </head>
 
@@ -194,9 +172,9 @@ div.csl-indent {
 <li class="chapter" data-level="6.2" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#integration-time-scale"><i class="fa fa-check"></i><b>6.2</b> Integration time scale</a></li>
 <li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.3</b> On the importance of muons</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> Two nuclides systems</a>
+<li class="chapter" data-level="7" data-path="nuclides-systems.html"><a href="nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> 2 nuclides systems</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.1</b> Steady-state denudation and constant exposure curves</a></li>
+<li class="chapter" data-level="7.1" data-path="nuclides-systems.html"><a href="nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.1</b> Steady-state denudation and constant exposure curves</a></li>
 </ul></li>
 </ul>
 
@@ -215,36 +193,56 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">A Minimal Book Example</h1>
-<p class="author"><em>Vincent Godard</em></p>
-<p class="date"><em>2022-10-06</em></p>
-</div>
-<div id="prerequisites" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">1</span> Prerequisites<a href="index.html#prerequisites" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This html page is derived from an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook.
-You can copy/paste the various lines of code into your own R script and run it in any R session.</p>
-<p>These activities do not require any specific prior knowledge of R programming language.
-The idea is for you to simply copy and paste the code in a script, run it, and change various parameters to observe and investigate the associated response.</p>
-<p>In addition to the scripting-oriented activities below you can also experiment visually with a few interactive <a href="https://shiny.rstudio.com">Shiny</a> apps</p>
-<p><a href="http://shinyproxy.osupytheas.fr" class="uri">http://shinyproxy.osupytheas.fr</a></p>
-<p>Both are built on the dedicated <code>TCNtools</code> package :</p>
-<p><a href="https://vincentgodard.github.io/TCNtools" class="uri">https://vincentgodard.github.io/TCNtools</a></p>
-<p>This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.</p>
-<p>You can install the package directly on you system, using the instruction provided on the package webpage (requires <code>devtools</code> package to install from Github).</p>
-<p>Alternatively launch a binder session and get a <code>RStudio</code> session running into your browser with the <code>TCNtools</code> package installed.
-You can launch the binder by clicking on the icon <img src="https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667" /> on the package website (right column).</p>
-<p>The first thing we have to do, before calling any of these functions, is to load the <code>TCNtools</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span></code></pre></div>
+<div id="nuclides-systems" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> 2 nuclides systems<a href="nuclides-systems.html#nuclides-systems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>We first define the usual variables and parameters</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="nuclides-systems.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda) <span class="co"># we load a vector containing the attenuation length into the environment</span></span>
+<span id="cb1-2"><a href="nuclides-systems.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm) <span class="co"># we load a matrix containing the production/decay parameters into the environment</span></span>
+<span id="cb1-3"><a href="nuclides-systems.html#cb1-3" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">2.7</span> <span class="co"># we also define the density (g/cm3)</span></span>
+<span id="cb1-4"><a href="nuclides-systems.html#cb1-4" aria-hidden="true" tabindex="-1"></a>altitude <span class="ot">=</span> <span class="dv">1000</span> <span class="co"># elevation in m</span></span>
+<span id="cb1-5"><a href="nuclides-systems.html#cb1-5" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> <span class="dv">45</span> <span class="co"># latitude in degrees</span></span>
+<span id="cb1-6"><a href="nuclides-systems.html#cb1-6" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
+<span id="cb1-7"><a href="nuclides-systems.html#cb1-7" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span></code></pre></div>
+<p>Here first we consider that all samples are close and have similar positions, so similar scaling parameters.
+We will see later how to deal with situations where samples have different positions and hence different scaling parameters.</p>
+<div id="steady-state-denudation-and-constant-exposure-curves" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Steady-state denudation and constant exposure curves<a href="nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Two-nuclides plots are usually built around two curves representing the predictions, in terms of concentrations, for end-member simplified situations :</p>
+<ul>
+<li><strong>steady-state denudation</strong>, where the concentrations of the nuclides of interest are computed for various values of surface denudation rates</li>
+<li><strong>constant exposure</strong>, where the concentrations of the nuclides of interest are computed for various duration of surface exposition, with no denudation</li>
+</ul>
+<p>We will use the Eulerian point of view (function <code>solv_conc_eul</code>) to compute the concentrations, which is done by function <code>tnp_curves</code>.</p>
+<p>In order to avoid messing up things later we define here once and for all which is nuclide 1 and which is nuclide 2, according to their respective <span class="math inline">\(\tau_{1/2}\)</span> :</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="nuclides-systems.html#cb2-1" aria-hidden="true" tabindex="-1"></a>N1 <span class="ot">=</span> <span class="st">&quot;Be10&quot;</span> <span class="co"># longer half-life</span></span>
+<span id="cb2-2"><a href="nuclides-systems.html#cb2-2" aria-hidden="true" tabindex="-1"></a>N2 <span class="ot">=</span> <span class="st">&quot;Al26&quot;</span> <span class="co"># shorter half-life</span></span></code></pre></div>
+<p>We compute the data for these two curves.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="nuclides-systems.html#cb3-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">=</span> <span class="fu">tnp_curves</span>(prm[,N1],prm[,N2],Lambda,S,rho)</span>
+<span id="cb3-2"><a href="nuclides-systems.html#cb3-2" aria-hidden="true" tabindex="-1"></a>ss_ero <span class="ot">=</span> tmp[[<span class="dv">1</span>]]</span>
+<span id="cb3-3"><a href="nuclides-systems.html#cb3-3" aria-hidden="true" tabindex="-1"></a>cst_exp <span class="ot">=</span> tmp[[<span class="dv">2</span>]]</span></code></pre></div>
+<p>The default parameters for the ranges of denudation rates and exposure ages can be adjusted if needed.</p>
+<p>Now that we can plot everything in a two-nuclides graph.
+While not mandatory, it is usually recommended to organize the plot this way :</p>
+<ul>
+<li><strong>X-axis</strong> : longer half-life nuclide (our <span class="math inline">\(N_1\)</span>)</li>
+<li><strong>Y-axis</strong> : ratio of shorter to longer half-life nuclides (our <span class="math inline">\(N_2/N_1\)</span>)</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="nuclides-systems.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(cst_exp<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C1),<span class="at">ylim=</span><span class="fu">range</span>(cst_exp<span class="sc">$</span>C2<span class="sc">/</span>cst_exp<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C2<span class="sc">/</span>ss_ero<span class="sc">$</span>C1),<span class="at">log=</span><span class="st">&quot;x&quot;</span>,</span>
+<span id="cb4-2"><a href="nuclides-systems.html#cb4-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">paste</span>(N1,<span class="st">&quot;(at/g)&quot;</span>),<span class="at">ylab=</span><span class="fu">paste</span>(N2,<span class="st">&quot;/&quot;</span>,N1))</span>
+<span id="cb4-3"><a href="nuclides-systems.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(cst_exp<span class="sc">$</span>C1,cst_exp<span class="sc">$</span>C2<span class="sc">/</span>cst_exp<span class="sc">$</span>C1,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;khaki4&quot;</span>) <span class="co"># constant exposure, dashed line</span></span>
+<span id="cb4-4"><a href="nuclides-systems.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ss_ero<span class="sc">$</span>C1,ss_ero<span class="sc">$</span>C2<span class="sc">/</span>ss_ero<span class="sc">$</span>C1,<span class="at">col=</span><span class="st">&quot;khaki4&quot;</span>) <span class="co"># steady-state erosion, solid line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/test-1.png" width="672" /></p>
+<p>The extent of the plot can be modified to correspond more closely to the reported data.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="application-to-denudation-rate-measurements.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,0 +1,63 @@
+# Two nuclides systems
+
+```{r include=FALSE}
+library("TCNtools")
+```
+
+We first define the usual variables and parameters
+
+```{r }
+data(Lambda) # we load a vector containing the attenuation length into the environment
+data(prm) # we load a matrix containing the production/decay parameters into the environment
+rho = 2.7 # we also define the density (g/cm3)
+altitude = 1000 # elevation in m
+latitude = 45 # latitude in degrees
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+```
+
+Here first we consider that all samples are close and have similar positions, so similar scaling parameters.
+We will see later how to deal with situations where samples have different positions and hence different scaling parameters.
+
+## Steady-state denudation and constant exposure curves
+
+Two-nuclides plots are usually built around two curves representing the predictions, in terms of concentrations, for end-member simplified situations :
+
+- **steady-state denudation**, where the concentrations of the nuclides of interest are computed for various values of surface denudation rates
+- **constant exposure**, where the concentrations of the nuclides of interest are computed for various duration of surface exposition, with no denudation
+
+We will use the Eulerian point of view (function `solv_conc_eul`) to compute the concentrations, which is done by function `tnp_curves`.
+
+In order to avoid messing up things later we define here once and for all which is nuclide 1 and which is nuclide 2, according to their respective $\tau_{1/2}$ :
+
+```{r}
+N1 = "Be10" # longer half-life
+N2 = "Al26" # shorter half-life
+```
+
+We compute the data for these two curves.
+
+```{r}
+tmp = tnp_curves(prm[,N1],prm[,N2],Lambda,S,rho)
+ss_ero = tmp[[1]]
+cst_exp = tmp[[2]]
+```
+
+The default parameters for the ranges of denudation rates and exposure ages can be adjusted if needed.
+
+Now that we can plot everything in a two-nuclides graph.
+While not mandatory, it is usually recommended to organize the plot this way :
+
+- **X-axis** : longer half-life nuclide (our $N_1$)
+- **Y-axis** : ratio of shorter to longer half-life nuclides (our $N_2/N_1$)
+
+```{r test}
+plot(NA,xlim=range(cst_exp$C1,ss_ero$C1),ylim=range(cst_exp$C2/cst_exp$C1,ss_ero$C2/ss_ero$C1),log="x",
+     xlab=paste(N1,"(at/g)"),ylab=paste(N2,"/",N1))
+lines(cst_exp$C1,cst_exp$C2/cst_exp$C1,lty=2,col="khaki4") # constant exposure, dashed line
+lines(ss_ero$C1,ss_ero$C2/ss_ero$C1,col="khaki4") # steady-state erosion, solid line
+```
+
+The extent of the plot can be modified to correspond more closely to the reported data.
+
+
