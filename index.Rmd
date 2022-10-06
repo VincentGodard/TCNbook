@@ -29,10 +29,10 @@ Both are built on the dedicated `TCNtools` package :
 
 This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.
 
-You can install the package directly on you system (instructions on package website), or alternatively launch a binder session where everything is installed and should run smoothly.
-You can launch the binder by clicking on the icon below, and access an online RStudio session in your browser.
+You can install the package directly on you system, using the instruction provided on the package webpage (requires `devtools` package to install from Github).
 
-[![binder](https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio)
+Alternatively launch a binder session and get a `RStudio` session running into your browser with the `TCNtools` package installed.
+You can launch the binder by clicking on the icon ![](https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667) on the package website (right column).
 
 The first thing we have to do, before calling any of these functions, is to load the `TCNtools` package.
 
