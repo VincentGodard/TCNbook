@@ -31,12 +31,46 @@ This package contain various functions to assist the interpretation of TCN conce
 
 You can install the package directly on you system, using the instruction provided on the package webpage (requires `devtools` package to install from Github).
 
-Alternatively launch a binder session and get a `RStudio` session running into your browser with the `TCNtools` package installed.
-You can launch the binder by clicking on the icon ![](https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667) on the package website (right column).
+Alternatively launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the following icon [![binder](images/binder.svg)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio).
 
-The first thing we have to do, before calling any of these functions, is to load the `TCNtools` package.
+
+<!-- You can launch the binder by clicking on the icon ![](https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667) on the package website (right column). -->
+
+The first thing you will have to do, before calling any of the functions, is to load the `TCNtools` package.
 
 ```{r}
 library("TCNtools")
 ```
+
+## Usage
+
+Various boxes will be used throughout the book.
+
+:::: {.codebox .codeimage data-latex="code"}
+This a summary code box. 
+In the following chapters the processes will explained step by step, with the various actions distributed between different successive code blocks (also named chunks) for better understanding.
+
+For convenience, and avoid you to have to copy and paste these various blocks one by one, sometimes everything will be combined in one block at the end of the section, which can unfold, copy and then paste into the R console or a script.
+Below you can get all the necessary code to produce a figure or result.
+```{r eval=FALSE, class.source='fold-hide', include=TRUE}
+a = 1
+b = 3
+c = (a+b)^2
+```
+::::
+
+
+:::: {.actionbox .actionimage data-latex="action"}
+The purpose of this book is to allow you to experiment and explore, not just copy and paste some code.
+This kind of box will suggest you some action on the code, typically changing the value of parameters to observe the evolution of the result.
+::::
+
+:::: {.notebox .noteimage data-latex="action"}
+This box will be used to highlight or stress something important.
+::::
+
+:::: {.questionbox .questionimage data-latex="action"}
+This box will be used to formulate some questions for you to think about.
+::::
+
 

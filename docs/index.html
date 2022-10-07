@@ -119,28 +119,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -155,7 +133,10 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#objectives-of-the-session"><i class="fa fa-check"></i><b>2.1</b> Objectives of the session</a></li>
@@ -236,13 +217,38 @@ The idea is for you to simply copy and paste the code in a script, run it, and c
 <p><a href="https://vincentgodard.github.io/TCNtools" class="uri">https://vincentgodard.github.io/TCNtools</a></p>
 <p>This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.</p>
 <p>You can install the package directly on you system, using the instruction provided on the package webpage (requires <code>devtools</code> package to install from Github).</p>
-<p>Alternatively launch a binder session and get a <code>RStudio</code> session running into your browser with the <code>TCNtools</code> package installed.
-You can launch the binder by clicking on the icon <img src="https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667" /> on the package website (right column).</p>
-<p>The first thing we have to do, before calling any of these functions, is to load the <code>TCNtools</code> package.</p>
+<p>Alternatively launch a <a href="https://mybinder.org/">binder</a> session and get a <code>RStudio</code> session running into your browser with the <code>TCNtools</code> package installed, by clicking on the following icon <a href="https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio"><img src="images/binder.svg" alt="binder" /></a>.</p>
+<!-- You can launch the binder by clicking on the icon ![](https://camo.githubusercontent.com/581c077bdbc6ca6899c86d0acc6145ae85e9d80e6f805a1071793dbe48917982/68747470733a2f2f6d7962696e6465722e6f72672f62616467655f6c6f676f2e737667) on the package website (right column). -->
+<p>The first thing you will have to do, before calling any of the functions, is to load the <code>TCNtools</code> package.</p>
 <details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span></code></pre></div>
 </details>
+<div id="usage" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Usage<a href="index.html#usage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Various boxes will be used throughout the book.</p>
+<div class="codebox codeimage">
+<p>This a summary code box.
+In the following chapters the processes will explained step by step, with the various actions distributed between different successive code blocks (also named chunks) for better understanding.</p>
+<p>For convenience, and avoid you to have to copy and paste these various blocks one by one, sometimes everything will be combined in one block at the end of the section, which can unfold, copy and then paste into the R console or a script.
+Below you can get all the necessary code to produce a figure or result.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-2"><a href="index.html#cb2-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb2-3"><a href="index.html#cb2-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> (a<span class="sc">+</span>b)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+</details>
+</div>
+<div class="actionbox actionimage">
+<p>The purpose of this book is to allow you to experiment and explore, not just copy and paste some code.
+This kind of box will suggest you some action on the code, typically changing the value of parameters to observe the evolution of the result.</p>
+</div>
+<div class="notebox noteimage">
+<p>This box will be used to highlight or stress something important.</p>
+</div>
+<div class="questionbox questionimage">
+<p>This box will be used to formulate some questions for you to think about.</p>
+</div>
 
+</div>
 </div>
             </section>
 
@@ -307,20 +313,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

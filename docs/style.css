@@ -6,7 +6,39 @@
   background: #f5f5f5 5px center/3em no-repeat;
 }
 .codeimage {
-  background-image: url("images/document-edit-symbolic.svg");
+  background-image: url("images/view-paged-symbolic.svg");
+}
+
+.notebox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid dodgerblue;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.noteimage {
+  background-image: url("images/filter-flagged-symbolic.svg");
+}
+
+.actionbox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid mediumvioletred;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.actionimage {
+  background-image: url("images/edit-find-symbolic.svg");
 }
 
 
+.questionbox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid olivedrab;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.questionimage {
+  background-image: url("images/question-round-symbolic.svg");
+}
