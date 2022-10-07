@@ -1,26 +1,33 @@
 # Exploring TCN build up at the surface
 
-```{r include=FALSE}
+```{r bu0, include=FALSE}
 library("TCNtools")
+data(Lambda)
+data(prm)
+rho = 2.7
+#
 ```
 
 
 We are going to consider simple computations of concentration under various conditions in terms of erosion, depth or age.
 This will be done using an *Eulerian point of view*, which is the most straightforward and fastest way to perform such computation.
 In this case the quantity of interest (concentration) is computed at fixed depths below the surface, while the exhumed material is moving through this reference frame during its trajectory toward the surface.
-More details on the differences between Eulerian and Lagrangian approaches, and their applications to complex exposition/denudation histories, will be studied later.
+More details on the differences between Eulerian and Lagrangian approaches, and their applications to complex exposition/denudation histories, will be presented later.
 
 Note that interpreting measured concentrations in terms of end-member situations of *pure exposure* or *steady-state denudation* is often done with online calculators (@balco2008complete,@marrero2016cronusearth,@martin2017crep).
-This will be fine in many cases, but you should always be careful about the underlying hypothesis (no erosion, steady state achieved...) when interpreting your concentrations and always think about how TCN are accumulating.
-The goal of this activity is to explore this behavior.
+Those calculators allow to perform very accurate computations of age or denudation rate, but one should always be careful about the underlying hypotheses (no erosion, steady state achieved, etc ...) when interpreting measured concentrations and always think about how TCN are accumulating in the sampled material.
+
+The goal of this activity is to explore this behavior, using simple approaches.
 
 ## Background
 
 The relevant general equation is the following,
 
-$$
-C=C_0e^{-\lambda t} + \sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda}e^{\frac{-\rho z}{\Lambda_i}}(1-e^{-(\frac{\rho \varepsilon}{\Lambda_i}+\lambda)t})
-$$ with the following variables and parameters,
+\begin{equation}
+C=C_0e^{-\lambda t} + \sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda}e^{\frac{-\rho z}{\Lambda_i}}(1-e^{-(\frac{\rho \varepsilon}{\Lambda_i}+\lambda)t}) (\#eq:conceuler)
+\end{equation}
+
+with the following variables and parameters,
 
 -   $C$ the concentration (as a function of time $t$ and depth $z$)
 -   $C_0$ the inherited concentration
@@ -39,21 +46,21 @@ Note two keys limitations of this representation :
 
 ## Set up of the calculations
 
-We should the define the basic parameters we are going to use for the computation, which are two vectors :
+We should introduce some of the basic parameters we are going to use for the computation. 
+For easy reference a set of data for parameters of interest is included in the `TCNtools` package.
 
--   a vector with the attenuation lengths for different particles (in g/cm$^2$)
+-   a vector (`Lambda`) with the attenuation lengths for different particles (in g/cm$^2$)
     -   neutrons for spallation reactions $\Lambda_{spal}$
     -   stopping muons $\Lambda_{stop}$
     -   fast muons $\Lambda_{fast}$\
--   a vector (or matrix) with the SLHL production rates (in at/g/a), in this case for the *st* scaling scheme (@stone2000air), and decay constant $\lambda$ (in 1/a) for the nuclide(s) of interest.
+-   a vector (`prm`) with the SLHL production rates (in at/g/a), in this case for the *st* scaling scheme (@stone2000air), and decay constant $\lambda$ (in 1/a) for the nuclides of interest. Note that this will need to be modified when using other scaling schemes.
 
-For easy reference a set of data for these parameters is included in the `TCNtools` package, including Sea-Level High-Latitude production rates for the `st` scaling scheme.
 Note that these often used SLHL values are defined for convenience, most calculators for exposure age work directly with the production rate value at calibration sites, and that they are always relative to the scaling scheme used (@borchers2016geological).
 
 We can first load the attenuation length data (g/cm$^2$).
-Documentation of this dataset is accessible with `?Lambda`.
+Documentation of this dataset is accessible by typing `?Lambda` in the R console.
 
-```{r }
+```{r bu1}
 data(Lambda) # we load a vector containing the attenuation length into the environment
 print(Lambda)
 rho = 2.7 # we also define the density (g/cm3)
@@ -62,14 +69,15 @@ rho = 2.7 # we also define the density (g/cm3)
 Some production and decay parameters can also be loaded.
 Documentation of this dataset is accessible with `?prm`.
 
-```{r}
+```{r bu2}
 data(prm) # we load a matrix containing the production/decay parameters into the environment
 print(prm)
 ```
 
-We also need to define the properties of our site of interest and compute the relevant scaling parameters. As we already saw previously, this can easily be done with,
+We also need to define the properties of our site of interest and compute the relevant scaling parameters. 
+As we already saw previously, this can easily be done with,
 
-```{r }
+```{r bu3}
 altitude = 1000 # elevation in m
 latitude = 45 # latitude in degrees
 P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
@@ -78,16 +86,30 @@ S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (
 
 ## Evolution of concentration with time
 
-To get a general overview of the behavior we are  going to use directly the `solv_conc_eul` function, which allows to easily deal with various configurations. In the following sections we will go back to the key equations to get a better sense of the importance of various parameters
+To get a general overview of the behavior we are  going to use directly the `solv_conc_eul` function, which allows to easily deal with various scenarios and configurations, using equation \@ref(eq:conceuler). 
+In the following chapters we will go back to the key equations to get a better sense of the importance of various parameters.
 As always the documentation of the function, including its various arguments, can be obtained by typing `?solv_conc_eul` in the R console.
 
-```{r ck_5bis}
+We start by defining the various 
+
+```{r bu4}
 nuc = "Be10" # "Al26", "C14"
 t =  seq(0,200e3,length.out=1000) # a vector containing time from 0 to 100 ka by 100 a steps
 z = 0 * rho # depth at which we are going to perform the calculation (cm converted to g/cm2)
 C0 = 0 # inherited concentration (at/g)
 ero = 0 * (100/1e6*rho) # denudation rate expressed in m/Ma and converted in g/cm2/a
+
+```
+
+Now we can compute the concentration (at various times `t`), according to equation \@ref(eq:conceuler).
+
+```{r bu5}
 C = solv_conc_eul(z,ero,t,C0,prm[,nuc],S,Lambda) # compute concentration
+```
+
+Then we can plot the evolution of concentration with time.
+
+```{r bu6}
 plot(t/1000,C,type="l",col="cornflowerblue",lwd=3,ylab="Concentration (at/g)",xlab="Time (ka)")
 grid()
 # see explanation for these  lines below
@@ -97,45 +119,42 @@ abline(0,sum(Prod)*1000,lty=2) # note that time is in ka on the plot
 abline(h=sum(Prod/((ero/Lambda)+lambda)),lty=2)
 ```
 
-Start with zero erosion ($\varepsilon=0$), corresponding to the pure exposition of a surface.
-We see here the progressive build-up of concentration though time and the establishment of balance between gains (production) and losses (denudation and decay) leading to the concentration plateau at steady state.
+:::: {.codebox .codeimage data-latex="caution"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('bu0','bu3','bu4','bu5','bu6')}
+```
+::::
 
-Two lines are added to the graph,
+Starting with zero erosion ($\varepsilon=0$), corresponding to the pure exposition of a surface, we see here the progressive build-up of concentration though time and the establishment of balance between gains (production) and losses (denudation and decay) leading to the concentration plateau at steady state.
+
+Note that two dashed lines are added to the graph,
 
 - The first one corresponds to the production slope $\sum_i P_i$, how much nuclide you produce and how it would accumulate if you had no radioactive decay and no denudation.
-- The second one (horizontal) is the maximum value of concentration when steady state is achieved :
+- The second one (horizontal, not visible with the initial parameters) is the maximum value of concentration when steady state is achieved :
 $$ C_{max}=\sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda} $$
 
-> **TODO**
-
+:::: {.actionbox .actionimage data-latex="action"}
 -   Change the maximum of the `t` vector until you see the influence of radioactive decay and the plateau.
--   Add some inheritance
--   Test the evolution with other nuclides ($^{26}$Al and $^{14}$C)
-
-You can also play around with this build up using this Shiny App :
-
-<http://shinyproxy.osupytheas.fr/simple_accumulation>
-
-Now try to modify the `ero` (always keeping it is in g/cm$^2$/a) parameter above, to see its influence on time needed to reach steady state and the final concentration.
+-   Add some inheritance ($C_0$)
+-   Test the evolution with other nuclides such as $^{26}$Al and $^{14}$C (set nuc to `Al26` or `C14`)
+-   Modify the `ero`  parameter above (always keeping it is in g/cm$^2$/a), to see its influence on time needed to reach steady state and the final concentration
+::::
 
 
 ## Two end-member situations
 
-No we are going to build a summary plot showing the influence of both exposure and denudation.
+Now we are going to build a summary plot showing the influence of both exposure and denudation.
 
-```{r }
-altitude = 1000 # elevation in m
-latitude = 45 # latitude in degrees
-nuc = "Be10"
-P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
-S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+
+```{r bu7}
+nuc = "Be10" # choice of nuclide
 t =  10^seq(log10(1),log10(10e6),length.out=1000) # time vector, log-spaced!
 # calculation of the evolution of concentration for denudation = 0
 C = solv_conc_eul(0,0,t,0,prm[,nuc],S,Lambda) # compute concentration for pure exposure
 plot(t,C,type="l",col="cornflowerblue",lwd=3,ylab="Concentration (at/g)",xlab="Time (a)",log="xy")
 grid()
 text(max(t),max(C),0,cex=0.5,adj=0) # label the curve
-# now we make the same computation for other denudation rates
+# now we make the same computation for other denudation rates (using a loop)
 ero = c(1,10,100,1000) # erosion vector in m/Ma
 for (i in 1:length(ero)){
   e = ero[i] * (100/1e6*rho) # convert denudation in g/cm2/a
@@ -143,12 +162,19 @@ for (i in 1:length(ero)){
   lines(t,C,col="cornflowerblue",lwd=3)
   text(max(t),max(C),ero[i],cex=0.5,adj=0) # label the curve
 }
-
 ```
+
+:::: {.codebox .codeimage data-latex="caution"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('bu0','bu3','bu7')}
+```
+::::
+
 
 Note that this a log-log plot. It is probably one of the most important figure to keep in mind when analyzing TCN concentrations. It clearly shows the existence of two end-member situations when interpreting these concentrations, in terms of exposure age or denudation rates, and the transition between the two. 
 
-> **TODO** Think about a bit about the following points
+:::: {.questionbox .questionimage data-latex="action"}
+Think about a bit about the following points
 
 - What are the key hypothesis made when interpreting a TCN concentration in terms of
     - exposure age
@@ -156,6 +182,8 @@ Note that this a log-log plot. It is probably one of the most important figure t
 - Can you think of geological/geomorphological situations where these hypotheses are violated?
 - Why are the plateau concentrations so different?
 - How is the time to reach the plateau changing and why?
+::::
+
 
 ## Interactive shiny app
 
