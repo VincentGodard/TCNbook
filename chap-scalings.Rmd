@@ -172,6 +172,6 @@ abline(h=scaling_st(P,lat)$Nneutrons,lty=2)
 You can also explore dynamically the behavior of scaling parameters using this embedded application, which use the same type of code. 
 
 ```{r echo=FALSE}
-knitr::include_url("http://shinyproxy.osupytheas.fr/production_rates/",height = "1200px")
+knitr::include_url("https://shinyproxy.osupytheas.fr/production_rates/",height = "1200px")
 ```
 
