@@ -1,6 +1,6 @@
 # Scaling factors
 
-```{r include=FALSE}
+```{r sf0, include=FALSE}
 library("TCNtools")
 ```
 
@@ -19,7 +19,7 @@ We first need to define some parameters concerning the site of interest :
 -   altitude `z` in meters (can be a vector or a scalar)
 -   longitude `lon` in degrees, this is not used for *st* scaling (@stone2000air), just in case we want to compute atmospheric pressure according to ERA40 (@uppala2005era40).
 
-```{r}
+```{r sf1}
 lat = 30 # latitude
 lon = 30 # longitude
 z = seq(0,3000,by=100) # vector from 0 to 3000 m by 100 m increments
@@ -30,15 +30,28 @@ Here `z` is a vector to see the variations over a range of elevations.
 
 To get information about the usage of the function used here (for example what are the different models) type `?atm_pressure` in the R console.
 
-```{r}
+```{r sf2}
 P1 = atm_pressure(alt=z,model="stone2000") 
 P2 = atm_pressure(alt=z,lat=lat,lon=lon,model="era40")
+```
+
+Finally, we plot the results.
+
+```{r sf3}
 plot(P1,z,type="l",xlab="Pressure (hPa)",ylab="Altitude (m)",col="darkorange3") 
 lines(P2,z,lty=2,col="darkorange3")
 legend("topright",c("Stone 2000","ERA40"),lty=c(1,2))
 ```
 
 > **TODO** Modify `lat` and `lon` to see the effects on the pressure computed with the ERA40 model 
+
+
+:::: {.codebox .codeimage data-latex="caution"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('sf0','sf1','sf2','sf3')}
+```
+::::
+
 
 ### Computation of scaling factors
 

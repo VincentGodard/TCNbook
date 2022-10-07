@@ -2,6 +2,8 @@ bookdown::gitbook:
   lib_dir: assets
   split_by: chapter
   split_bib: false
+  code_folding: show
+  css: style.css
   config:
     toolbar:
       position: static

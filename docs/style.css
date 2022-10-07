@@ -1,0 +1,12 @@
+.codebox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid orange;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.codeimage {
+  background-image: url("images/document-edit-symbolic.svg");
+}
+
+
