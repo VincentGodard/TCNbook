@@ -156,3 +156,13 @@ Note that this a log-log plot. It is probably one of the most important figure t
 - Can you think of geological/geomorphological situations where these hypotheses are violated?
 - Why are the plateau concentrations so different?
 - How is the time to reach the plateau changing and why?
+
+## Interactive shiny app
+
+You can also explore dynamically the TCN build up using this embedded application, which use the same type of code. 
+
+```{r echo=FALSE}
+knitr::include_url("https://shinyproxy.osupytheas.fr/simple_accumulation/",height = "1200px")
+```
+
+

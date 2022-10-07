@@ -172,7 +172,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.1" data-path="scaling-factors.html"><a href="scaling-factors.html#definition-of-paleomagnetic-variations"><i class="fa fa-check"></i><b>3.2.1</b> Definition of paleomagnetic variations</a></li>
 <li class="chapter" data-level="3.2.2" data-path="scaling-factors.html"><a href="scaling-factors.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-app"><i class="fa fa-check"></i><b>3.3</b> Interactive App</a></li>
+<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-shiny-app"><i class="fa fa-check"></i><b>3.3</b> Interactive shiny app</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
 <ul>
@@ -180,6 +180,7 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#set-up-of-the-calculations"><i class="fa fa-check"></i><b>4.2</b> Set up of the calculations</a></li>
 <li class="chapter" data-level="4.3" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#evolution-of-concentration-with-time"><i class="fa fa-check"></i><b>4.3</b> Evolution of concentration with time</a></li>
 <li class="chapter" data-level="4.4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#two-end-member-situations"><i class="fa fa-check"></i><b>4.4</b> Two end-member situations</a></li>
+<li class="chapter" data-level="4.5" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#interactive-shiny-app-1"><i class="fa fa-check"></i><b>4.5</b> Interactive shiny app</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html"><i class="fa fa-check"></i><b>5</b> Application to exposure dating</a>
 <ul>
@@ -249,7 +250,7 @@ The key equation is now,
 <span id="cb30-11"><a href="application-to-denudation-rate-measurements.html#cb30-11" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">=</span> prm[<span class="dv">4</span>,nuc] <span class="co"># radioactive decay</span></span>
 <span id="cb30-12"><a href="application-to-denudation-rate-measurements.html#cb30-12" aria-hidden="true" tabindex="-1"></a>C2 <span class="ot">=</span> prm[<span class="dv">1</span>,nuc]<span class="sc">*</span>S<span class="sc">$</span>Nneutrons<span class="sc">*</span>Lambda[<span class="dv">1</span>]<span class="sc">/</span>ero <span class="sc">+</span> prm[<span class="dv">2</span>,nuc]<span class="sc">*</span>S<span class="sc">$</span>Nmuons<span class="sc">*</span>Lambda[<span class="dv">2</span>]<span class="sc">/</span>ero <span class="sc">+</span> prm[<span class="dv">3</span>,nuc]<span class="sc">*</span>S<span class="sc">$</span>Nmuons<span class="sc">*</span>Lambda[<span class="dv">3</span>]<span class="sc">/</span>ero    </span>
 <span id="cb30-13"><a href="application-to-denudation-rate-measurements.html#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ero<span class="sc">/</span><span class="dv">100</span><span class="sc">*</span><span class="fl">1e6</span><span class="sc">/</span>rho,C2,<span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>This figure (log-scales on both axes) highlights the strong inverse relationship, at steady-state, between denudation rate (<span class="math inline">\(\varepsilon\)</span>) and concentration (<span class="math inline">\(C\)</span>), which is the foundation of many geomorphological studies trying to establish landscape evolution rates.
 Note the change in the relationship at very low denudation rates, which corresponds to the situation where the effects of radioactive decay become predominant.</p>
 <blockquote>
@@ -258,7 +259,7 @@ Note the change in the relationship at very low denudation rates, which correspo
 <p>A simple way to answer this question would be to compute the relative difference between the computed concentrations</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="application-to-denudation-rate-measurements.html#cb31-1" aria-hidden="true" tabindex="-1"></a>error <span class="ot">=</span> <span class="fu">abs</span>(C<span class="sc">-</span>C2)<span class="sc">/</span>C<span class="sc">*</span><span class="dv">100</span></span>
 <span id="cb31-2"><a href="application-to-denudation-rate-measurements.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ero<span class="sc">/</span><span class="dv">100</span><span class="sc">*</span><span class="fl">1e6</span><span class="sc">/</span>rho,error,<span class="at">log=</span><span class="st">&quot;xy&quot;</span>,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Relative error (%)&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Denudation rate (m/Ma)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 <div id="integration-time-scale" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Integration time scale<a href="application-to-denudation-rate-measurements.html#integration-time-scale" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -306,7 +307,7 @@ We can separate the various sources of production (neutrons and muons) and see w
 <span id="cb34-29"><a href="application-to-denudation-rate-measurements.html#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>,</span>
 <span id="cb34-30"><a href="application-to-denudation-rate-measurements.html#cb34-30" aria-hidden="true" tabindex="-1"></a>       <span class="fu">c</span>(<span class="st">&quot;Spallation&quot;</span>,<span class="st">&quot;Stopping muons&quot;</span>,<span class="st">&quot;Fast muons&quot;</span>),</span>
 <span id="cb34-31"><a href="application-to-denudation-rate-measurements.html#cb34-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">22</span>,<span class="at">pt.bg=</span><span class="fu">c</span>(col_sp,col_sm,col_fm),<span class="at">pt.cex=</span><span class="fl">1.5</span>,<span class="at">cex=</span><span class="dv">1</span>,<span class="at">bg=</span><span class="st">&quot;white&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 
 </div>
 </div>

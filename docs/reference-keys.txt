@@ -11,12 +11,13 @@ definition-of-paleomagnetic-variations
 virtual-dipole-moment
 cutoff-rigidity
 lalstone-modified-scaling-lm
-interactive-app
+interactive-shiny-app
 exploring-tcn-build-up-at-the-surface
 background
 set-up-of-the-calculations
 evolution-of-concentration-with-time
 two-end-member-situations
+interactive-shiny-app-1
 application-to-exposure-dating
 back-to-the-evolution-of-concentration
 interpretation-in-terms-of-exposure-ages

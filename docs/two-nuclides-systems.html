@@ -172,7 +172,7 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.1" data-path="scaling-factors.html"><a href="scaling-factors.html#definition-of-paleomagnetic-variations"><i class="fa fa-check"></i><b>3.2.1</b> Definition of paleomagnetic variations</a></li>
 <li class="chapter" data-level="3.2.2" data-path="scaling-factors.html"><a href="scaling-factors.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-app"><i class="fa fa-check"></i><b>3.3</b> Interactive App</a></li>
+<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-shiny-app"><i class="fa fa-check"></i><b>3.3</b> Interactive shiny app</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
 <ul>
@@ -180,6 +180,7 @@ div.csl-indent {
 <li class="chapter" data-level="4.2" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#set-up-of-the-calculations"><i class="fa fa-check"></i><b>4.2</b> Set up of the calculations</a></li>
 <li class="chapter" data-level="4.3" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#evolution-of-concentration-with-time"><i class="fa fa-check"></i><b>4.3</b> Evolution of concentration with time</a></li>
 <li class="chapter" data-level="4.4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#two-end-member-situations"><i class="fa fa-check"></i><b>4.4</b> Two end-member situations</a></li>
+<li class="chapter" data-level="4.5" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#interactive-shiny-app-1"><i class="fa fa-check"></i><b>4.5</b> Interactive shiny app</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html"><i class="fa fa-check"></i><b>5</b> Application to exposure dating</a>
 <ul>
@@ -246,7 +247,7 @@ We plot the evolution of the ratio through time.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="two-nuclides-systems.html#cb39-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>C1 <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(<span class="cn">Inf</span>,<span class="dv">0</span>,data<span class="sc">$</span>t,C1_0,prm[,N1],S,Lambda)</span>
 <span id="cb39-2"><a href="two-nuclides-systems.html#cb39-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>C2 <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(<span class="cn">Inf</span>,<span class="dv">0</span>,data<span class="sc">$</span>t,C2_0,prm[,N2],S,Lambda)</span>
 <span id="cb39-3"><a href="two-nuclides-systems.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>t,data<span class="sc">$</span>C2<span class="sc">/</span>data<span class="sc">$</span>C1,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;darkorange&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Time (a)&quot;</span>,<span class="at">ylab=</span><span class="fu">paste</span>(N2,<span class="st">&quot;/&quot;</span>,N1))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 </div>
 <div id="steady-state-denudation-and-constant-exposure-curves" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Steady-state denudation and constant exposure curves<a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves" class="anchor-section" aria-label="Anchor link to header"></a></h2>
