@@ -1,7 +1,11 @@
 # Application to exposure dating
 
-```{r include=FALSE}
+```{r ed0, include=FALSE}
 library("TCNtools")
+data(Lambda)
+data(prm)
+rho = 2.7
+#
 ```
 
 ## Back to the evolution of concentration
@@ -9,41 +13,68 @@ library("TCNtools")
 We first consider the evolution of concentration with time $t$.
 The computation will be carried out at the surface ($z=0$), but this could be done at any arbitrary depth.
 We also consider that $\varepsilon = 0$ and that there is no inheritance.
-The starting equation above becomes, $$
-C(t)=\sum_i \frac{P_i}{\lambda}(1-e^{-\lambda t})
-$$ 
-For the sake of the example we are going to compute that by hand, and compare with our results above obtained with the `solv_conc_eul` function,
+The starting equation above becomes, 
+\begin{equation}
+C(t)=\sum_i \frac{P_i}{\lambda}(1-e^{-\lambda t}) (\#eq:pureexpo)
+\end{equation}
 
-```{r `}
+For the sake of the example we are going to compute that by hand, and compare with the results obtained with the `solv_conc_eul` function,
+
+Again we define the usual parameters 
+
+```{r ed1}
 # set up
 altitude = 1000 # elevation in m
 latitude = 45 # latitude in degrees
 nuc = "Be10"
 P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
 S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
-t =  seq(0,200e3,by=100) # a vector containing time from 0 to 100 ka by 100 a steps
+```
+
+To improve readability we compute scaled production rates and give them explicit names.
+
+```{r ed2}
 Pspal = prm[1,nuc]*S$Nneutrons # scaled spallation production rate in at/g/y (st scaling)
 Pstop = prm[2,nuc]*S$Nmuons # scaled stopped muons  production rate in at/g/y
 Pfast = prm[3,nuc]*S$Nmuons # scaled fast muons  production rate in at/g/y
 lambda = prm[4,nuc] # radioactive decay (1/y)
+```
+
+And then apply equation \@ref(eq:pureexpo) and compare the results with the output of function `solv_conc_eul`.
+
+```{r ed3}
+t =  seq(0,200e3,by=100) # a vector containing time from 0 to 100 ka by 100 a steps
 C = (Pspal + Pstop + Pfast) / lambda * (1-exp(-lambda*t))
 plot(t/1000,C,type="l",col="coral",lwd=3,ylab="Concentration (at/g)",xlab="Time (ka)")
 grid()
 # check if this is ok
 C2 = solv_conc_eul(0,0,t,0,prm[,nuc],S,Lambda) # compute concentration for pure exposure
 lines(t/1000,C2,lty=2)
-
 ```
 
-On thing to note in this graph is that time $t$ is expressed as *time elapsed since start of exposure*, which we can not directly translate into the age BP, when dealing with radioactive decay and time variations in production rate. 
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('ed0','ed1','ed2','ed3')}
+```
+::::
+
+One thing to note in this graph is that time $t$ is expressed as *time elapsed since start of exposure*, which we can not directly translate into the age BP, when dealing with radioactive decay and time variations in production rate. 
+
+:::: {.actionbox .actionimage data-latex="action"}
+Change the maximum time `t` to check that everything is correct.
+::::
+
 
 ## Interpretation in terms of exposure ages
- We are no going to make some simple calculations to convert our concentrations in terms of exposure age. 
-It basically solving for $t$ the equation $C_{mod}(t) = C_{mes}$. The left hand side is our modelled concentration, obtained for example with ou simple Eulerian model (`solv_conc_eul`), where we need to keep in mind all the hypotheses we make ($z=0$, $\varepsilon=0$, $C_0=0$) 
 
-We are going to use an example from @protin2019climatic, using sample *ARG-16-9*. Here are the characteristics of this sample.
+We are now going to make some simple calculations to interpret concentrations in terms of exposure age. 
+The objective is solving for $t$ the equation $C_{mod}(t) = C_{mes}$. 
+The left hand side is our modelled concentration, obtained for example with equation \@ref(eq:conceuler) (`solv_conc_eul`), where we need to keep in mind all the hypotheses we make ($z=0$, $\varepsilon=0$, $C_0=0$). 
 
-```{r}
+We are going to use an example from @protin2019climatic, using sample *ARG-16-9*. 
+Here are the characteristics of this sample (see table 1 from this paper).
+
+```{r ed4}
 rho = 2.7
 altitude = 2252 # elevation in m
 latitude = 45.97 # latitude in degrees
@@ -58,44 +89,91 @@ S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (
 
 Now, for example we can make some guess about the exposure age and see what is the difference with the measured concentration.
 
-```{r}
+```{r ed5}
 age = 10e3 # a 
 Cmod = solv_conc_eul(0,0,age,0,prm[,"Be10"],S*Ss,Lambda) # compute concentration
 ```
 
-We could try make `Cmod` equal to `Cmes` by trial and error, but we can be more systematic,
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to compute `Cmod`
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('ed0','ed4','ed5')}
+```
+::::
 
-```{r}
-age = seq(0,20e3,by=10)
-Cmod = rep(NA,length(age))
+:::: {.actionbox .actionimage data-latex="action"}
+Change the value of age and try to get close to measured $^{10}$Be concentration.
+::::
+
+We could try make `Cmod` equal to `Cmes` by trial and error, but we can be more systematic. 
+We go through automatically over a whole range of `age` values, and compute the corresponding `Cmod` values.
+
+```{r ed6}
+age = seq(0,20e3,by=10) # we define a vector for age, which set the different explored values
+Cmod = rep(NA,length(age)) # The vector of same length to store the results
 for (i in 1:length(age)){
   Cmod[i] = solv_conc_eul(0,0,age[i],0,prm[,"Be10"],S*Ss,Lambda) # compute concentration
 }
-imin = which.min(abs(Cmod-Cmes))
-res = age[imin]
+
+```
+
+We then plot the results to identify the minimum value of $|C_{mod} - C_{mes}|$
+
+```{r ed7}
+imin = which.min(abs(Cmod-Cmes)) # what is the index of the minimum difference
+res = age[imin] # the corresponding age
 plot(age,Cmod-Cmes,type="l",main=paste(res,"a BP"),col="coral",lwd=2)
 abline(h=0)
 abline(v=res)
 ```
 
-> **TODO** Compare with the age from table 1 from @protin2019climatic. Comment about the possible causes for the differences?
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('ed0','ed4','ed5','ed6','ed7')}
+```
+::::
 
-We can be even more efficient by using an simple optimization approach to solve $C_{mod}(t) = C_{mes}$, using the built in `optimize` function. We just define a function to be optimized (search of minimum) and launch a search over an age range. We are looking for the minimum value of $|C_{mod}-C_{mes}|$
+:::: {.questionbox .questionimage data-latex="action"}
+Compare with the age reported in table 1 from @protin2019climatic. Comment about the possible causes for the differences?
+::::
 
-```{r}
+
+We can be even more efficient by using an simple optimization approach to solve $C_{mod}(t) = C_{mes}$, using the built in `optimize` function. 
+We just define a function to be optimized (search of minimum) and launch a search over an age range. 
+We are looking for the minimum value of $|C_{mod}(t)-C_{mes}|$. 
+Here the function we are trying to optimize.
+
+```{r ed8}
 fun_opt <-function(t,Cmes,prm,S,Lambda){
   Cmod = solv_conc_eul(0,0,t,0,prm[,"Be10"],S,Lambda)
   return(abs(Cmod-Cmes))
 }
+```
+
+We then launch the search of the 0-50 ka interval.
+
+```{r ed9}
 res = optimize(fun_opt,c(0,50e3),Cmes,prm,S*Ss,Lambda)
 print(res)
 ```
 
-## Time varying production rates
-We are now going back to the time varying-scaling parameters
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to obtain this result
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('ed0','ed4','ed8','ed9')}
+```
+::::
 
-```{r}
-data = data.frame(t1=seq(0,50e3,length.out=2000)) # we build a dataframe to store results
+:::: {.questionbox .questionimage data-latex="action"}
+This is a very coarse calculation, but searching the  solution for $|C_{mod}(t)-C_{mes}|$ is the essence of what online calculator do.
+What kind of improvement could you think of concerning this calculation?  
+::::
+
+
+## Time varying production rates
+
+We are now going back to the time varying-scaling schemes, such as the one we explored in the previous chapter.
+
+```{r ed10}
+data = data.frame(t1=seq(0,20e3,length.out=2000)) # we build a dataframe to store results
 data$t2 = max(data$t1) - data$t1 # time BP
 data$vdm = get_vdm(data$t2,model="musch")
 data$rc = vdm2rc(data$vdm,latitude,model="elsasser54")
@@ -105,45 +183,59 @@ abline(h=S$Nneutrons,col="red")
 abline(h=mean(data$lm),lty=2)
 ```
 
-In this case we can not use the same equations for the evolution of TCN  concentration as above, because we need to account for $P(t)$. We are going to use,
-$$C_{mod}(t) = \int_0^t P(t)e^{-\lambda t}dt$$
+In this case we can not use the same equations for the evolution of TCN  concentration as above, because we need to account for $P(t)$. 
+We are going to use,
+$$C_{mod}(t) = e^{-\lambda t} \int_0^t P(t')e^{\lambda t'}dt'$$
+
 Note : it is usually considered that production by muons is much less affected than that by neutrons by the magnetic field variations.
 
 Below we first compare how the concentration evolves through time with the two approaches. 
 
 ```{r}
 library(pracma) # useful library containing the cumtrapz function for trapezoidal integration
+#
+Pspal = prm[1,"Be10"]*S$Nneutrons*Ss # scaled spallation production rate in at/g/y (st scaling)
+Pstop = prm[2,"Be10"]*S$Nmuons*Ss # scaled stopped muons  production rate in at/g/y
+Pfast = prm[3,"Be10"]*S$Nmuons*Ss # scaled fast muons  production rate in at/g/y
+lambda = prm[4,"Be10"] # radioactive decay (1/y)
+data$Prod_st = Pspal + Pstop + Pfast
 data$C1 = solv_conc_eul(0,0,data$t1,0,prm,S*Ss,Lambda) 
-data$C2 = cumtrapz(data$t1,(prm[1]*data$lm*Ss+(prm[2,"Be10"] + prm[3,"Be10"])*Ss*S$Nmuons)*(exp(-prm["lambda",'Be10']*data$t1)))[,1] 
-plot(data$t1,data$C1,type="l",xlab="time (a)",ylab="Concentration (at/g)",col="cyan4")
+#
+data$Prod_lm = prm[1,"Be10"]*data$lm*Ss+(prm[2,"Be10"] + prm[3,"Be10"])*Ss*S$Nmuons
+data$C2 = exp(-lambda*data$t1)*cumtrapz(data$t1,data$Prod_lm*exp(lambda*data$t1))
+#
+plot(data$t1,data$C1,type="l",xlab="Time since start of exposure (a)",ylab="Concentration (at/g)",col="cyan4")
 lines(data$t1,data$C2,col="darkgoldenrod2")
 legend("topleft",c("st","lm"),lty=1,col=c("cyan4", "darkgoldenrod2"))
 ```
 
-We can solve solve $|C_{mod}-C_{mes}|$ for $t$ with the same approach as the `st` case,
+:::: {.questionbox .questionimage data-latex="question"}
+Comment on the differences.
+::::
+
+We can solve solve $C_{mod}(t)=C_{mes}$ for $t$ with the same approach as the `st` case,
 
 ```{r}
-compute_C<-function(t1,prm,P,lat,Lambda,S){
+compute_C<-function(t1,prm,P,lat,Lambda,S,Ss){
   data = data.frame(t1=seq(0,t1,length.out=1000)) # we build a dataframe to store results
   data$t2 = max(data$t1) - data$t1 # time BP
   data$vdm = get_vdm(data$t2,model="musch")
   data$rc = vdm2rc(data$vdm,lat,model="elsasser54")
-  data$lm = scaling_lm(P,data$rc)
-  Cmod = trapz(data$t1,(prm[1,"Be10"]*data$lm+(prm[2,"Be10"] + prm[3,"Be10"])*S$Nmuons)*(exp(-prm["lambda",'Be10']*data$t2)))
+  data$lm = scaling_lm(P,data$rc)*Ss
+  Cmod = exp(-lambda*data$t1[nrow(data)])*trapz(data$t1,(prm[1,"Be10"]*data$lm+(prm[2,"Be10"] + prm[3,"Be10"])*S$Nmuons)*(exp(prm["lambda",'Be10']*data$t1)))
   return(Cmod)
 }
-
-fun_opt2 <-function(t1,Cmes,prm,P,lat,Lambda,S){
-  Cmod =  compute_C(t1,prm,P,lat,Lambda,S)
+#
+fun_opt2 <-function(t1,Cmes,prm,P,lat,Lambda,S,Ss){
+  Cmod =  compute_C(t1,prm,P,lat,Lambda,S,Ss)
   return(abs(Cmod-Cmes))
 }
-
+#
   P = atm_pressure(alt=altitude,lat=latitude,lon=longitude,model="era40") # compute atmospheric pressure at site
   S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
-  res = optimize(fun_opt2,c(0,50e3),Cmes,prm,P,latitude,Lambda,S*Ss)
+  res = optimize(fun_opt2,c(0,50e3),Cmes,prm,P,latitude,Lambda,S,Ss)
 print(res)
 ```
-
 
 Caveat we did those calculation using a number of simplification and numerical shortcuts ....
 

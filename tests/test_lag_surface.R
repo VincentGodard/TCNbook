@@ -68,3 +68,45 @@ plot(density(res$A1))
 res$A2 = approx(data$C2obs,data$t2,res$Cobs)$y
 lines(density(res$A2),col="green")
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+library(pracma) # useful library containing the cumtrapz function for trapezoidal integration
+Pspal = prm[1,nuc]*S$Nneutrons*Ss # scaled spallation production rate in at/g/y (st scaling)
+Pstop = prm[2,nuc]*S$Nmuons*Ss # scaled stopped muons  production rate in at/g/y
+Pfast = prm[3,nuc]*S$Nmuons*Ss # scaled fast muons  production rate in at/g/y
+lambda = prm[4,nuc] # radioactive decay (1/y)
+data$Prod_st = Pspal + Pstop + Pfast
+
+data$C1 = solv_conc_eul(0,0,data$t1,0,prm,S*Ss,Lambda) 
+data$C1b = cumtrapz(data$t1,data$Prod_st*exp(-lambda*data$t1))
+data$C1b = exp(-lambda*data$t1)*cumtrapz(data$t1,data$Prod_st*exp(lambda*data$t1))
+
+data$Prod_lm = prm[1,"Be10"]*data$lm*Ss+(prm[2,"Be10"] + prm[3,"Be10"])*Ss*S$Nmuons
+data$C2 = exp(-lambda*data$t1)*cumtrapz(data$t1,data$Prod_lm*exp(lambda*data$t1))
+data$C2b = cumtrapz(data$t1,data$Prod_lm*exp(-lambda*data$t1))
+data$C2c = NA
+for (i in 2:nrow(data)){
+  data$C2c[i] = trapz(data$t1[1:i],data$Prod_lm[1:i]*exp(-lambda*(data$t1[i]-data$t1[1:i])))
+}
+
+#data$C2 = cumtrapz(data$t1,data$Prod_lm*(exp(-prm["lambda",'Be10']*(data$t1))))[,1] 
+plot(data$t1,data$C1,type="l",xlab="Time since start of exposure (a)",ylab="Concentration (at/g)",col="cyan4")
+lines(data$t1,data$C2,col="darkgoldenrod2")
+lines(data$t1,data$C1b,col="red",lty=2)
+lines(data$t1,data$C2b,col="pink",lty=2)
+lines(data$t1,data$C2c,col="green",lty=2)
+
+legend("topleft",c("st","lm"),lty=1,col=c("cyan4", "darkgoldenrod2"))

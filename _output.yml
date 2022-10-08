@@ -4,6 +4,7 @@ bookdown::gitbook:
   split_bib: false
   code_folding: show
   css: style.css
+  df_print: paged
   config:
     toolbar:
       position: static

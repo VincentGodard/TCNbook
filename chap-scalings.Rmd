@@ -62,14 +62,13 @@ Same as above, to get some information about the function (parameters definition
 
 ```{r sf4}
 st = scaling_st(P1,lat) # here we use the pressure according to Stone 2000 model
-print(st)
 ```
 
 The result is stored in `st` as a dataframe with as many rows as there are elements in the input pressure vector (`P1`) and two columns named `Nneutrons` and `Nmuons`, for the spallogenic and muogenic contributions, respectively.
 
 
 ```{r sf4b}
-print(st)
+st
 ```
 
 
