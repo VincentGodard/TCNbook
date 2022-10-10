@@ -76,6 +76,32 @@ plot(ero/100*1e6/rho,error,log="xy",type="l",ylab="Relative error (%)",xlab="Den
 
 
 ## Integration time scale
+Like all techniques used to measure erosion or denudation of the Earth surface, rates measured from cosmogenic nuclides are averaged over a specific period of time.
+This integration time-scale is often considered, at first order, to be the time required to erode the thickness of the zone where most of nuclide production  occurs (@vonblanckenburg2005control), which can be considered as the penetration length for neutrons $\Lambda/\rho$. 
+This average is one of the advantages of the method, allowing to filter the high frequency variability, in particular of anthropic origin (@reusser2015quantifying). 
+
+In its simplest form the integration time scale $\tau$ for a denudation rate measurement can be calculated as,
+\begin{equation}
+\tau = \frac{\Lambda}{\rho \varepsilon} 
+\end{equation}
+
+
+```{r}
+rho = 2.7
+data(Lambda)
+ero = 10^seq(log10(0.5),log10(2000),length.out = 100) # log spaced vector for denudation rate mm/ka
+tau = (Lambda[1]/rho*10)/ero
+plot(ero,tau,xlab="Denudation rate (mm/ka)",ylab="Integration time scale (ka)",type="l",log="xy",lwd=3,col="gold")
+```
+
+This simple plot allows to observe the very strong influence of denudation rate $\varepsilon$ on the integration time scale.
+
+- For a denudation rate of 10 mm/ka, typical of slow erosion cratonic domains, the integration time scale is ~60 ka
+- For a denudation rate of 500 mm/ka, which can be encountered in high relief mountain ranges, the integration time scale is ~1 ka
+
+:::: {.questionbox .questionimage data-latex="question"}
+What are the implications of this relationship for the geomorphological interpretation of the denudation rates?
+::::
 
 
 ## Catchment wide denudation rates
