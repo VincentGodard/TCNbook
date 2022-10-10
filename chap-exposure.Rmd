@@ -191,7 +191,7 @@ Note : it is usually considered that production by muons is much less affected t
 
 Below we first compare how the concentration evolves through time with the two approaches. 
 
-```{r}
+```{r ed11}
 library(pracma) # useful library containing the cumtrapz function for trapezoidal integration
 #
 Pspal = prm[1,"Be10"]*S$Nneutrons*Ss # scaled spallation production rate in at/g/y (st scaling)
@@ -215,14 +215,16 @@ Comment on the differences.
 
 We can solve solve $C_{mod}(t)=C_{mes}$ for $t$ with the same approach as the `st` case,
 
-```{r}
+```{r ed12}
+library(pracma) # useful library containing the cumtrapz function for trapezoidal integration
+#
 compute_C<-function(t1,prm,P,lat,Lambda,S,Ss){
   data = data.frame(t1=seq(0,t1,length.out=1000)) # we build a dataframe to store results
   data$t2 = max(data$t1) - data$t1 # time BP
   data$vdm = get_vdm(data$t2,model="musch")
   data$rc = vdm2rc(data$vdm,lat,model="elsasser54")
   data$lm = scaling_lm(P,data$rc)*Ss
-  Cmod = exp(-lambda*data$t1[nrow(data)])*trapz(data$t1,(prm[1,"Be10"]*data$lm+(prm[2,"Be10"] + prm[3,"Be10"])*S$Nmuons)*(exp(prm["lambda",'Be10']*data$t1)))
+  Cmod = exp(-prm["lambda",'Be10']*data$t1[nrow(data)])*trapz(data$t1,(prm[1,"Be10"]*data$lm+(prm[2,"Be10"] + prm[3,"Be10"])*S$Nmuons)*(exp(prm["lambda",'Be10']*data$t1)))
   return(Cmod)
 }
 #
@@ -236,6 +238,13 @@ fun_opt2 <-function(t1,Cmes,prm,P,lat,Lambda,S,Ss){
   res = optimize(fun_opt2,c(0,50e3),Cmes,prm,P,latitude,Lambda,S,Ss)
 print(res)
 ```
+
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to obtain this result
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('ed0','ed4','ed12')}
+```
+::::
+
 
 Caveat we did those calculation using a number of simplification and numerical shortcuts ....
 
