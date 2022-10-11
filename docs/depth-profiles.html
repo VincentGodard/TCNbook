@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Depth profiles | A Minimal Book Example</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Depth profiles | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Depth profiles | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Vincent Godard" />
+
+
+<meta name="date" content="2022-10-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="two-nuclides-systems.html"/>
+<link rel="next" href="references.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="assets/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="assets/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="assets/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="assets/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="assets/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#objectives-of-the-session"><i class="fa fa-check"></i><b>2.1</b> Objectives of the session</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scaling-factors.html"><a href="scaling-factors.html"><i class="fa fa-check"></i><b>3</b> Scaling factors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scaling-factors.html"><a href="scaling-factors.html#time-independent-scaling"><i class="fa fa-check"></i><b>3.1</b> Time-independent scaling</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="scaling-factors.html"><a href="scaling-factors.html#site-characteristics"><i class="fa fa-check"></i><b>3.1.1</b> Site characteristics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="scaling-factors.html"><a href="scaling-factors.html#computation-of-scaling-factors"><i class="fa fa-check"></i><b>3.1.2</b> Computation of scaling factors</a></li>
+<li class="chapter" data-level="3.1.3" data-path="scaling-factors.html"><a href="scaling-factors.html#global-variations"><i class="fa fa-check"></i><b>3.1.3</b> Global variations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="scaling-factors.html"><a href="scaling-factors.html#time-dependent-scalings"><i class="fa fa-check"></i><b>3.2</b> Time-dependent scalings</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="scaling-factors.html"><a href="scaling-factors.html#definition-of-paleomagnetic-variations"><i class="fa fa-check"></i><b>3.2.1</b> Definition of paleomagnetic variations</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scaling-factors.html"><a href="scaling-factors.html#lalstone-modified-scaling-lm"><i class="fa fa-check"></i><b>3.2.2</b> Lal/Stone modified scaling (<em>lm</em>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="scaling-factors.html"><a href="scaling-factors.html#interactive-shiny-app"><i class="fa fa-check"></i><b>3.3</b> Interactive shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html"><i class="fa fa-check"></i><b>4</b> Exploring TCN build up at the surface</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#background"><i class="fa fa-check"></i><b>4.1</b> Background</a></li>
+<li class="chapter" data-level="4.2" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#set-up-of-the-calculations"><i class="fa fa-check"></i><b>4.2</b> Set up of the calculations</a></li>
+<li class="chapter" data-level="4.3" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#evolution-of-concentration-with-time"><i class="fa fa-check"></i><b>4.3</b> Evolution of concentration with time</a></li>
+<li class="chapter" data-level="4.4" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#two-end-member-situations"><i class="fa fa-check"></i><b>4.4</b> Two end-member situations</a></li>
+<li class="chapter" data-level="4.5" data-path="exploring-tcn-build-up-at-the-surface.html"><a href="exploring-tcn-build-up-at-the-surface.html#interactive-shiny-app-1"><i class="fa fa-check"></i><b>4.5</b> Interactive shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html"><i class="fa fa-check"></i><b>5</b> Application to exposure dating</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html#back-to-the-evolution-of-concentration"><i class="fa fa-check"></i><b>5.1</b> Back to the evolution of concentration</a></li>
+<li class="chapter" data-level="5.2" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html#interpretation-in-terms-of-exposure-ages"><i class="fa fa-check"></i><b>5.2</b> Interpretation in terms of exposure ages</a></li>
+<li class="chapter" data-level="5.3" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html#time-varying-production-rates"><i class="fa fa-check"></i><b>5.3</b> Time varying production rates</a></li>
+<li class="chapter" data-level="5.4" data-path="application-to-exposure-dating.html"><a href="application-to-exposure-dating.html#dealing-with-uncertainties"><i class="fa fa-check"></i><b>5.4</b> Dealing with uncertainties</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html"><i class="fa fa-check"></i><b>6</b> Application to denudation rate measurements</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#concentration---denudation-rate-relationship"><i class="fa fa-check"></i><b>6.1</b> Concentration - denudation rate relationship</a></li>
+<li class="chapter" data-level="6.2" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#integration-time-scale"><i class="fa fa-check"></i><b>6.2</b> Integration time scale</a></li>
+<li class="chapter" data-level="6.3" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#catchment-wide-denudation-rates"><i class="fa fa-check"></i><b>6.3</b> Catchment wide denudation rates</a></li>
+<li class="chapter" data-level="6.4" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#change-in-denudation-through-time"><i class="fa fa-check"></i><b>6.4</b> Change in denudation through time</a></li>
+<li class="chapter" data-level="6.5" data-path="application-to-denudation-rate-measurements.html"><a href="application-to-denudation-rate-measurements.html#on-the-importance-of-muons"><i class="fa fa-check"></i><b>6.5</b> On the importance of muons</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html"><i class="fa fa-check"></i><b>7</b> Two nuclides systems</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#evolution-of-ratios"><i class="fa fa-check"></i><b>7.1</b> Evolution of ratios</a></li>
+<li class="chapter" data-level="7.2" data-path="two-nuclides-systems.html"><a href="two-nuclides-systems.html#steady-state-denudation-and-constant-exposure-curves"><i class="fa fa-check"></i><b>7.2</b> Steady-state denudation and constant exposure curves</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="depth-profiles.html"><a href="depth-profiles.html"><i class="fa fa-check"></i><b>8</b> Depth profiles</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="depth-profiles.html"><a href="depth-profiles.html#setup-and-dataset"><i class="fa fa-check"></i><b>8.1</b> Setup and dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="depth-profiles.html"><a href="depth-profiles.html#profile-modelling"><i class="fa fa-check"></i><b>8.2</b> Profile modelling</a></li>
+<li class="chapter" data-level="8.3" data-path="depth-profiles.html"><a href="depth-profiles.html#exploration-of-parameters-space"><i class="fa fa-check"></i><b>8.3</b> Exploration of parameters space</a></li>
+<li class="chapter" data-level="8.4" data-path="depth-profiles.html"><a href="depth-profiles.html#interactive-shiny-app-2"><i class="fa fa-check"></i><b>8.4</b> Interactive shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9</b> References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="depth-profiles" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Depth profiles<a href="depth-profiles.html#depth-profiles" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="setup-and-dataset" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Setup and dataset<a href="depth-profiles.html#setup-and-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The package <code>TCNtools</code> includes a selection of depth profiles data from the literature.
+We will use the profile published in <span class="citation">Laloy et al. (<a href="references.html#ref-laloy2017bayesian" role="doc-biblioref">2017</a>)</span> from the Campines Plateau in Belgium.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="depth-profiles.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tcn_depth_profiles&quot;</span>) <span class="co"># import the data set</span></span>
+<span id="cb74-2"><a href="depth-profiles.html#cb74-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> tcn_depth_profiles[tcn_depth_profiles<span class="sc">$</span>study<span class="sc">==</span><span class="st">&quot;laloy2017bayesian&quot;</span>,] <span class="co"># selecting a particular study</span></span>
+<span id="cb74-3"><a href="depth-profiles.html#cb74-3" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div>
+</details>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["study"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sample"],"name":[2],"type":["chr"],"align":["left"]},{"label":["label"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["depth"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["C"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["C_e"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["latitude"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["altitude"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["title"],"name":[9],"type":["chr"],"align":["left"]},{"label":["amin"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["amax"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["astart"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["emin"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["emax"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["estart"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["imin"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["imax"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["istart"],"name":[18],"type":["dbl"],"align":["right"]}],"data":[{"1":"laloy2017bayesian","2":"TB1204","3":"1","4":"45","5":"153700","6":"6500","7":"50.95","8":"45","9":"Campine Plateau, Belgium (Laloy et al. 2017)","10":"0","11":"1000","12":"300","13":"0","14":"80","15":"50","16":"0","17":"1e+05","18":"50000","_rn_":"11"},{"1":"laloy2017bayesian","2":"TB1205","3":"2","4":"75","5":"132800","6":"7000","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","_rn_":"12"},{"1":"laloy2017bayesian","2":"TB1206","3":"3","4":"95","5":"101500","6":"7000","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","_rn_":"13"},{"1":"laloy2017bayesian","2":"TB1207","3":"4","4":"115","5":"124500","6":"6500","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","_rn_":"14"},{"1":"laloy2017bayesian","2":"TB1208","3":"5","4":"195","5":"89800","6":"6100","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","_rn_":"15"},{"1":"laloy2017bayesian","2":"TB1209","3":"6","4":"275","5":"98700","6":"6000","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","_rn_":"16"},{"1":"laloy2017bayesian","2":"TB1210","3":"7","4":"355","5":"90900","6":"6000","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA","16":"NA","17":"NA","18":"NA","_rn_":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div id="htmlwidget-136c5821d4c93d88fd53" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-136c5821d4c93d88fd53">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addProviderTiles","args":["OpenStreetMap",null,"OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addLayersControl","args":[["OpenStreetMap","Esri.WorldImagery"],[],{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addMarkers","args":[50.95,5.63,{"iconUrl":{"data":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=","index":0},"iconWidth":1,"iconHeight":1},null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Profile location",{"interactive":false,"permanent":true,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"topright"}]}],"limits":{"lat":[50.95,50.95],"lng":[5.63,5.63]}},"evals":[],"jsHooks":[]}</script>
+<p>We can then compute the scaling for this study site.
+Note that each site characteristics are only reported for the first sample (<code>label</code>=1).</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="depth-profiles.html#cb75-1" aria-hidden="true" tabindex="-1"></a>altitude <span class="ot">=</span> data<span class="sc">$</span>altitude[<span class="dv">1</span>] <span class="co"># elevation in m</span></span>
+<span id="cb75-2"><a href="depth-profiles.html#cb75-2" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> data<span class="sc">$</span>latitude[<span class="dv">1</span>] <span class="co"># latitude in degrees</span></span>
+<span id="cb75-3"><a href="depth-profiles.html#cb75-3" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
+<span id="cb75-4"><a href="depth-profiles.html#cb75-4" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span></code></pre></div>
+</details>
+<p>We plot the depth profile</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="depth-profiles.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(data<span class="sc">$</span>C,<span class="fl">50e3</span>,<span class="fl">200e3</span>),<span class="at">ylim=</span><span class="fu">rev</span>(<span class="fu">range</span>(data<span class="sc">$</span>depth)),</span>
+<span id="cb76-2"><a href="depth-profiles.html#cb76-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;10Be concentration (at/g)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Depth below surface (cm)&quot;</span>)</span>
+<span id="cb76-3"><a href="depth-profiles.html#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb76-4"><a href="depth-profiles.html#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(data<span class="sc">$</span>C<span class="sc">-</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,data<span class="sc">$</span>C<span class="sc">+</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,<span class="at">length =</span> <span class="dv">0</span>)</span>
+<span id="cb76-5"><a href="depth-profiles.html#cb76-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">cex=</span><span class="dv">2</span>,<span class="at">bg=</span><span class="st">&quot;pink&quot;</span>)</span>
+<span id="cb76-6"><a href="depth-profiles.html#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,data<span class="sc">$</span>label,<span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+</details>
+<p><img src="_main_files/figure-html/pr3-1.png" width="672" /></p>
+<div class="codebox codeimage">
+<p>Below you can get all the necessary code to produce this figure</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb77-1"><a href="depth-profiles.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span>
+<span id="cb77-2"><a href="depth-profiles.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda)</span>
+<span id="cb77-3"><a href="depth-profiles.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm)</span>
+<span id="cb77-4"><a href="depth-profiles.html#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb77-5"><a href="depth-profiles.html#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tcn_depth_profiles&quot;</span>) <span class="co"># import the data set</span></span>
+<span id="cb77-6"><a href="depth-profiles.html#cb77-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> tcn_depth_profiles[tcn_depth_profiles<span class="sc">$</span>study<span class="sc">==</span><span class="st">&quot;laloy2017bayesian&quot;</span>,] <span class="co"># selecting a particular study</span></span>
+<span id="cb77-7"><a href="depth-profiles.html#cb77-7" aria-hidden="true" tabindex="-1"></a>data</span>
+<span id="cb77-8"><a href="depth-profiles.html#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(data<span class="sc">$</span>C,<span class="fl">50e3</span>,<span class="fl">200e3</span>),<span class="at">ylim=</span><span class="fu">rev</span>(<span class="fu">range</span>(data<span class="sc">$</span>depth)),</span>
+<span id="cb77-9"><a href="depth-profiles.html#cb77-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;10Be concentration (at/g)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Depth below surface (cm)&quot;</span>)</span>
+<span id="cb77-10"><a href="depth-profiles.html#cb77-10" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb77-11"><a href="depth-profiles.html#cb77-11" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(data<span class="sc">$</span>C<span class="sc">-</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,data<span class="sc">$</span>C<span class="sc">+</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,<span class="at">length =</span> <span class="dv">0</span>)</span>
+<span id="cb77-12"><a href="depth-profiles.html#cb77-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">cex=</span><span class="dv">2</span>,<span class="at">bg=</span><span class="st">&quot;pink&quot;</span>)</span>
+<span id="cb77-13"><a href="depth-profiles.html#cb77-13" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,data<span class="sc">$</span>label,<span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+</details>
+</div>
+<div class="questionbox questionimage">
+<p>Comment on the evolution of concentrations with depth.</p>
+</div>
+</div>
+<div id="profile-modelling" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Profile modelling<a href="depth-profiles.html#profile-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We are going to use equation <a href="exploring-tcn-build-up-at-the-surface.html#eq:conceuler">(4.1)</a> to compute a theoretical concentration profile.</p>
+<p>We use initial guess of the value for the parameters</p>
+<ul>
+<li>Material density <span class="math inline">\(\rho\)</span> (<code>rho</code>)</li>
+<li>Surface denudation <span class="math inline">\(\varepsilon\)</span> (<code>ero</code>)</li>
+<li>Age of the deposit <span class="math inline">\(t\)</span> (<code>age</code>)</li>
+<li>Inherited concentration at the time of deposition <span class="math inline">\(C_0\)</span> (<code>C0</code>)</li>
+</ul>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="depth-profiles.html#cb78-1" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">1.7</span> <span class="co">#  density (g/cm3)</span></span>
+<span id="cb78-2"><a href="depth-profiles.html#cb78-2" aria-hidden="true" tabindex="-1"></a>ero <span class="ot">=</span> <span class="dv">40</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fl">1e6</span><span class="sc">*</span>rho  <span class="co"># m/Ma -&gt; g/cm2/a</span></span>
+<span id="cb78-3"><a href="depth-profiles.html#cb78-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">=</span> <span class="fl">0.3e6</span> <span class="co"># a</span></span>
+<span id="cb78-4"><a href="depth-profiles.html#cb78-4" aria-hidden="true" tabindex="-1"></a>C0 <span class="ot">=</span> <span class="fl">20e3</span> <span class="co"># inheritance (at/g)</span></span>
+<span id="cb78-5"><a href="depth-profiles.html#cb78-5" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(data<span class="sc">$</span>depth),<span class="at">length.out =</span> <span class="dv">40</span>)<span class="sc">*</span>rho <span class="co"># calculation depth (g/cm2)</span></span>
+<span id="cb78-6"><a href="depth-profiles.html#cb78-6" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(z,ero,age,C0,prm[,<span class="st">&quot;Be10&quot;</span>],S,Lambda) <span class="co"># compute concentration´</span></span></code></pre></div>
+</details>
+<p>We now plot this modeled profile with the dataset.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="depth-profiles.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(data<span class="sc">$</span>C,<span class="fl">50e3</span>,<span class="fl">200e3</span>),<span class="at">ylim=</span><span class="fu">rev</span>(<span class="fu">range</span>(data<span class="sc">$</span>depth)),</span>
+<span id="cb79-2"><a href="depth-profiles.html#cb79-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;10Be concentration (at/g)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Depth below surface (cm)&quot;</span>)</span>
+<span id="cb79-3"><a href="depth-profiles.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb79-4"><a href="depth-profiles.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(C,z,<span class="at">lwd=</span><span class="dv">3</span>) <span class="co"># plotting the modelled profile</span></span>
+<span id="cb79-5"><a href="depth-profiles.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(data<span class="sc">$</span>C<span class="sc">-</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,data<span class="sc">$</span>C<span class="sc">+</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,<span class="at">length =</span> <span class="dv">0</span>)</span>
+<span id="cb79-6"><a href="depth-profiles.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">cex=</span><span class="dv">2</span>,<span class="at">bg=</span><span class="st">&quot;pink&quot;</span>)</span>
+<span id="cb79-7"><a href="depth-profiles.html#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,data<span class="sc">$</span>label,<span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+</details>
+<p><img src="_main_files/figure-html/pr5-1.png" width="672" /></p>
+<div class="codebox codeimage">
+<p>Below you can get all the necessary code to produce this figure</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb80-1"><a href="depth-profiles.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span>
+<span id="cb80-2"><a href="depth-profiles.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda)</span>
+<span id="cb80-3"><a href="depth-profiles.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm)</span>
+<span id="cb80-4"><a href="depth-profiles.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb80-5"><a href="depth-profiles.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tcn_depth_profiles&quot;</span>) <span class="co"># import the data set</span></span>
+<span id="cb80-6"><a href="depth-profiles.html#cb80-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> tcn_depth_profiles[tcn_depth_profiles<span class="sc">$</span>study<span class="sc">==</span><span class="st">&quot;laloy2017bayesian&quot;</span>,] <span class="co"># selecting a particular study</span></span>
+<span id="cb80-7"><a href="depth-profiles.html#cb80-7" aria-hidden="true" tabindex="-1"></a>data</span>
+<span id="cb80-8"><a href="depth-profiles.html#cb80-8" aria-hidden="true" tabindex="-1"></a>altitude <span class="ot">=</span> data<span class="sc">$</span>altitude[<span class="dv">1</span>] <span class="co"># elevation in m</span></span>
+<span id="cb80-9"><a href="depth-profiles.html#cb80-9" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> data<span class="sc">$</span>latitude[<span class="dv">1</span>] <span class="co"># latitude in degrees</span></span>
+<span id="cb80-10"><a href="depth-profiles.html#cb80-10" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
+<span id="cb80-11"><a href="depth-profiles.html#cb80-11" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span>
+<span id="cb80-12"><a href="depth-profiles.html#cb80-12" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">1.7</span> <span class="co">#  density (g/cm3)</span></span>
+<span id="cb80-13"><a href="depth-profiles.html#cb80-13" aria-hidden="true" tabindex="-1"></a>ero <span class="ot">=</span> <span class="dv">40</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fl">1e6</span><span class="sc">*</span>rho  <span class="co"># m/Ma -&gt; g/cm2/a</span></span>
+<span id="cb80-14"><a href="depth-profiles.html#cb80-14" aria-hidden="true" tabindex="-1"></a>age <span class="ot">=</span> <span class="fl">0.3e6</span> <span class="co"># a</span></span>
+<span id="cb80-15"><a href="depth-profiles.html#cb80-15" aria-hidden="true" tabindex="-1"></a>C0 <span class="ot">=</span> <span class="fl">20e3</span> <span class="co"># inheritance (at/g)</span></span>
+<span id="cb80-16"><a href="depth-profiles.html#cb80-16" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(data<span class="sc">$</span>depth),<span class="at">length.out =</span> <span class="dv">40</span>)<span class="sc">*</span>rho <span class="co"># calculation depth (g/cm2)</span></span>
+<span id="cb80-17"><a href="depth-profiles.html#cb80-17" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(z,ero,age,C0,prm[,<span class="st">&quot;Be10&quot;</span>],S,Lambda) <span class="co"># compute concentration´</span></span>
+<span id="cb80-18"><a href="depth-profiles.html#cb80-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(data<span class="sc">$</span>C,<span class="fl">50e3</span>,<span class="fl">200e3</span>),<span class="at">ylim=</span><span class="fu">rev</span>(<span class="fu">range</span>(data<span class="sc">$</span>depth)),</span>
+<span id="cb80-19"><a href="depth-profiles.html#cb80-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;10Be concentration (at/g)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Depth below surface (cm)&quot;</span>)</span>
+<span id="cb80-20"><a href="depth-profiles.html#cb80-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb80-21"><a href="depth-profiles.html#cb80-21" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(C,z,<span class="at">lwd=</span><span class="dv">3</span>) <span class="co"># plotting the modelled profile</span></span>
+<span id="cb80-22"><a href="depth-profiles.html#cb80-22" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(data<span class="sc">$</span>C<span class="sc">-</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,data<span class="sc">$</span>C<span class="sc">+</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,<span class="at">length =</span> <span class="dv">0</span>)</span>
+<span id="cb80-23"><a href="depth-profiles.html#cb80-23" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">cex=</span><span class="dv">2</span>,<span class="at">bg=</span><span class="st">&quot;pink&quot;</span>)</span>
+<span id="cb80-24"><a href="depth-profiles.html#cb80-24" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,data<span class="sc">$</span>label,<span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+</details>
+</div>
+<div class="actionbox actionimage">
+<p>Try to get as close to the observations by modifying the various parameters.</p>
+</div>
+<div class="questionbox questionimage">
+<p>Comment on the influence of each parameter on the profile.</p>
+</div>
+</div>
+<div id="exploration-of-parameters-space" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Exploration of parameters space<a href="depth-profiles.html#exploration-of-parameters-space" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We could change the parameters incrementally one by one to explore the effects on the modeled profile and attempt to converge toward a best-looking solution.
+It is obviously much more efficient and robust to do this automatically by going through a large number of parameters sets, compute the predicted concentrations (<span class="math inline">\(C_{mod}\)</span>) and evaluate how well they match the measured concentrations (<span class="math inline">\(C_{mes}\)</span> with uncertainty <span class="math inline">\(\sigma\)</span>).
+We can use the <span class="math inline">\(\chi^2\)</span> to quantify the difference between the model and observations.</p>
+<p><span class="math display">\[\begin{equation}
+\chi^2 = \sum_{i=1}^n \left( \frac{C_{mes,i} - C_{mod,i} }{\sigma_i} \right)^2
+\end{equation}\]</span></p>
+<p>The function <code>depth_profile_mc</code> will allow us to generate a large number of models over the parameter space defined by :</p>
+<ul>
+<li>the age of the formation (<code>age</code> in a)</li>
+<li>the surface denudation rate (<code>ero</code> in m/Ma)</li>
+<li>the inherited concentration (<code>inh</code> in at/g)</li>
+<li>the density (<code>rho</code> in g/cm2)</li>
+</ul>
+<p>There two additional parameters <code>n1</code> and <code>n2</code>, which control how many models we are going to sample from this parameters space</p>
+<ul>
+<li><code>n1</code> is the number of model which are randomly drawn (Monte Carlo)</li>
+<li><code>n2</code> is the number of regularly sampled points for each parameter (if all 4 parameters are varying the number of models is <code>n2</code><span class="math inline">\(^4\)</span>)</li>
+</ul>
+<p>We can choose to carry out an exploration of the parameters space which completely random (<code>n2=0</code>) or following a regular grid (<code>n1=0</code>), or a combination of both.</p>
+<p>This first attempt is a crude exploration of the parameter space.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="depth-profiles.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data = data[!data$label %in% c(3,5),] # if we want to remove samples 3 and 5 (use with caution)</span></span>
+<span id="cb81-2"><a href="depth-profiles.html#cb81-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">depth_profile_mc</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,prm[,<span class="st">&quot;Be10&quot;</span>],Lambda,S,</span>
+<span id="cb81-3"><a href="depth-profiles.html#cb81-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">age=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>)<span class="sc">*</span><span class="dv">1000</span>,</span>
+<span id="cb81-4"><a href="depth-profiles.html#cb81-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ero=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>),</span>
+<span id="cb81-5"><a href="depth-profiles.html#cb81-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">inh=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fl">1e5</span>,</span>
+<span id="cb81-6"><a href="depth-profiles.html#cb81-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">rho=</span><span class="fu">c</span>(<span class="fl">1.5</span>,<span class="fl">2.5</span>),</span>
+<span id="cb81-7"><a href="depth-profiles.html#cb81-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1=</span><span class="fl">50e3</span>)</span></code></pre></div>
+</details>
+<p>Note that in <code>depth_profile_mc</code> we could choose to fix a parameter by passing a single value as argument, instead of a two elements vector, which corresponds to the bounds of the explored interval.</p>
+<p>We can have a look at the result table.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="depth-profiles.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
+</details>
+<pre><code>##       age                ero                inh                rho       
+##  Min.   :    1.42   Min.   : 0.00193   Min.   :    0.35   Min.   :1.500  
+##  1st Qu.:24522.58   1st Qu.:12.51497   1st Qu.:24765.41   1st Qu.:1.750  
+##  Median :49603.10   Median :24.95371   Median :49962.32   Median :2.004  
+##  Mean   :49766.41   Mean   :25.01723   Mean   :49865.75   Mean   :2.000  
+##  3rd Qu.:74982.46   3rd Qu.:37.45515   3rd Qu.:74843.07   3rd Qu.:2.249  
+##  Max.   :99999.40   Max.   :49.99899   Max.   :99997.38   Max.   :2.500  
+##       chi2        
+##  Min.   :  13.04  
+##  1st Qu.:  99.40  
+##  Median : 313.00  
+##  Mean   : 464.91  
+##  3rd Qu.: 722.06  
+##  Max.   :2198.57</code></pre>
+<p>Based on the <span class="math inline">\(\chi2\)</span> value we can now try to have a look at a subset of our model, which correspond to the best fitting values for this metric.
+We can start to do that very coarsely by looking at a quantile, for example the best 1%.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="depth-profiles.html#cb84-1" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">=</span> <span class="fu">quantile</span>(res<span class="sc">$</span>chi2,<span class="fl">0.01</span>)</span>
+<span id="cb84-2"><a href="depth-profiles.html#cb84-2" aria-hidden="true" tabindex="-1"></a>best <span class="ot">=</span> res[res<span class="sc">$</span>chi2<span class="sc">&lt;</span>cutoff,]</span>
+<span id="cb84-3"><a href="depth-profiles.html#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(best[,<span class="sc">-</span><span class="dv">5</span>],<span class="at">pch=</span><span class="dv">16</span>,<span class="at">col=</span><span class="fu">adjustcolor</span>(<span class="st">&quot;blue&quot;</span>,<span class="fl">0.2</span>)) <span class="co"># we remove the last column (5) which correspond to the chi2</span></span></code></pre></div>
+</details>
+<p><img src="_main_files/figure-html/pr7-1.png" width="672" />
+We see numerous tradeoffs between parameters, notably between age and denudation rate.</p>
+<p>We can select and plot the best model</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="depth-profiles.html#cb85-1" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">=</span> <span class="fu">which.min</span>(res<span class="sc">$</span>chi2) <span class="co"># position of the lowest chi2 in the dataframe</span></span>
+<span id="cb85-2"><a href="depth-profiles.html#cb85-2" aria-hidden="true" tabindex="-1"></a>res[imin,]</span></code></pre></div>
+</details>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["age"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["ero"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["inh"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["rho"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["chi2"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"92790.6","2":"21.69914","3":"91376.48","4":"2.46113","5":"13.04369","_rn_":"26696"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="depth-profiles.html#cb86-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(data<span class="sc">$</span>depth),<span class="at">length.out =</span> <span class="dv">40</span>) <span class="co"># calculation depth (g/cm2)</span></span>
+<span id="cb86-2"><a href="depth-profiles.html#cb86-2" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(z<span class="sc">*</span>res<span class="sc">$</span>rho[imin],res<span class="sc">$</span>ero[imin]<span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fl">1e6</span><span class="sc">*</span>res<span class="sc">$</span>rho[imin],res<span class="sc">$</span>age[imin],res<span class="sc">$</span>inh[imin],prm[,<span class="st">&quot;Be10&quot;</span>],S,Lambda) <span class="co"># compute concentration</span></span>
+<span id="cb86-3"><a href="depth-profiles.html#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb86-4"><a href="depth-profiles.html#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(data<span class="sc">$</span>C,<span class="fl">50e3</span>,<span class="fl">200e3</span>),<span class="at">ylim=</span><span class="fu">rev</span>(<span class="fu">range</span>(data<span class="sc">$</span>depth)),</span>
+<span id="cb86-5"><a href="depth-profiles.html#cb86-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;10Be concentration (at/g)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Depth below surface (cm)&quot;</span>)</span>
+<span id="cb86-6"><a href="depth-profiles.html#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb86-7"><a href="depth-profiles.html#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(C,z,<span class="at">lwd=</span><span class="dv">3</span>) <span class="co"># plotting the modeled profile</span></span>
+<span id="cb86-8"><a href="depth-profiles.html#cb86-8" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(data<span class="sc">$</span>C<span class="sc">-</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,data<span class="sc">$</span>C<span class="sc">+</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,<span class="at">length =</span> <span class="dv">0</span>)</span>
+<span id="cb86-9"><a href="depth-profiles.html#cb86-9" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">cex=</span><span class="dv">2</span>,<span class="at">bg=</span><span class="st">&quot;pink&quot;</span>)</span>
+<span id="cb86-10"><a href="depth-profiles.html#cb86-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,data<span class="sc">$</span>label,<span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+</details>
+<p><img src="_main_files/figure-html/pr8-1.png" width="672" /></p>
+<div class="codebox codeimage">
+<p>Below you can get all the necessary code to produce these figures</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb87-1"><a href="depth-profiles.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span>
+<span id="cb87-2"><a href="depth-profiles.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda)</span>
+<span id="cb87-3"><a href="depth-profiles.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm)</span>
+<span id="cb87-4"><a href="depth-profiles.html#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb87-5"><a href="depth-profiles.html#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tcn_depth_profiles&quot;</span>) <span class="co"># import the data set</span></span>
+<span id="cb87-6"><a href="depth-profiles.html#cb87-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> tcn_depth_profiles[tcn_depth_profiles<span class="sc">$</span>study<span class="sc">==</span><span class="st">&quot;laloy2017bayesian&quot;</span>,] <span class="co"># selecting a particular study</span></span>
+<span id="cb87-7"><a href="depth-profiles.html#cb87-7" aria-hidden="true" tabindex="-1"></a>data</span>
+<span id="cb87-8"><a href="depth-profiles.html#cb87-8" aria-hidden="true" tabindex="-1"></a>altitude <span class="ot">=</span> data<span class="sc">$</span>altitude[<span class="dv">1</span>] <span class="co"># elevation in m</span></span>
+<span id="cb87-9"><a href="depth-profiles.html#cb87-9" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> data<span class="sc">$</span>latitude[<span class="dv">1</span>] <span class="co"># latitude in degrees</span></span>
+<span id="cb87-10"><a href="depth-profiles.html#cb87-10" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
+<span id="cb87-11"><a href="depth-profiles.html#cb87-11" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span>
+<span id="cb87-12"><a href="depth-profiles.html#cb87-12" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">1.7</span> <span class="co">#  density (g/cm3)</span></span>
+<span id="cb87-13"><a href="depth-profiles.html#cb87-13" aria-hidden="true" tabindex="-1"></a>ero <span class="ot">=</span> <span class="dv">40</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fl">1e6</span><span class="sc">*</span>rho  <span class="co"># m/Ma -&gt; g/cm2/a</span></span>
+<span id="cb87-14"><a href="depth-profiles.html#cb87-14" aria-hidden="true" tabindex="-1"></a>age <span class="ot">=</span> <span class="fl">0.3e6</span> <span class="co"># a</span></span>
+<span id="cb87-15"><a href="depth-profiles.html#cb87-15" aria-hidden="true" tabindex="-1"></a>C0 <span class="ot">=</span> <span class="fl">20e3</span> <span class="co"># inheritance (at/g)</span></span>
+<span id="cb87-16"><a href="depth-profiles.html#cb87-16" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(data<span class="sc">$</span>depth),<span class="at">length.out =</span> <span class="dv">40</span>)<span class="sc">*</span>rho <span class="co"># calculation depth (g/cm2)</span></span>
+<span id="cb87-17"><a href="depth-profiles.html#cb87-17" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(z,ero,age,C0,prm[,<span class="st">&quot;Be10&quot;</span>],S,Lambda) <span class="co"># compute concentration´</span></span>
+<span id="cb87-18"><a href="depth-profiles.html#cb87-18" aria-hidden="true" tabindex="-1"></a><span class="co">#data = data[!data$label %in% c(3,5),] # if we want to remove samples 3 and 5 (use with caution)</span></span>
+<span id="cb87-19"><a href="depth-profiles.html#cb87-19" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">depth_profile_mc</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,prm[,<span class="st">&quot;Be10&quot;</span>],Lambda,S,</span>
+<span id="cb87-20"><a href="depth-profiles.html#cb87-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">age=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>)<span class="sc">*</span><span class="dv">1000</span>,</span>
+<span id="cb87-21"><a href="depth-profiles.html#cb87-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ero=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>),</span>
+<span id="cb87-22"><a href="depth-profiles.html#cb87-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">inh=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fl">1e5</span>,</span>
+<span id="cb87-23"><a href="depth-profiles.html#cb87-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">rho=</span><span class="fu">c</span>(<span class="fl">1.5</span>,<span class="fl">2.5</span>),</span>
+<span id="cb87-24"><a href="depth-profiles.html#cb87-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1=</span><span class="fl">50e3</span>)</span>
+<span id="cb87-25"><a href="depth-profiles.html#cb87-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-26"><a href="depth-profiles.html#cb87-26" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">=</span> <span class="fu">quantile</span>(res<span class="sc">$</span>chi2,<span class="fl">0.01</span>)</span>
+<span id="cb87-27"><a href="depth-profiles.html#cb87-27" aria-hidden="true" tabindex="-1"></a>best <span class="ot">=</span> res[res<span class="sc">$</span>chi2<span class="sc">&lt;</span>cutoff,]</span>
+<span id="cb87-28"><a href="depth-profiles.html#cb87-28" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(best[,<span class="sc">-</span><span class="dv">5</span>],<span class="at">pch=</span><span class="dv">16</span>,<span class="at">col=</span><span class="fu">adjustcolor</span>(<span class="st">&quot;blue&quot;</span>,<span class="fl">0.2</span>)) <span class="co"># we remove the last column (5) which correspond to the chi2</span></span>
+<span id="cb87-29"><a href="depth-profiles.html#cb87-29" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">=</span> <span class="fu">which.min</span>(res<span class="sc">$</span>chi2) <span class="co"># position of the lowest chi2 in the dataframe</span></span>
+<span id="cb87-30"><a href="depth-profiles.html#cb87-30" aria-hidden="true" tabindex="-1"></a>res[imin,]</span>
+<span id="cb87-31"><a href="depth-profiles.html#cb87-31" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(data<span class="sc">$</span>depth),<span class="at">length.out =</span> <span class="dv">40</span>) <span class="co"># calculation depth (g/cm2)</span></span>
+<span id="cb87-32"><a href="depth-profiles.html#cb87-32" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(z<span class="sc">*</span>res<span class="sc">$</span>rho[imin],res<span class="sc">$</span>ero[imin]<span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fl">1e6</span><span class="sc">*</span>res<span class="sc">$</span>rho[imin],res<span class="sc">$</span>age[imin],res<span class="sc">$</span>inh[imin],prm[,<span class="st">&quot;Be10&quot;</span>],S,Lambda) <span class="co"># compute concentration</span></span>
+<span id="cb87-33"><a href="depth-profiles.html#cb87-33" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb87-34"><a href="depth-profiles.html#cb87-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cn">NA</span>,<span class="at">xlim=</span><span class="fu">range</span>(data<span class="sc">$</span>C,<span class="fl">50e3</span>,<span class="fl">200e3</span>),<span class="at">ylim=</span><span class="fu">rev</span>(<span class="fu">range</span>(data<span class="sc">$</span>depth)),</span>
+<span id="cb87-35"><a href="depth-profiles.html#cb87-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;10Be concentration (at/g)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Depth below surface (cm)&quot;</span>)</span>
+<span id="cb87-36"><a href="depth-profiles.html#cb87-36" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb87-37"><a href="depth-profiles.html#cb87-37" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(C,z,<span class="at">lwd=</span><span class="dv">3</span>) <span class="co"># plotting the modeled profile</span></span>
+<span id="cb87-38"><a href="depth-profiles.html#cb87-38" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(data<span class="sc">$</span>C<span class="sc">-</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,data<span class="sc">$</span>C<span class="sc">+</span>data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,<span class="at">length =</span> <span class="dv">0</span>)</span>
+<span id="cb87-39"><a href="depth-profiles.html#cb87-39" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">cex=</span><span class="dv">2</span>,<span class="at">bg=</span><span class="st">&quot;pink&quot;</span>)</span>
+<span id="cb87-40"><a href="depth-profiles.html#cb87-40" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>depth,data<span class="sc">$</span>label,<span class="at">cex=</span><span class="fl">0.7</span>)</span></code></pre></div>
+</details>
+</div>
+<div class="actionbox actionimage">
+<ul>
+<li>Change the range of explored parameters</li>
+<li>Try to remove some samples, and observe the influence on the solution</li>
+</ul>
+</div>
+<p>In many situations we have some knowledge about the values or plausible ranges of some parameters.
+For example the density can be measured at the sampling site, and inheritance can be estimated from the shape of the profile.
+In our case it seems reasonable to consider that it is close to 90<span class="math inline">\(\times10^3\)</span> at/g.
+We can restrict the range of variation or even fix these parameters, which is what we do next, by letting only the age and denudation rate as free parameters.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="depth-profiles.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data = data[!data$label %in% c(3,5),] # if we want to remove samples 3 and 5 (use with caution)</span></span>
+<span id="cb88-2"><a href="depth-profiles.html#cb88-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">depth_profile_mc</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,prm[,<span class="st">&quot;Be10&quot;</span>],Lambda,S,</span>
+<span id="cb88-3"><a href="depth-profiles.html#cb88-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">age=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">200</span>)<span class="sc">*</span><span class="dv">1000</span>,</span>
+<span id="cb88-4"><a href="depth-profiles.html#cb88-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ero=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>),</span>
+<span id="cb88-5"><a href="depth-profiles.html#cb88-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">inh=</span><span class="dv">90</span><span class="sc">*</span><span class="fl">1e3</span>,</span>
+<span id="cb88-6"><a href="depth-profiles.html#cb88-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">rho=</span><span class="dv">2</span>,</span>
+<span id="cb88-7"><a href="depth-profiles.html#cb88-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1=</span><span class="dv">20000</span>,<span class="at">n2=</span><span class="dv">20</span>)</span>
+<span id="cb88-8"><a href="depth-profiles.html#cb88-8" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">=</span> <span class="fu">quantile</span>(res<span class="sc">$</span>chi2,<span class="fl">0.01</span>)</span>
+<span id="cb88-9"><a href="depth-profiles.html#cb88-9" aria-hidden="true" tabindex="-1"></a>best <span class="ot">=</span> res[res<span class="sc">$</span>chi2<span class="sc">&lt;</span>cutoff,]</span>
+<span id="cb88-10"><a href="depth-profiles.html#cb88-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(best<span class="sc">$</span>ero,best<span class="sc">$</span>age<span class="sc">/</span><span class="dv">1000</span>,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">col=</span><span class="fu">adjustcolor</span>(<span class="st">&quot;blue&quot;</span>,<span class="fl">0.2</span>),</span>
+<span id="cb88-11"><a href="depth-profiles.html#cb88-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Denudation rate (m/Ma)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Age (ka)&quot;</span>)</span>
+<span id="cb88-12"><a href="depth-profiles.html#cb88-12" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">=</span> <span class="fu">which.min</span>(res<span class="sc">$</span>chi2) <span class="co"># position of the lowest chi2 in the dataframe</span></span>
+<span id="cb88-13"><a href="depth-profiles.html#cb88-13" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(res[imin,]<span class="sc">$</span>ero,res[imin,]<span class="sc">$</span>age<span class="sc">/</span><span class="dv">1000</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="_main_files/figure-html/pr9-1.png" width="672" /></p>
+<p>In this case the results will be much easier to visualize through the construction of a <span class="math inline">\(\chi^2\)</span> surface.
+We use the library <code>akima</code> to grid the results (note that we use <span class="math inline">\(\log_{10}(\chi^2)\)</span>).</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="depth-profiles.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;akima&quot;</span>)</span>
+<span id="cb89-2"><a href="depth-profiles.html#cb89-2" aria-hidden="true" tabindex="-1"></a>spline<span class="ot">&lt;-</span><span class="fu">interp</span>(res<span class="sc">$</span>ero<span class="sc">/</span><span class="fu">max</span>(res<span class="sc">$</span>ero),res<span class="sc">$</span>age<span class="sc">/</span><span class="fu">max</span>(res<span class="sc">$</span>age),<span class="fu">log10</span>(res<span class="sc">$</span>chi2),<span class="at">duplicate=</span><span class="st">&quot;mean&quot;</span>,<span class="at">nx=</span><span class="dv">100</span>,<span class="at">ny=</span><span class="dv">100</span>)</span>
+<span id="cb89-3"><a href="depth-profiles.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(spline<span class="sc">$</span>x<span class="sc">*</span><span class="fu">max</span>(res<span class="sc">$</span>ero),spline<span class="sc">$</span>y<span class="sc">*</span><span class="fu">max</span>(res<span class="sc">$</span>age)<span class="sc">/</span><span class="fl">1e3</span>,spline<span class="sc">$</span>z,<span class="at">col=</span><span class="st">&quot;pink&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Denudation rate (m/Ma)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Age (ka)&quot;</span>)</span>
+<span id="cb89-4"><a href="depth-profiles.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(res[imin,]<span class="sc">$</span>ero,res[imin,]<span class="sc">$</span>age<span class="sc">/</span><span class="dv">1000</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="co"># &quot;best&quot; model</span></span></code></pre></div>
+</details>
+<p><img src="_main_files/figure-html/pr10-1.png" width="672" /></p>
+<div class="codebox codeimage">
+<p>Below you can get all the necessary code to produce these figures</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb90-1"><a href="depth-profiles.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span>
+<span id="cb90-2"><a href="depth-profiles.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Lambda)</span>
+<span id="cb90-3"><a href="depth-profiles.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(prm)</span>
+<span id="cb90-4"><a href="depth-profiles.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb90-5"><a href="depth-profiles.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tcn_depth_profiles&quot;</span>) <span class="co"># import the data set</span></span>
+<span id="cb90-6"><a href="depth-profiles.html#cb90-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> tcn_depth_profiles[tcn_depth_profiles<span class="sc">$</span>study<span class="sc">==</span><span class="st">&quot;laloy2017bayesian&quot;</span>,] <span class="co"># selecting a particular study</span></span>
+<span id="cb90-7"><a href="depth-profiles.html#cb90-7" aria-hidden="true" tabindex="-1"></a>data</span>
+<span id="cb90-8"><a href="depth-profiles.html#cb90-8" aria-hidden="true" tabindex="-1"></a>altitude <span class="ot">=</span> data<span class="sc">$</span>altitude[<span class="dv">1</span>] <span class="co"># elevation in m</span></span>
+<span id="cb90-9"><a href="depth-profiles.html#cb90-9" aria-hidden="true" tabindex="-1"></a>latitude <span class="ot">=</span> data<span class="sc">$</span>latitude[<span class="dv">1</span>] <span class="co"># latitude in degrees</span></span>
+<span id="cb90-10"><a href="depth-profiles.html#cb90-10" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">atm_pressure</span>(<span class="at">alt=</span>altitude,<span class="at">model=</span><span class="st">&quot;stone2000&quot;</span>) <span class="co"># compute atmospheric pressure at site</span></span>
+<span id="cb90-11"><a href="depth-profiles.html#cb90-11" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">scaling_st</span>(P,latitude) <span class="co"># compute the scaling parameters according to Stone (2000)</span></span>
+<span id="cb90-12"><a href="depth-profiles.html#cb90-12" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">=</span> <span class="fl">1.7</span> <span class="co">#  density (g/cm3)</span></span>
+<span id="cb90-13"><a href="depth-profiles.html#cb90-13" aria-hidden="true" tabindex="-1"></a>ero <span class="ot">=</span> <span class="dv">40</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fl">1e6</span><span class="sc">*</span>rho  <span class="co"># m/Ma -&gt; g/cm2/a</span></span>
+<span id="cb90-14"><a href="depth-profiles.html#cb90-14" aria-hidden="true" tabindex="-1"></a>age <span class="ot">=</span> <span class="fl">0.3e6</span> <span class="co"># a</span></span>
+<span id="cb90-15"><a href="depth-profiles.html#cb90-15" aria-hidden="true" tabindex="-1"></a>C0 <span class="ot">=</span> <span class="fl">20e3</span> <span class="co"># inheritance (at/g)</span></span>
+<span id="cb90-16"><a href="depth-profiles.html#cb90-16" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(data<span class="sc">$</span>depth),<span class="at">length.out =</span> <span class="dv">40</span>)<span class="sc">*</span>rho <span class="co"># calculation depth (g/cm2)</span></span>
+<span id="cb90-17"><a href="depth-profiles.html#cb90-17" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">solv_conc_eul</span>(z,ero,age,C0,prm[,<span class="st">&quot;Be10&quot;</span>],S,Lambda) <span class="co"># compute concentration´</span></span>
+<span id="cb90-18"><a href="depth-profiles.html#cb90-18" aria-hidden="true" tabindex="-1"></a><span class="co">#data = data[!data$label %in% c(3,5),] # if we want to remove samples 3 and 5 (use with caution)</span></span>
+<span id="cb90-19"><a href="depth-profiles.html#cb90-19" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">depth_profile_mc</span>(data<span class="sc">$</span>C,data<span class="sc">$</span>C_e,data<span class="sc">$</span>depth,prm[,<span class="st">&quot;Be10&quot;</span>],Lambda,S,</span>
+<span id="cb90-20"><a href="depth-profiles.html#cb90-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">age=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">200</span>)<span class="sc">*</span><span class="dv">1000</span>,</span>
+<span id="cb90-21"><a href="depth-profiles.html#cb90-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ero=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>),</span>
+<span id="cb90-22"><a href="depth-profiles.html#cb90-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">inh=</span><span class="dv">90</span><span class="sc">*</span><span class="fl">1e3</span>,</span>
+<span id="cb90-23"><a href="depth-profiles.html#cb90-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">rho=</span><span class="dv">2</span>,</span>
+<span id="cb90-24"><a href="depth-profiles.html#cb90-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1=</span><span class="dv">20000</span>,<span class="at">n2=</span><span class="dv">20</span>)</span>
+<span id="cb90-25"><a href="depth-profiles.html#cb90-25" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">=</span> <span class="fu">quantile</span>(res<span class="sc">$</span>chi2,<span class="fl">0.01</span>)</span>
+<span id="cb90-26"><a href="depth-profiles.html#cb90-26" aria-hidden="true" tabindex="-1"></a>best <span class="ot">=</span> res[res<span class="sc">$</span>chi2<span class="sc">&lt;</span>cutoff,]</span>
+<span id="cb90-27"><a href="depth-profiles.html#cb90-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(best<span class="sc">$</span>ero,best<span class="sc">$</span>age<span class="sc">/</span><span class="dv">1000</span>,<span class="at">pch=</span><span class="dv">16</span>,<span class="at">col=</span><span class="fu">adjustcolor</span>(<span class="st">&quot;blue&quot;</span>,<span class="fl">0.2</span>),</span>
+<span id="cb90-28"><a href="depth-profiles.html#cb90-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Denudation rate (m/Ma)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Age (ka)&quot;</span>)</span>
+<span id="cb90-29"><a href="depth-profiles.html#cb90-29" aria-hidden="true" tabindex="-1"></a>imin <span class="ot">=</span> <span class="fu">which.min</span>(res<span class="sc">$</span>chi2) <span class="co"># position of the lowest chi2 in the dataframe</span></span>
+<span id="cb90-30"><a href="depth-profiles.html#cb90-30" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(res[imin,]<span class="sc">$</span>ero,res[imin,]<span class="sc">$</span>age<span class="sc">/</span><span class="dv">1000</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb90-31"><a href="depth-profiles.html#cb90-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;akima&quot;</span>)</span>
+<span id="cb90-32"><a href="depth-profiles.html#cb90-32" aria-hidden="true" tabindex="-1"></a>spline<span class="ot">&lt;-</span><span class="fu">interp</span>(res<span class="sc">$</span>ero<span class="sc">/</span><span class="fu">max</span>(res<span class="sc">$</span>ero),res<span class="sc">$</span>age<span class="sc">/</span><span class="fu">max</span>(res<span class="sc">$</span>age),<span class="fu">log10</span>(res<span class="sc">$</span>chi2),<span class="at">duplicate=</span><span class="st">&quot;mean&quot;</span>,<span class="at">nx=</span><span class="dv">100</span>,<span class="at">ny=</span><span class="dv">100</span>)</span>
+<span id="cb90-33"><a href="depth-profiles.html#cb90-33" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(spline<span class="sc">$</span>x<span class="sc">*</span><span class="fu">max</span>(res<span class="sc">$</span>ero),spline<span class="sc">$</span>y<span class="sc">*</span><span class="fu">max</span>(res<span class="sc">$</span>age)<span class="sc">/</span><span class="fl">1e3</span>,spline<span class="sc">$</span>z,<span class="at">col=</span><span class="st">&quot;pink&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Denudation rate (m/Ma)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Age (ka)&quot;</span>)</span>
+<span id="cb90-34"><a href="depth-profiles.html#cb90-34" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(res[imin,]<span class="sc">$</span>ero,res[imin,]<span class="sc">$</span>age<span class="sc">/</span><span class="dv">1000</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="co"># &quot;best&quot; model</span></span></code></pre></div>
+</details>
+</div>
+<div class="actionbox actionimage">
+<ul>
+<li>Change the values for density and inheritance</li>
+<li>Repeat the calculations with the other profiles included in the dataset (<code>data("tcn_depth_profiles")</code>) : <span class="citation">Siame et al. (<a href="references.html#ref-siame2004local" role="doc-biblioref">2004</a>)</span>, <span class="citation">Hein et al. (<a href="references.html#ref-hein2009middle" role="doc-biblioref">2009</a>)</span>, <span class="citation">Hidy et al. (<a href="references.html#ref-hidy2010geologically" role="doc-biblioref">2010</a>)</span></li>
+</ul>
+</div>
+<div class="questionbox questionimage">
+<p>How well are the age and denudation rate defined for this profile?</p>
+</div>
+</div>
+<div id="interactive-shiny-app-2" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Interactive shiny app<a href="depth-profiles.html#interactive-shiny-app-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can also explore profile modelling dynamically using this embedded application, which use the same type of code.</p>
+<iframe src="https://shinyproxy.osupytheas.fr/profile_modelling/" width="672" height="1200px" data-external="1">
+</iframe>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="two-nuclides-systems.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

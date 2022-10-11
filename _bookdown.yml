@@ -1,4 +1,4 @@
 output_dir: "docs"
-rmd_files: ["index.Rmd", "chap-intro.Rmd", "chap-scalings.Rmd","chap-build_up.Rmd","chap-exposure.Rmd","chap-denudation.Rmd","chap-2nuclides.Rmd","chap-references.Rmd"]
+rmd_files: ["index.Rmd", "chap-intro.Rmd", "chap-scalings.Rmd","chap-build_up.Rmd","chap-exposure.Rmd","chap-denudation.Rmd","chap-2nuclides.Rmd","chap-profiles.Rmd","chap-references.Rmd"]
 
 

@@ -36,4 +36,9 @@ on-the-importance-of-muons
 two-nuclides-systems
 evolution-of-ratios
 steady-state-denudation-and-constant-exposure-curves
+depth-profiles
+setup-and-dataset
+profile-modelling
+exploration-of-parameters-space
+interactive-shiny-app-2
 references
