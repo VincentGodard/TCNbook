@@ -71,7 +71,24 @@ We are now going to make some simple calculations to interpret concentrations in
 The objective is solving for $t$ the equation $C_{mod}(t) = C_{mes}$. 
 The left hand side is our modelled concentration, obtained for example with equation \@ref(eq:conceuler) (`solv_conc_eul`), where we need to keep in mind all the hypotheses we make ($z=0$, $\varepsilon=0$, $C_0=0$). 
 
-We are going to use an example from @protin2019climatic, using sample *ARG-16-9*. 
+We are going to use an example from @protin2019climatic, using sample *ARG-16-9*, which was collected from a lateral moraine of the Argentière glacier (Northern French Alps).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(sf)
+library(leaflet)
+df = data.frame(X =  6.96065,Y = 45.96670,label="ARG-16-9")
+  
+m <- leaflet(df) %>%
+  addTiles() %>%
+  addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
+  addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
+  addLayersControl(baseGroups = c("OpenStreetMap","Esri.WorldImagery"),position = "topleft") %>%
+  addLabelOnlyMarkers(data = df,
+                      lng = ~X, lat = ~Y, label = ~label, 
+                      labelOptions = labelOptions(noHide = TRUE, direction = 'auto', textOnly = FALSE)) 
+m
+```
+
 Here are the characteristics of this sample (see table 1 from this paper).
 
 ```{r ed4}
