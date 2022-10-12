@@ -14,7 +14,7 @@ This will be done using an *Eulerian point of view*, which is the most straightf
 In this case the quantity of interest (concentration) is computed at fixed depths below the surface, while the exhumed material is moving through this reference frame during its trajectory toward the surface.
 More details on the differences between Eulerian and Lagrangian approaches, and their applications to complex exposition/denudation histories, will be presented later.
 
-Note that interpreting measured concentrations in terms of end-member situations of *pure exposure* or *steady-state denudation* is often done with online calculators (@balco2008complete,@marrero2016cronusearth,@martin2017crep).
+Note that interpreting measured concentrations in terms of end-member situations of *pure exposure* or *steady-state denudation* is often done with online calculators (@balco2008complete,@marrero2016cosmogenic,@martin2017crep).
 Those calculators allow to perform very accurate computations of age or denudation rate, but one should always be careful about the underlying hypotheses (no erosion, steady state achieved, etc ...) when interpreting measured concentrations and always think about how TCN are accumulating in the sampled material.
 
 The goal of this activity is to explore this behavior, using simple approaches.
