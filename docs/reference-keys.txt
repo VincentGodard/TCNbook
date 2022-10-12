@@ -42,3 +42,5 @@ profile-modelling
 exploration-of-parameters-space
 interactive-shiny-app-2
 references
+section
+front-page

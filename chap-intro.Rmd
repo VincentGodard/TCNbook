@@ -1,6 +1,8 @@
 # Introduction
 
-## Objectives of the session
+## Terrestrial Cosmogenic Nuclides and Earth Surface Dynamics
+
+## Scope and objectives 
 
 We are going to cover two things during this session
 
@@ -9,6 +11,66 @@ We are going to cover two things during this session
 - test
 
 
+## Usage
+
+This html page is derived from an [R Markdown](http://rmarkdown.rstudio.com) Notebook.
+You can copy/paste the various lines of code into your own R script and run it in any R session.
+
+These activities do not require any specific prior knowledge of R programming language.
+The idea is for you to simply copy and paste the code in a script, run it, and change various parameters to observe and investigate the associated response.
+
+In addition to the scripting-oriented activities below you can also experiment visually with a few interactive [Shiny](https://shiny.rstudio.com) apps
+
+<http://shinyproxy.osupytheas.fr>
+
+Both are built on the dedicated `TCNtools` package :
+
+<https://vincentgodard.github.io/TCNtools>
+
+This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.
+
+You can install the package directly on you system, using the instruction provided on the package webpage (requires `devtools` package to install from Github).
+
+<!-- Alternatively launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the following icon [![binder](images/binder.svg)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio). -->
+
+Alternatively you can launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the icon ![](images/binder.svg) on the package website (right column).
+
+<!-- You can launch the binder by clicking on the icon ![](images/binder.svg) on the package website (right column). -->
+
+The first thing you will have to do, before calling any of the functions, is to load the `TCNtools` package.
+
+```{r}
+library("TCNtools")
+```
+
+Various boxes will be used throughout the book.
+
+:::: {.codebox .codeimage data-latex="code"}
+This a summary code box. 
+In the following chapters the processes will explained step by step, with the various actions distributed between different successive code blocks (also named chunks) for better understanding.
+
+For convenience, and avoid you to have to copy and paste these various blocks one by one, sometimes everything will be combined in one block at the end of the section, which can unfold, copy and then paste into the R console or a script.
+Below you can get all the necessary code to produce a figure or result.
+```{r eval=FALSE, class.source='fold-hide', include=TRUE}
+a = 1
+b = 3
+c = (a+b)^2
+```
+::::
+
+
+:::: {.actionbox .actionimage data-latex="action"}
+The purpose of this book is to allow you to experiment and explore, not just copy and paste some code.
+This kind of box will suggest you some action on the code, typically changing the value of parameters to observe the evolution of the result.
+::::
+
+:::: {.notebox .noteimage data-latex="note"}
+This box will be used to highlight or stress something important.
+::::
+
+:::: {.questionbox .questionimage data-latex="question"}
+This box will be used to formulate some questions for you to think about.
+::::
 
 
 
