@@ -96,6 +96,12 @@ Starting from a position on the steady-state denudation curve, we progressively 
 
 > **TODO** Change the denudation rate used to compute the initial steayd-state concentrations
 
+## Interactive shiny app
 
+You can also explore dynamically 2 nuclides plots using this embedded application, which use the same type of code. 
+
+```{r echo=FALSE}
+knitr::include_url("https://shinyproxy.osupytheas.fr/2_nuclides/",height = "1200px")
+```
 
 

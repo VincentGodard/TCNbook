@@ -304,7 +304,7 @@ Below you can get all the necessary code to produce the figure
 - Further reading for the $^{14}$C/$^{10}$Be system in @mudd2016detection. What kinf of information does the use of multiple nuclides can provide?
 ::::
 
-You can also explore dynamically the impact of changes in denudation rates up using this embedded application, which use the same type of code. 
+You can also explore dynamically the impact of changes in denudation rates  using this embedded application, which use the same type of code. 
 
 ```{r echo=FALSE}
 knitr::include_url("https://shinyproxy.osupytheas.fr/transient_erosion/",height = "1200px")
