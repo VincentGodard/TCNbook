@@ -4,22 +4,16 @@
 
 ## Scope and objectives 
 
-We are going to cover two things during this session
-
--   look into the calculation of scaling factors used for the computation of local production rates, and how they vary in space and time
--   make some simple calculations of TCN concentration build up at the Earth surface, as a response to exposure and denudation
-- test
-
 
 ## Usage
 
-This html page is derived from an [R Markdown](http://rmarkdown.rstudio.com) Notebook.
+This html site was generated from  [R Markdown](http://rmarkdown.rstudio.com) files using the [bookdown](https://bookdown.org) package.
 You can copy/paste the various lines of code into your own R script and run it in any R session.
 
 These activities do not require any specific prior knowledge of R programming language.
 The idea is for you to simply copy and paste the code in a script, run it, and change various parameters to observe and investigate the associated response.
 
-In addition to the scripting-oriented activities below you can also experiment visually with a few interactive [Shiny](https://shiny.rstudio.com) apps
+In addition to the scripting-oriented activities below you can also experiment visually with a few interactive [Shiny](https://shiny.rstudio.com) apps :
 
 <http://shinyproxy.osupytheas.fr>
 
@@ -33,7 +27,9 @@ You can install the package directly on you system, using the instruction provid
 
 <!-- Alternatively launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the following icon [![binder](images/binder.svg)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio). -->
 
-Alternatively you can launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the icon ![](images/binder.svg) on the package website (right column).
+Alternatively you can launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the icon ![](images/binder.svg) on the package Github repository :
+
+<https://github.com/VincentGodard/TCNtools>
 
 <!-- You can launch the binder by clicking on the icon ![](images/binder.svg) on the package website (right column). -->
 
@@ -47,7 +43,7 @@ Various boxes will be used throughout the book.
 
 :::: {.codebox .codeimage data-latex="code"}
 This a summary code box. 
-In the following chapters the processes will explained step by step, with the various actions distributed between different successive code blocks (also named chunks) for better understanding.
+In the following chapters the processes will be explained step by step, with the various actions distributed between different successive code blocks (also named chunks) for better understanding.
 
 For convenience, and avoid you to have to copy and paste these various blocks one by one, sometimes everything will be combined in one block at the end of the section, which can unfold, copy and then paste into the R console or a script.
 Below you can get all the necessary code to produce a figure or result.

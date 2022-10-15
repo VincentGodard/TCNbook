@@ -1,10 +1,10 @@
 eq:conceuler
 eq:pureexpo
 eq:ssero
-prerequisites
-usage
 introduction
-objectives-of-the-session
+terrestrial-cosmogenic-nuclides-and-earth-surface-dynamics
+scope-and-objectives
+usage
 scaling-factors
 time-independent-scaling
 site-characteristics
@@ -21,6 +21,11 @@ background
 set-up-of-the-calculations
 evolution-of-concentration-with-time
 two-end-member-situations
+comparing-the-eulerian-and-lagrangian-descriptions
+definition-of-the-denudation-scenario
+computation-of-concentrations-with-the-eulerian-reference-frame
+computation-of-concentrations-with-the-lagrangian-reference-frame
+comparison-of-results
 interactive-shiny-app-1
 application-to-exposure-dating
 back-to-the-evolution-of-concentration
@@ -42,5 +47,3 @@ profile-modelling
 exploration-of-parameters-space
 interactive-shiny-app-2
 references
-section
-front-page

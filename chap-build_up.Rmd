@@ -53,7 +53,8 @@ For easy reference a set of data for parameters of interest is included in the `
     -   neutrons for spallation reactions $\Lambda_{spal}$
     -   stopping muons $\Lambda_{stop}$
     -   fast muons $\Lambda_{fast}$\
--   a vector (`prm`) with the SLHL production rates (in at/g/a), in this case for the *st* scaling scheme (@stone2000air), and decay constant $\lambda$ (in 1/a) for the nuclides of interest. Note that this will need to be modified when using other scaling schemes.
+-   a vector (`prm`) with the SLHL production rates (in at/g/a), in this case for the *st* scaling scheme (@stone2000air), and decay constant $\lambda$ (in 1/a) for the nuclides of interest. 
+Note that this will need to be modified when using other scaling schemes.
 
 Note that these often used SLHL values are defined for convenience, most calculators for exposure age work directly with the production rate value at calibration sites, and that they are always relative to the scaling scheme used (@borchers2016geological).
 
@@ -98,7 +99,6 @@ t =  seq(0,200e3,length.out=1000) # a vector containing time from 0 to 100 ka by
 z = 0 * rho # depth at which we are going to perform the calculation (cm converted to g/cm2)
 C0 = 0 # inherited concentration (at/g)
 ero = 0 * (100/1e6*rho) # denudation rate expressed in m/Ma and converted in g/cm2/a
-
 ```
 
 Now we can compute the concentration (at various times `t`), according to equation \@ref(eq:conceuler).
@@ -125,7 +125,7 @@ Below you can get all the necessary code to produce the figure
 ```
 ::::
 
-Starting with zero erosion ($\varepsilon=0$), corresponding to the pure exposition of a surface, we see here the progressive build-up of concentration though time and the establishment of balance between gains (production) and losses (denudation and decay) leading to the concentration plateau at steady state.
+Starting with zero erosion ($\varepsilon=0$), corresponding to the pure exposition of a surface, we see the progressive build-up of concentration though time and the establishment of a balance between gains (production) and losses (denudation and decay) leading to the concentration plateau at steady state.
 
 Note that two dashed lines are added to the graph,
 
@@ -136,7 +136,7 @@ $$ C_{max}=\sum_i \frac{P_i}{\frac{\rho \varepsilon}{\Lambda_i}+\lambda} $$
 :::: {.actionbox .actionimage data-latex="action"}
 -   Change the maximum of the `t` vector until you see the influence of radioactive decay and the plateau.
 -   Add some inheritance ($C_0$)
--   Test the evolution with other nuclides such as $^{26}$Al and $^{14}$C (set nuc to `Al26` or `C14`)
+-   Test the evolution with other nuclides such as $^{26}$Al and $^{14}$C (set `nuc` to `Al26` or `C14`)
 -   Modify the `ero`  parameter above (always keeping it is in g/cm$^2$/a), to see its influence on time needed to reach steady state and the final concentration
 ::::
 
@@ -171,19 +171,121 @@ Below you can get all the necessary code to produce the figure
 ::::
 
 
-Note that this a log-log plot. It is probably one of the most important figure to keep in mind when analyzing TCN concentrations. It clearly shows the existence of two end-member situations when interpreting these concentrations, in terms of exposure age or denudation rates, and the transition between the two. 
+Note that this a log-log plot. 
+It is probably one of the most important figure to keep in mind when analyzing TCN concentrations. 
+It clearly shows the existence of two end-member situations when interpreting these concentrations, in terms of exposure age or denudation rates, and the transition between the two. 
 
 :::: {.questionbox .questionimage data-latex="action"}
 Think about a bit about the following points
 
-- What are the key hypothesis made when interpreting a TCN concentration in terms of
+- What are the key hypotheses made when interpreting a TCN concentration in terms of
     - exposure age
     - surface denudation
-- Can you think of geological/geomorphological situations where these hypotheses are violated?
+- Can you think of geological/geomorphological situations where these hypotheses are invalid?
 - Why are the plateau concentrations so different?
 - How is the time to reach the plateau changing and why?
 ::::
 
+
+
+## Comparing the Eulerian and Lagrangian descriptions
+
+This section presents a simple comparison of the Eulerian and Lagrangian approaches for the computation of cosmogenic nuclides concentration evolution in complex denudation and exposure scenarios.
+A nice presentation of this distinction is provided in @knudsen2019timeintegrating.
+
+### Definition of the denudation scenario
+
+We will start from a steady state situation under constant denudation, and then apply a change in the denudation rate for a given period of time.
+
+```{r bu11}
+tmax = 2e6 # duration in a 
+ero = 1/1.e6*100*rho # denudation rate conversion en m/Ma -> g/cm2/a
+fact = 5 # change factor
+```
+
+Here the duration of the simulation will be `r tmax/1e6` Ma, the initial denudation rate will be `r ero*1e6/100/rho` m/Ma, which will changed by a factor `r fact` at the beginning of the simulation.
+
+### Computation of concentrations with the Eulerian reference frame
+
+We compute the evolution of concentrations at the surface ($z=0$) using an Eulerian point of view.
+The calculation is very straightforward with to the `solv_conc_eul` function, note the use of `in_ero` parameter, to specify a starting denudation rate.
+
+```{r bu12}
+df_e = data.frame(t = seq(0,tmax,length.out = 10000))
+df_e$C10 = solv_conc_eul(0,ero*fact,df_e$t,0,prm[,"Be10"],S,Lambda,in_ero=ero)
+```
+
+### Computation of concentrations with the  Lagrangian reference frame
+
+Now we do the same calculation using a Lagrangian point of view, i.e. with a reference frame attached to a rock particle during its journey toward the surface as a response to denudation. 
+It is slightly more complicated than in the Eulerian case and is done using the `solv_conc_lag` function.
+
+We first initiate a dataframe (`df_l`) and compute the evolution in depth `z` of the particle through time when it is exhumed from its initial depth (here `r ero*fact*tmax/rho/100` m) to the surface at a rate `r ero*fact/rho/100*1e6` m/Ma.
+
+```{r bu13}
+df_l = data.frame(t=seq(0,tmax,length.out = 10000)) # data frame to store results
+df_l$z = ero*fact*df_l$t # cumulative erosion trough time (g/cm2)
+df_l$z = max(df_l$z) - df_l$z # convert into depth
+```
+
+We compute the steady state concentration at starting depth, using the Eulerian solver.
+
+```{r bu14}
+C10_0 = solv_conc_eul(max(df_l$z),ero,Inf,0,prm[,'Be10'],S,Lambda) # starting 10Be concentration
+```
+
+
+We then define another column in the data frame with the evolution of scaling parameters through time. 
+It is trivial here in the case of the time-independent **st** scaling, but it will be highly valuable when dealing with time-dependent scalings, where the Eulerian approach is not applicable.
+ 
+```{r bu15}
+df_l$Ssp  = rep(as.numeric(S[1]),nrow(df_l)) # scaling spallation
+df_l$Smu  = rep(as.numeric(S[2]),nrow(df_l)) # scaling muons
+```
+
+Then we calculate the un-scaled production rates at depths  of interest. 
+Here again, as we use simple models of exponential decrease for production with depth, the interest of using such Lagrangian approach is not obvious. 
+But such way of computing concentration will allow to deal with non-exponential production profiles, which might necessary in some situation for  muons or low-energy neutrons. 
+
+
+```{r bu16}
+# 10Be (not scaled)
+df_l$Psp10 = prm["Pspal",'Be10']*exp(-1*df_l$z/Lambda["Lspal"]) # spallation
+df_l$Pmu10 = prm["Pstop",'Be10']*exp(-1*df_l$z/Lambda["Lstop"]) + prm["Pfast",'Be10']*exp(-1*df_l$z/Lambda["Lfast"]) # muons
+```
+
+We can now use the `solv_conc_lag` function to compute the evolution of concentration through time and depth.
+```{r bu17}
+df_l$C10 = solv_conc_lag(df_l$t,df_l$z,C10_0,df_l$Psp10,df_l$Pmu10,prm["lambda",'Be10'],cbind(df_l$Ssp,df_l$Smu),final=FALSE)
+```
+
+### Comparison of results
+
+We can now plot the results of the calculations and compare the two approaches.
+
+```{r bu18}
+col_e = "chartreuse"
+col_l = "chocolate1"
+  
+plot(df_e$t/1e6,df_e$C10/1e6,type="l",col=col_e,lwd=2, xlim=range(df_e$t/1e6),ylim=range(df_e$C10/1e6,df_l$C10/1e6),
+     xlab="Time (Ma)",ylab="10Be concentration (x10e6 at/g)")
+grid()
+lines(df_l$t/1e6,df_l$C10/1e6,col=col_l,lwd=2)
+legend("topright",c("Eulerian","Lagrangian"),lwd=2,col=c(col_e,col_l))
+```
+
+:::: {.codebox .codeimage data-latex="caution"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('bu0','bu3','bu11','bu12','bu13','bu14','bu15','bu16','bu17','bu18')}
+```
+::::
+
+The Lagrangian evolution starts with a low concentration corresponding to the burial at depth of the particle at the onset of the evolution, while at the same time ($t=0$) we are looking at the surface with the Eulerian point of view, and then obviously observe much higher concentrations.
+The two descriptions converge toward the same concentration at the end of the evolution (i.e. when the lagrangian particle reaches the surface).
+
+:::: {.questionbox .questionimage data-latex="question"}
+Try to think about various contexts and applications where the use of the Eulerian or Lagrangian appraoch could be preferred, and why.
+::::
 
 ## Interactive shiny app
 
