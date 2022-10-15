@@ -275,10 +275,45 @@ Below you can get all the necessary code to produce the figures presented in thi
 
 ## Change in denudation through time
 
+The  `solv_conc_eul` function has a `in_ero` parameter which allows to specify an initial denudation rate, and then simulate the evolution concentration as a response to a change in the denudation rate.
+
+```{r dm11}
+nuc = "Be10"
+E1 = 10/1.e6*100*rho # denudation rate conversion en m/Ma -> g/cm2/a
+E2 = 20/1.e6*100*rho # denudation rate conversion en m/Ma -> g/cm2/a
+t = seq(0,1e6,length.out = 10000)
+C = solv_conc_eul(0,E2,t,0,prm[,nuc],S,Lambda,in_ero=E1)
+plot(t/1e6,C,xlab="Time (Ma)",ylab="Concentration (at/g)",type="l",col="gold",lwd=2)
+```
+
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('dm0','dm1','dm11')}
+```
+::::
+
+
+:::: {.actionbox .actionimage data-latex="action"}
+- Change the values of the denudation rates `E1` and `E2`
+- Change the nuclide (use "Al26" and "C14")
+::::
+
+:::: {.questionbox .questionimage data-latex="question"}
+- What are the implications of changes in denudation rates for the interpretation of TCN concentrations?
+- What kind of geomorphological situation could it correspond to?
+- Further reading for the $^{14}$C/$^{10}$Be system in @mudd2016detection. What kinf of information does the use of multiple nuclides can provide?
+::::
+
+You can also explore dynamically the impact of changes in denudation rates up using this embedded application, which use the same type of code. 
+
+```{r echo=FALSE}
+knitr::include_url("https://shinyproxy.osupytheas.fr/transient_erosion/",height = "1200px")
+```
+
 
 ## On the importance of muons
 
-For $^{10}$Be the muonic represent a very small fraction of surface production : 
+For $^{10}$Be the muonic contribution represents a very small fraction of surface production : 
 
 ```{r dm20}
 nuc = "Be10"
