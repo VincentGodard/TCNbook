@@ -1,17 +1,17 @@
 # Two nuclides systems
 
-```{r include=FALSE}
+```{r tn0, include=FALSE}
 library("TCNtools")
 ```
 
 We first define the usual variables and parameters.
 
-```{r }
+```{r tn1}
 data(Lambda) # we load a vector containing the attenuation length into the environment
 data(prm) # we load a matrix containing the production/decay parameters into the environment
 rho = 2.7 # we also define the density (g/cm3)
 altitude = 1000 # elevation in m
-latitude = 45 # latitude in degrees
+latitude = 40 # latitude in degrees
 P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
 S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
 ```
@@ -21,7 +21,7 @@ We will see later how to deal with situations where samples have different posit
 
 In order to avoid messing up things later we define here once and for all which is nuclide 1 and which is nuclide 2, according to their respective $\tau_{1/2}$ :
 
-```{r}
+```{r tn2}
 N1 = "Be10" # longer half-life
 N2 = "Al26" # shorter half-life
 ```
@@ -33,29 +33,44 @@ We first start by looking into the evolution of the isotopic ratio between the n
 
 We will look at the evolution through time (typically over several Ma for the 26/10 system), starting from concentrations defined by a denudation steady-state.
 
-```{r}
+```{r tn3}
 data = data.frame(t = seq(0,7e6,by=2000))
 ero = 50 * rho * 100 / 1e6 # in g/cm2/a
 ```
 
 We compute the initial steady-state concentrations.
 
-```{r}
+```{r tn4}
 C1_0 = solv_conc_eul(0,ero,Inf,0,prm[,N1],S,Lambda)
 C2_0 = solv_conc_eul(0,ero,Inf,0,prm[,N2],S,Lambda)
 ```
 
 Now we let them decay through time starting from the initial values, with no production ($z=+\infty$).
-We plot the evolution of the ratio through time. 
 
-```{r}
+```{r tn5}
 data$C1 = solv_conc_eul(Inf,0,data$t,C1_0,prm[,N1],S,Lambda)
 data$C2 = solv_conc_eul(Inf,0,data$t,C2_0,prm[,N2],S,Lambda)
+```
+
+We plot the evolution of the ratio through time. 
+
+
+```{r tn5b}
 plot(data$t,data$C2/data$C1,type="l",lwd=2,col="darkorange",xlab="Time (a)",ylab=paste(N2,"/",N1))
 ```
 
 
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('tn0','tn1','tn2','tn3','tn4','tn5','tn5b')}
+```
+::::
 
+:::: {.actionbox .actionimage data-latex="action"}
+Change the following parameters and observe the implication on the ratio and its evolution 
+- location (`altitude` and `latitude`)
+- initial denudation rate (`ero`)
+::::
 
 
 ## Steady-state denudation and constant exposure curves
@@ -69,8 +84,8 @@ We will use the Eulerian point of view (function `solv_conc_eul`) to compute the
 
 We compute the data for these two curves.
 
-```{r}
-tmp = tnp_curves(prm[,N1],prm[,N2],Lambda,S,rho)
+```{r tn6}
+tmp = tnp_curves(prm[,N1],prm[,N2],Lambda,S,rho,dlim = c(0.01, 1000),alim = c(100, 1e+09))
 ss_ero = tmp[[1]]
 cst_exp = tmp[[2]]
 ```
@@ -83,18 +98,164 @@ While not mandatory, it is usually recommended to organize the plot this way :
 - **X-axis** : longer half-life nuclide (our $N_1$)
 - **Y-axis** : ratio of shorter to longer half-life nuclides (our $N_2/N_1$)
 
-```{r test}
-plot(NA,xlim=range(cst_exp$C1,ss_ero$C1),ylim=range(cst_exp$C2/cst_exp$C1,ss_ero$C2/ss_ero$C1),log="x",
+```{r tn7}
+plot(NA,xlim=range(cst_exp$C1,ss_ero$C1),ylim=range(1,cst_exp$C2/cst_exp$C1,ss_ero$C2/ss_ero$C1),log="x",
      xlab=paste(N1,"(at/g)"),ylab=paste(N2,"/",N1))
 lines(cst_exp$C1,cst_exp$C2/cst_exp$C1,lty=2,col="khaki4") # constant exposure, dashed line
 lines(ss_ero$C1,ss_ero$C2/ss_ero$C1,col="khaki4") # steady-state erosion, solid line
 lines(data$C1,data$C2/data$C1,lwd=2,col="darkorange")
 ```
 
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('tn0','tn1','tn2','tn3','tn4','tn5','tn6','tn7')}
+```
+::::
+
 We have also plotted the burial trajectory we generated above.
 Starting from a position on the steady-state denudation curve, we progressively lower the ratios.
 
-> **TODO** Change the denudation rate used to compute the initial steayd-state concentrations
+Note that you can adjust the extent of the curves by modifying the range in denudation rate (option `dlim`, default from 0.1 to 1000 m/Ma) in exposure duration (option `alim`, default from 100 a to 1 Ma).
+
+:::: {.actionbox .actionimage data-latex="action"}
+Again change the following parameters and observe the implications on plot
+- location (`altitude` and `latitude`)
+- initial denudation rate (`ero`)
+::::
+
+## Burial age and denudation rate curves
+
+It is also common practice in such plot to overlays network of curves, indicating for example burial age.
+The `tnp_burial` function allows to compute such curves.
+
+```{r tn8}
+A = (1:10)*1e6 # increments in age (a)
+E = c(0.1,0.2,0.5,1,2,5,10,20,50,100,200,500,1000,2000) # increments in denudation rate (m/Ma)
+res = tnp_burial(A,E,prm[,N1],prm[,N2],Lambda,S,rho,n=100) # compute array
+```
+
+We plot these lines on our two nuclides plot.
+
+```{r tn9}
+plot(NA,xlim=range(cst_exp$C1,ss_ero$C1),ylim=range(0,cst_exp$C2/cst_exp$C1,ss_ero$C2/ss_ero$C1),log="x",
+     xlab=paste(N1,"(at/g)"),ylab=paste(N2,"/",N1))
+lines(res[[1]]$C1,res[[1]]$C2/res[[1]]$C1,col="black") # constant age
+lines(res[[2]]$C1,res[[2]]$C2/res[[2]]$C1,col="grey") # constant denudation
+lines(cst_exp$C1,cst_exp$C2/cst_exp$C1,lty=2,col="khaki4") # constant exposure, dashed line
+lines(ss_ero$C1,ss_ero$C2/ss_ero$C1,col="khaki4") # steady-state erosion, solid line
+
+lines(data$C1,data$C2/data$C1,lwd=2,col="darkorange")
+
+```
+
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('tn0','tn1','tn2','tn3','tn4','tn5','tn6','tn8','tn9')}
+```
+::::
+
+:::: {.questionbox .questionimage data-latex="question"}
+Comment on the general structure of the plot and our ability to resolve burial ages.
+::::
+
+## Exemple of Lombrive cave (Ariège)
+
+We are going to use data from @sartegou2020late, obtained by measuring $^{10}Be$ and $^{26}$Al concentrations in caves deposits from the Lombrives system, 114 m above the current level of the Ariège river.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(sf)
+library(leaflet)
+df = data.frame(X =  1.616056,Y = 42.823389,label="Lombrives")
+   
+m <- leaflet(df) %>%
+  addTiles() %>%
+  addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
+  addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
+  addLayersControl(baseGroups = c("OpenStreetMap","Esri.WorldImagery"),position = "topleft") %>%
+  addLabelOnlyMarkers(data = df,
+                      lng = ~X, lat = ~Y, label = ~label, 
+                      labelOptions = labelOptions(noHide = TRUE, direction = 'auto', textOnly = FALSE)) 
+m
+```
+
+We start by loading the data (note that concentrations are in $\times 10^3$ at/g).
+
+```{r tn10, eval=FALSE, include=TRUE}
+data = read.table("https://raw.githubusercontent.com/VincentGodard/TCNbook/main/data/sartegou2020late.dat",header=T)
+data
+```
+
+```{r tn10b, eval=TRUE, include=FALSE}
+data = read.table("data/sartegou2020late.dat",header=T)
+data
+```
+
+We also recompute the paramters according to location of Lombrive cave and the estimated average elevation of the paleo-catchment (see discussion in the article).
+
+```{r tn11}
+data(Lambda) # we load a vector containing the attenuation length into the environment
+data(prm) # we load a matrix containing the production/decay parameters into the environment
+rho = 2.5 # we also define the density (g/cm3)
+altitude = 1990 # elevation in m
+latitude = 43 # latitude in degrees
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+```
+
+We also recompute the various reference curves of the plot.
+
+```{r tn12}
+tmp = tnp_curves(prm[,N1],prm[,N2],Lambda,S,rho,dlim = c(0.01, 1000),alim = c(1000, 1e+09))
+ss_ero = tmp[[1]]
+cst_exp = tmp[[2]]
+#
+A = (1:10)*1e6 # increments in age (a)
+E = c(1,2,5,10,20,50,100,200,500,1000) # increments in denudation rate (m/Ma)
+res = tnp_burial(A,E,prm[,N1],prm[,N2],Lambda,S,rho,n=100) # compute array
+```
+
+We now can plot the dataset.
+
+```{r tn13}
+plot(NA,xlim=range(1e4,2e5),ylim=range(0.01,cst_exp$C2/cst_exp$C1,ss_ero$C2/ss_ero$C1),log="x",
+     xlab=paste(N1,"(at/g)"),ylab=paste(N2,"/",N1))
+lines(res[[1]]$C1,res[[1]]$C2/res[[1]]$C1,col="black") # constant age
+lines(res[[2]]$C1,res[[2]]$C2/res[[2]]$C1,col="grey") # constant denudation
+lines(cst_exp$C1,cst_exp$C2/cst_exp$C1,lty=2,col="khaki4") # constant exposure, dashed line
+lines(ss_ero$C1,ss_ero$C2/ss_ero$C1,col="khaki4") # steady-state erosion, solid line
+#
+points(data$C10*1e3,data$C26/data$C10,pch=21,bg="pink",cex=2)
+text(data$C10*1e3,data$C26/data$C10,data$num,cex=0.5)
+```
+
+Note that we have modified the X-axis extent with respect to previous plots.
+Analytical uncertainties are  critical to interpret such plots, especially for long burial duration.
+We are going to plot them as ellispes, using the function `tnp_ellipse`.
+
+```{r tn14}
+plot(NA,xlim=range(1e4,2e5),ylim=range(0.01,cst_exp$C2/cst_exp$C1,ss_ero$C2/ss_ero$C1),log="x",
+     xlab=paste(N1,"(at/g)"),ylab=paste(N2,"/",N1))
+lines(res[[1]]$C1,res[[1]]$C2/res[[1]]$C1,col="black") # constant age
+lines(res[[2]]$C1,res[[2]]$C2/res[[2]]$C1,col="grey") # constant denudation
+lines(cst_exp$C1,cst_exp$C2/cst_exp$C1,lty=2,col="khaki4") # constant exposure, dashed line
+lines(ss_ero$C1,ss_ero$C2/ss_ero$C1,col="khaki4") # steady-state erosion, solid line
+#
+el = tnp_ellipse(data$C10*1e3, data$C10_e*1e3, data$C26*1e3, data$C26_e*1e3,confidence=0.68)
+for (i in 1:length(el)) {polygon(el[[i]],col="pink",border="grey")}
+text(data$C10*1e3,data$C26/data$C10,data$num,cex=0.5)
+```
+
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce the figure
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('tn0','tn2','tn10','tn11','tn12','tn14')}
+```
+::::
+
+:::: {.questionbox .questionimage data-latex="question"}
+Comment on the implications for the burial ages and paleo-denudation rates.
+::::
+
+
 
 ## Interactive shiny app
 

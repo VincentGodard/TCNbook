@@ -41,6 +41,8 @@ on-the-importance-of-muons
 two-nuclides-systems
 evolution-of-ratios
 steady-state-denudation-and-constant-exposure-curves
+burial-age-and-denudation-rate-curves
+exemple-of-lombrive-cave-ariège
 interactive-shiny-app-2
 depth-profiles
 setup-and-dataset
