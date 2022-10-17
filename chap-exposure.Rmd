@@ -138,7 +138,9 @@ We then plot the results to identify the minimum value of $|C_{mod} - C_{mes}|$
 ```{r ed7}
 imin = which.min(abs(Cmod-Cmes)) # what is the index of the minimum difference
 res = age[imin] # the corresponding age
-plot(age,Cmod-Cmes,type="l",main=paste(res,"a BP"),col="coral",lwd=2)
+plot(age,abs(Cmod-Cmes),type="l",
+     xlab="Age (a)",
+     main=paste(res,"a BP"),col="coral",lwd=2)
 abline(h=0)
 abline(v=res)
 ```
@@ -187,7 +189,7 @@ What kind of improvement could you think of concerning this calculation?
 
 ## Time varying production rates
 
-We are now going back to the time varying-scaling schemes, such as the one we explored in the previous chapter.
+We are now going back to the time-varying scaling schemes, such as the one we explored in the previous chapter.
 
 ```{r ed10}
 data = data.frame(t1=seq(0,20e3,length.out=2000)) # we build a dataframe to store results
@@ -204,7 +206,10 @@ In this case we can not use the same equations for the evolution of TCN  concent
 We are going to use,
 $$C_{mod}(t) = e^{-\lambda t} \int_0^t P(t')e^{\lambda t'}dt'$$
 
-Note : it is usually considered that production by muons is much less affected than that by neutrons by the magnetic field variations.
+Important notes : 
+- It is usually considered that production by muons is much less affected than that by neutrons by the magnetic field variations.
+- You might notice that the equation above is different than, for example, equation 1 from @balco2008complete, of the form $C_{mod}(T) =  \int_0^T P(t')e^{-\lambda t'}dt'$. This just because the latter refer to exposure age BP, whereas we are thinking in terms of time since exposure here.
+ 
 
 Below we first compare how the concentration evolves through time with the two approaches. 
 
