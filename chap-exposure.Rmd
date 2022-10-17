@@ -180,7 +180,7 @@ Below you can get all the necessary code to obtain this result
 ::::
 
 :::: {.questionbox .questionimage data-latex="action"}
-This is a very coarse calculation, but searching the  solution for $|C_{mod}(t)-C_{mes}|$ is the essence of what online calculator do.
+This is a very coarse calculation, but searching the  solution for $C_{mod}(t)=C_{mes}$ is the essence of what online calculator do.
 What kind of improvement could you think of concerning this calculation?  
 ::::
 
