@@ -74,6 +74,169 @@ error = abs(C-C2)/C*100
 plot(ero/100*1e6/rho,error,log="xy",type="l",ylab="Relative error (%)",xlab="Denudation rate (m/Ma)")
 ```
 
+## Calculation of denudation rates
+
+We are going to load a subset of the octopus database from @codilean2022octopus, which compile most of the published catchment-wide denudation rates and can be accessed through this web site :
+
+[https://octopusdata.org](https://octopusdata.org) 
+
+The original database have been filtered to retain catchments with the following characteristics
+
+- Area in the 20-100 km$^2$ range
+- Denudation rate $<$ 2 mm/a
+
+```{r dm50, eval=TRUE, include=FALSE}
+octopus = read.table("data/gis/octopus.dat",header=T)
+```
+
+```{r dm50b, eval=FALSE, include=TRUE}
+octopus = read.table("https://raw.githubusercontent.com/VincentGodard/TCNbook/main/data/gis/octopus.dat",header=T)
+```
+
+The data base contains a lot of information about the catchments.
+
+```{r}
+octopus
+```
+
+We can have look at the distribution of these denudation rates.
+
+```{r dm50c}
+hist(octopus$EBE_MMKYR,breaks=50,xlab="Denudation rate (mm/ka)",main="")
+```
+
+We can first make a very crude calculation, considering only production by neutrons and neglecting radioactive decay, using the following relationship,
+
+$$\varepsilon=\frac{P \Lambda}{\rho C}$$
+We load the usual parameters and make some definitions
+
+```{r dm51}
+data(Lambda)
+data(prm)
+rho = 2.65 # same density in g/cm3 as the one used in Octopus
+```
+
+We compute the scaling factors for each basin, using its average elevation to compute average scaling factors. 
+This is a very important point and a section will be devoted to the analysis of this approximation.
+
+```{r dm52}
+octopus$P = atm_pressure(alt=octopus$ELEV_AVE,model="stone2000")
+S = scaling_st(octopus$P,octopus$Y_WGS84)
+octopus = cbind(octopus,S)
+```
+
+For the sake of readability we define a number of variables.
+
+```{r dm53}
+Pspal = prm["Pspal","Be10"]*octopus$Nneutrons # scaled spallation production rate
+Pstop = prm["Pstop","Be10"]*octopus$Nmuons # scalled stopped muons production rate
+Pfast = prm["Pfast","Be10"]*octopus$Nmuons # scalled fast muons production rate
+lambda = prm["lambda","Be10"]
+C = octopus$BE10NC
+```
+
+We can now compute denudation rates and compare them with the rates calculated in Octopus.
+
+```{r dm54}
+octopus$E1 = (Pspal*Lambda[1])/(rho*C)*10*1000 # denudation rate in mm/ka
+plot(octopus$EBE_MMKYR,octopus$E1,pch=21,bg="lightblue",cex=0.5,
+     xlab="Octopus denudation rate (mm/ka)",ylab="Recalculated denudation rate (mm/ka)")
+abline(0,1,col="red",lty=2)
+```
+
+:::: {.questionbox .questionimage data-latex="question"}
+What can you say about this comparison?
+::::
+
+We compute an estimator of the difference for latter reference.
+
+```{r dm55}
+ER1 = mean(((octopus$EBE_MMKYR-octopus$E1)/octopus$EBE_MMKYR)^2)
+ER1
+```
+
+Now we include muons in the calculation (still neglecting radioactive decay):
+$$ \varepsilon=\sum_i \frac{P_i\Lambda_i}{\rho C}$$
+
+```{r dm56}
+octopus$E2 = (Pspal*Lambda[1] + Pstop*Lambda[2] + Pfast*Lambda[3])/(rho*C)*10*1000
+plot(octopus$EBE_MMKYR,octopus$E2,pch=21,bg="lightblue",cex=0.5,
+     xlab="Octopus denudation rate (mm/ka)",ylab="Recalculated denudation rate (mm/ka)")
+abline(0,1,col="red",lty=2)
+```
+
+```{r dm57}
+ER2 = mean(((octopus$EBE_MMKYR-octopus$E2)/octopus$EBE_MMKYR)^2)
+ER2
+```
+
+
+:::: {.questionbox .questionimage data-latex="question"}
+Comment on the differences between the two calculations.
+::::
+
+The denudation rates span several orders of magnitude, so we use a log-log plot.
+
+
+```{r dm58}
+plot(octopus$EBE_MMKYR,octopus$E2,log="xy",pch=21,bg="lightblue",cex=0.5)
+abline(0,1,col="red",lty=2)
+```
+
+:::: {.questionbox .questionimage data-latex="question"}
+What happens for low denudation rates?
+::::
+
+Now we want to take into account radioactive decay, and have to deal with equation \@ref(eq:ssero), which does not allow to compute denudation rate $\varepsilon$ directly.
+So we have to solve $C_{mod}(\varepsilon) = C_{obs}$.
+For that purpose we define a function to compute concentration for any value of $\varepsilon$, and a function to optimize the difference between the modeled and observed concentration : $|C_{mod}(\varepsilon) - C_{obs}|$.
+
+
+```{r dm59}
+compute_C <- function(ero,prm,S,Lambda){
+  C = solv_conc_eul(0,ero,Inf,0,prm,S,Lambda) # compute concentration
+  return(C)
+}
+fun_opt <-function(ero,prm,S,Lambda,Cmes){
+  Cmod =  compute_C(ero,prm,S,Lambda)
+  return(abs(Cmod-Cmes))
+}
+```
+
+Then we run the optimization for each basin.
+
+```{r dm60}
+octopus$E3 = NA
+for (i in 1:nrow(octopus)){
+  res = optimize(fun_opt,c(0,3000)/10*rho,prm[,"Be10"],c(octopus$Nneutrons[i],octopus$Nmuons[i]),
+                 Lambda,octopus$BE10NC[i])
+  octopus$E3[i] = res$minimum*10/rho*1000
+}
+```
+
+
+And we compare again the denudation rates.
+
+```{r dm61}
+plot(octopus$EBE_MMKYR,octopus$E3,log="xy",pch=21,bg="lightblue",cex=0.5)
+abline(0,1,col="red",lty=2)
+```
+
+```{r dm62}
+ER3 = mean(((octopus$EBE_MMKYR-octopus$E3)/octopus$EBE_MMKYR)^2)
+ER3
+```
+
+
+:::: {.questionbox .questionimage data-latex="question"}
+Comment this result.
+::::
+
+:::: {.codebox .codeimage data-latex="code"}
+Below you can get all the necessary code to produce these figures
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('dm50b','dm50c','dm51','dm52','dm53','dm54','dm55','dm56','dm57','dm58','dm59','dm60','dm61','dm62')}
+```
+::::
 
 ## Integration time scale
 Like all techniques used to measure erosion or denudation of the Earth surface, rates measured from cosmogenic nuclides are averaged over a specific period of time.
@@ -273,11 +436,20 @@ Below you can get all the necessary code to produce the figures presented in thi
 ::::
 
 
+
+
+
 ## Change in denudation through time
 
 The  `solv_conc_eul` function has a `in_ero` parameter which allows to specify an initial denudation rate, and then simulate the evolution concentration as a response to a change in the denudation rate.
 
 ```{r dm11}
+altitude = 1000 # elevation in m
+latitude = 45 # latitude in degrees
+P = atm_pressure(alt=altitude,model="stone2000") # compute atmospheric pressure at site
+S = scaling_st(P,latitude) # compute the scaling parameters according to Stone (2000)
+rho = 2.7
+#
 nuc = "Be10"
 E1 = 10/1.e6*100*rho # denudation rate conversion en m/Ma -> g/cm2/a
 E2 = 20/1.e6*100*rho # denudation rate conversion en m/Ma -> g/cm2/a
@@ -288,7 +460,7 @@ plot(t/1e6,C,xlab="Time (Ma)",ylab="Concentration (at/g)",type="l",col="gold",lw
 
 :::: {.codebox .codeimage data-latex="code"}
 Below you can get all the necessary code to produce the figure
-```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('dm0','dm1','dm11')}
+```{r eval=FALSE, class.source='fold-hide', include=TRUE, ref.label=c('dm0','dm11')}
 ```
 ::::
 
