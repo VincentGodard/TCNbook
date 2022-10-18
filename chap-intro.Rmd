@@ -4,8 +4,12 @@
 
 ## Scope and objectives 
 
+The objective of these activities is to allow users to explore a number of ideas and concepts related to the use of TCNs for the study of surface processes, in particular for exposure and denudation issues.
 
-## Usage
+The book is built from small sequences of numerical code allowing to produce the presented figures. 
+These sequences are organized to be easily reusable and allow to quickly test the influence of different parameters on the calculations.
+
+## Working with this web site
 
 This html site was generated from  [R Markdown](http://rmarkdown.rstudio.com) files using the [bookdown](https://bookdown.org) package.
 You can copy/paste the various lines of code into your own R script and run it in any R session.
@@ -23,21 +27,69 @@ Both are built on the dedicated `TCNtools` package :
 
 This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.
 
-You can install the package directly on you system, using the instruction provided on the package webpage (requires `devtools` package to install from Github).
-
-<!-- Alternatively launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the following icon [![binder](images/binder.svg)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio). -->
-
-Alternatively you can launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the icon ![](images/binder.svg) on the package Github repository :
-
-<https://github.com/VincentGodard/TCNtools>
-
-<!-- You can launch the binder by clicking on the icon ![](images/binder.svg) on the package website (right column). -->
-
-The first thing you will have to do, before calling any of the functions, is to load the `TCNtools` package.
+The first thing you will have to do, before calling any of the functions, is always to load the `TCNtools` package.
 
 ```{r}
 library("TCNtools")
 ```
+
+But before that you need to have a R/RStudio working environment.
+
+## Getting started with R/RStudio
+
+Various options can be considered to run the R code bits presented in this book.
+
+### Local installation
+
+You can install [RStudio](https://www.rstudio.com) directly on your system and then the [TCNTools](https://github.com/VincentGodard/TCNtools) package using the instruction provided on the package webpage (requires `devtools` package to install from Github).
+
+```{r eval=FALSE, include=TRUE}
+install.packages("devtools")
+devtools::install_git(url = "https://github.com/VincentGodard/TCNtools")
+```
+
+- **Pros**  
+     - Run locally, not dependent on a distant server with possible usage limits
+- **Cons** : 
+     - Requires to install R/RStudio, which might not be interesting if you do not use them on a regular basis
+     - `devtools` install can sometimes take some work, in particular on Windows systems  
+
+### Binder
+
+Alternatively you can launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package already installed, by clicking on the icon ![](images/binder.svg) on the package Github repository (top of Readme.md):
+
+<https://github.com/VincentGodard/TCNtools>
+
+- **Pros**  
+     - Run into your browser
+     - Nothing to install, just one click
+- **Cons** : 
+     - Temporary session, you loose everything when closing the browser (but it is possible to download your files) 
+     - Limit on the number of instances that can run simultaneously
+     
+
+<!-- You can launch the binder by clicking on the icon ![](images/binder.svg) on the package website (right column). -->
+
+### RStudio Cloud
+
+Another option is to create a free account on [https://rstudio.cloud](https://rstudio.cloud).
+Then start a project and install the `TCNTools` package.
+
+```{r eval=FALSE, include=TRUE}
+install.packages("devtools")
+devtools::install_git(url = "https://github.com/VincentGodard/TCNtools")
+```
+
+- **Pros**  
+     - Run in your browser
+     - Simple installation 
+     - Permanent account, allowing to keep projects and files from one session to the other
+- **Cons** : 
+     - A 25 hours per month limit with the free base plan. Remember to close you session when you are not working
+
+
+## Usage
+
 
 Various boxes will be used throughout the book.
 

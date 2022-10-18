@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 Introduction | A Minimal Book Example</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <title>1 Introduction | Interpreting TCN concentrations at the Earth Surface</title>
+  <meta name="description" content="This book presents a set of simple exercises and hands on activity to familiarize students with the interpretation of measured Terrestrial Nuclides Concentrations in Earth Surface material" />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 Introduction | A Minimal Book Example" />
+  <meta property="og:title" content="1 Introduction | Interpreting TCN concentrations at the Earth Surface" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="This book presents a set of simple exercises and hands on activity to familiarize students with the interpretation of measured Terrestrial Nuclides Concentrations in Earth Surface material" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 Introduction | A Minimal Book Example" />
+  <meta name="twitter:title" content="1 Introduction | Interpreting TCN concentrations at the Earth Surface" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="This book presents a set of simple exercises and hands on activity to familiarize students with the interpretation of measured Terrestrial Nuclides Concentrations in Earth Surface material" />
   
 
 <meta name="author" content="Vincent Godard" />
 
 
-<meta name="date" content="2022-10-17" />
+<meta name="date" content="2022-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -172,7 +172,14 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#terrestrial-cosmogenic-nuclides-and-earth-surface-dynamics"><i class="fa fa-check"></i><b>1.1</b> Terrestrial Cosmogenic Nuclides and Earth Surface Dynamics</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#scope-and-objectives"><i class="fa fa-check"></i><b>1.2</b> Scope and objectives</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#usage"><i class="fa fa-check"></i><b>1.3</b> Usage</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#working-with-this-web-site"><i class="fa fa-check"></i><b>1.3</b> Working with this web site</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#getting-started-with-rrstudio"><i class="fa fa-check"></i><b>1.4</b> Getting started with R/RStudio</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#local-installation"><i class="fa fa-check"></i><b>1.4.1</b> Local installation</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#binder"><i class="fa fa-check"></i><b>1.4.2</b> Binder</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#rstudio-cloud"><i class="fa fa-check"></i><b>1.4.3</b> RStudio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#usage"><i class="fa fa-check"></i><b>1.5</b> Usage</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="scaling-factors.html"><a href="scaling-factors.html"><i class="fa fa-check"></i><b>2</b> Scaling factors</a>
 <ul>
@@ -245,7 +252,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Interpreting TCN concentrations at the Earth Surface</a>
           </h1>
         </div>
 
@@ -260,9 +267,12 @@ div.csl-indent {
 </div>
 <div id="scope-and-objectives" class="section level2 hasAnchor" number="1.2">
 <h2><span class="header-section-number">1.2</span> Scope and objectives<a href="introduction.html#scope-and-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The objective of these activities is to allow users to explore a number of ideas and concepts related to the use of TCNs for the study of surface processes, in particular for exposure and denudation issues.</p>
+<p>The book is built from small sequences of numerical code allowing to produce the presented figures.
+These sequences are organized to be easily reusable and allow to quickly test the influence of different parameters on the calculations.</p>
 </div>
-<div id="usage" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Usage<a href="introduction.html#usage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="working-with-this-web-site" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Working with this web site<a href="introduction.html#working-with-this-web-site" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This html site was generated from <a href="http://rmarkdown.rstudio.com">R Markdown</a> files using the <a href="https://bookdown.org">bookdown</a> package.
 You can copy/paste the various lines of code into your own R script and run it in any R session.</p>
 <p>These activities do not require any specific prior knowledge of R programming language.
@@ -272,15 +282,76 @@ The idea is for you to simply copy and paste the code in a script, run it, and c
 <p>Both are built on the dedicated <code>TCNtools</code> package :</p>
 <p><a href="https://vincentgodard.github.io/TCNtools" class="uri">https://vincentgodard.github.io/TCNtools</a></p>
 <p>This package contain various functions to assist the interpretation of TCN concentration at the Earth Surface.</p>
-<p>You can install the package directly on you system, using the instruction provided on the package webpage (requires <code>devtools</code> package to install from Github).</p>
-<!-- Alternatively launch a [binder](https://mybinder.org/) session and get a `RStudio` session running into your browser with the `TCNtools` package installed, by clicking on the following icon [![binder](images/binder.svg)](https://mybinder.org/v2/gh/VincentGodard/TCNtools/main?urlpath=rstudio). -->
-<p>Alternatively you can launch a <a href="https://mybinder.org/">binder</a> session and get a <code>RStudio</code> session running into your browser with the <code>TCNtools</code> package installed, by clicking on the icon <img src="images/binder.svg" /> on the package Github repository :</p>
-<p><a href="https://github.com/VincentGodard/TCNtools" class="uri">https://github.com/VincentGodard/TCNtools</a></p>
-<!-- You can launch the binder by clicking on the icon ![](images/binder.svg) on the package website (right column). -->
-<p>The first thing you will have to do, before calling any of the functions, is to load the <code>TCNtools</code> package.</p>
+<p>The first thing you will have to do, before calling any of the functions, is always to load the <code>TCNtools</code> package.</p>
 <details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;TCNtools&quot;</span>)</span></code></pre></div>
 </details>
+<p>But before that you need to have a R/RStudio working environment.</p>
+</div>
+<div id="getting-started-with-rrstudio" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Getting started with R/RStudio<a href="introduction.html#getting-started-with-rrstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Various options can be considered to run the R code bits presented in this book.</p>
+<div id="local-installation" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Local installation<a href="introduction.html#local-installation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can install <a href="https://www.rstudio.com">RStudio</a> directly on your system and then the <a href="https://github.com/VincentGodard/TCNtools">TCNTools</a> package using the instruction provided on the package webpage (requires <code>devtools</code> package to install from Github).</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb2-2"><a href="introduction.html#cb2-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_git</span>(<span class="at">url =</span> <span class="st">&quot;https://github.com/VincentGodard/TCNtools&quot;</span>)</span></code></pre></div>
+</details>
+<ul>
+<li><strong>Pros</strong>
+<ul>
+<li>Run locally, not dependent on a distant server with possible usage limits</li>
+</ul></li>
+<li><strong>Cons</strong> :
+<ul>
+<li>Requires to install R/RStudio, which might not be interesting if you do not use them on a regular basis</li>
+<li><code>devtools</code> install can sometimes take some work, in particular on Windows systems</li>
+</ul></li>
+</ul>
+</div>
+<div id="binder" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Binder<a href="introduction.html#binder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Alternatively you can launch a <a href="https://mybinder.org/">binder</a> session and get a <code>RStudio</code> session running into your browser with the <code>TCNtools</code> package already installed, by clicking on the icon <img src="images/binder.svg" /> on the package Github repository (top of Readme.md):</p>
+<p><a href="https://github.com/VincentGodard/TCNtools" class="uri">https://github.com/VincentGodard/TCNtools</a></p>
+<ul>
+<li><strong>Pros</strong>
+<ul>
+<li>Run into your browser</li>
+<li>Nothing to install, just one click</li>
+</ul></li>
+<li><strong>Cons</strong> :
+<ul>
+<li>Temporary session, you loose everything when closing the browser (but it is possible to download your files)</li>
+<li>Limit on the number of instances that can run simultaneously</li>
+</ul></li>
+</ul>
+<!-- You can launch the binder by clicking on the icon ![](images/binder.svg) on the package website (right column). -->
+</div>
+<div id="rstudio-cloud" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> RStudio Cloud<a href="introduction.html#rstudio-cloud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Another option is to create a free account on <a href="https://rstudio.cloud">https://rstudio.cloud</a>.
+Then start a project and install the <code>TCNTools</code> package.</p>
+<details class=chunk-details open><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb3-2"><a href="introduction.html#cb3-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_git</span>(<span class="at">url =</span> <span class="st">&quot;https://github.com/VincentGodard/TCNtools&quot;</span>)</span></code></pre></div>
+</details>
+<ul>
+<li><strong>Pros</strong>
+<ul>
+<li>Run in your browser</li>
+<li>Simple installation</li>
+<li>Permanent account, allowing to keep projects and files from one session to the other</li>
+</ul></li>
+<li><strong>Cons</strong> :
+<ul>
+<li>A 25 hours per month limit with the free base plan. Remember to close you session when you are not working</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="usage" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Usage<a href="introduction.html#usage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Various boxes will be used throughout the book.</p>
 <div class="codebox codeimage">
 <p>This a summary code box.
@@ -288,9 +359,9 @@ In the following chapters the processes will be explained step by step, with the
 <p>For convenience, and avoid you to have to copy and paste these various blocks one by one, sometimes everything will be combined in one block at the end of the section, which can unfold, copy and then paste into the R console or a script.
 Below you can get all the necessary code to produce a figure or result.</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="introduction.html#cb2-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb2-2"><a href="introduction.html#cb2-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb2-3"><a href="introduction.html#cb2-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> (a<span class="sc">+</span>b)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb4-1"><a href="introduction.html#cb4-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb4-2"><a href="introduction.html#cb4-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb4-3"><a href="introduction.html#cb4-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> (a<span class="sc">+</span>b)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 </details>
 </div>
 <div class="actionbox actionimage">

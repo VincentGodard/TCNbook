@@ -1,5 +1,5 @@
 --- 
-title: "A Minimal Book Example"
+title: "Interpreting TCN concentrations at the Earth Surface"
 author: "Vincent Godard"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -8,7 +8,7 @@ documentclass: book
 bibliography: 'data/TCNbook.bib'
 biblio-style: natbib
 link-citations: yes
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+description: "This book presents a set of simple exercises and hands on activity to familiarize students with the interpretation of measured Terrestrial Nuclides Concentrations in Earth Surface material"
 ---
 
 # Front page {-}

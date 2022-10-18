@@ -4,6 +4,11 @@ eq:ssero
 introduction
 terrestrial-cosmogenic-nuclides-and-earth-surface-dynamics
 scope-and-objectives
+working-with-this-web-site
+getting-started-with-rrstudio
+local-installation
+binder
+rstudio-cloud
 usage
 scaling-factors
 time-independent-scaling

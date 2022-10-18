@@ -1,0 +1,60 @@
+---
+output:
+  pdf_document: default
+---
+
+
+L'ensemble des activités est décrite sur le site suivant :
+
+[https://vincentgodard.github.io/TCNbook/index.html](https://vincentgodard.github.io/TCNbook/index.html)
+
+Ces exercices pratiques sont basés sur le langage R, que nous allons utiliser via l'interface RStudio.
+
+Le but n'est évidemment par de faire un TP de programmation, aucune connaissance de R n'est requise pour suivre le déroulement. 
+Les scripts proposés 
+
+# Accès à RStudio
+
+## Installation locale
+Vous pouvez installer sur votre ordinateur une version de [RStudio](https://www.rstudio.com), puis installer le package [TCNTools](https://github.com/VincentGodard/TCNtools) en suivant les instructions (via l'outil `devtools`)
+
+- **Avantages**  
+     - Ça tourne en local, pas de dépendance vis à vis d'un serveur distant
+- **Inconvénients** : 
+     - Nécessite d'installer R/RStudio, ce qui n'a pas forcement d’intérêt si vous ne l’utilisez pas d'autre part
+     - L'installation de `devtools` est parfois compliquée, en particulier sous Windows
+
+## Binder
+Une autre option est de lancer à la volée un image construite à partir du dépot github du package (via binder.org).
+Vous avez juste à cliquer sur l'icone ![](images/binder.svg) dans le dépôt du package [TCNTools](https://github.com/VincentGodard/TCNtools) (en bas dans le Readme)
+
+- **Avantages**  
+     - Tourne dans un navigateur
+     - Rien à installer, juste un lien à cliquer
+- **Inconvénients** : 
+     - Session temporaire, tout disparait à la fermeture (possibilité de télécharger ses fichiers)
+     - Limite au nombre d'images qui peuvent tourner en simultané
+     
+## RStudio Cloud
+Une autre solution distance est de créer un compte (gratuit) sur [https://rstudio.cloud](https://rstudio.cloud)
+
+Puis de démmarer un projet et d'installer le package `TCNTools` de la façon suivante :
+
+```{r}
+install.packages("devtools")
+devtools::install_git(url = "https://github.com/VincentGodard/TCNtools")
+```
+
+- **Avantages**  
+     - Tourne dans un navigateur
+     - Installation simple
+     - Compte permament permettant de conerver ses projets et fichiers
+- **Inconvénients** : 
+     - Une limite de 25 heures par mois avec le plan de base (penser à fermer la session can vous ne travaillez pas)
+
+
+
+
+
+
+

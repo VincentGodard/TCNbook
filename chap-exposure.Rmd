@@ -207,8 +207,9 @@ We are going to use,
 $$C_{mod}(t) = e^{-\lambda t} \int_0^t P(t')e^{\lambda t'}dt'$$
 
 Important notes : 
+
 - It is usually considered that production by muons is much less affected than that by neutrons by the magnetic field variations.
-- You might notice that the equation above is different than, for example, equation 1 from @balco2008complete, of the form $C_{mod}(T) =  \int_0^T P(t')e^{-\lambda t'}dt'$. This just because the latter refer to exposure age BP, whereas we are thinking in terms of time since exposure here.
+- You might notice that the equation above is different than, for example, equation 1 from @balco2008complete, of the form $C_{mod}(T) =  \int_0^T P(t')e^{-\lambda t'}dt'$. This just because the latter refers to exposure age BP, whereas we are thinking in terms of time since exposure here.
  
 
 Below we first compare how the concentration evolves through time with the two approaches. 
